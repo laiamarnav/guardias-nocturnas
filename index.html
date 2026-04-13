@@ -470,7 +470,7 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getFirestore, collection, doc, onSnapshot, addDoc, deleteDoc, setDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 /* ─ Equipo: edita nombres y PINs aquí ─ */
@@ -589,7 +589,10 @@ function showApp(){
   clockTick=setInterval(()=>{
     const n=new Date();
     document.getElementById('fichaClock').textContent=`${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;
-    if(shiftStart){const e=Math.floor((n-shiftStart)/1000),h=Math.floor(e/3600),mm=Math.floor((e%3600)/60),s=e%60;document.getElementById('fichaStatus').innerHTML=`<span class="pulse"></span> En curso · ${pad(h)}:${pad(mm)}:${pad(s)}`;}
+    if(shiftStart){
+      const e=Math.floor((n-shiftStart)/1000),h=Math.floor(e/3600),mm=Math.floor((e%3600)/60),s=e%60;
+      document.getElementById('fichaStatus').innerHTML=`<span class="pulse"></span> En curso · ${pad(h)}:${pad(mm)}:${pad(s)}`;
+    }
   },1000);
   renderAll();renderConfig();
 }
@@ -724,7 +727,7 @@ window.assignRange=async()=>{
   const batch=writeBatch(db);
   toAdd.forEach(g=>batch.set(doc(collection(db,'guardias')),g));
   await batch.commit();
-  toast(`${toAdd.length} guardia${toAdd.length>1?'s':'} asignada${toAdd.length>1?'s':''}`);
+  toast(`${toAdd.length} guardia${toAdd.length > 1 ? 's' : ''} asignada${toAdd.length > 1 ? 's' : ''}`);
   document.getElementById('rangeFrom').value='';document.getElementById('rangeTo').value='';
   rangeSelected.clear();document.querySelectorAll('.mtog').forEach(el=>el.classList.remove('on'));
   document.getElementById('rangePreview').textContent='';
