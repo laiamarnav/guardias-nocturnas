@@ -5,903 +5,413 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guardias Nocturnas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0d0d0f;
-  --bg2: #141417;
-  --bg3: #1c1c21;
-  --bg4: #242429;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.12);
-  --text: #f0f0f2;
-  --text2: #9090a0;
-  --text3: #55555f;
-  --blue: #4f8ef7;
-  --blue-bg: rgba(79,142,247,0.12);
-  --blue-border: rgba(79,142,247,0.25);
-  --green: #3ecf8e;
-  --green-bg: rgba(62,207,142,0.1);
-  --green-border: rgba(62,207,142,0.25);
-  --amber: #f5a623;
-  --amber-bg: rgba(245,166,35,0.1);
-  --amber-border: rgba(245,166,35,0.25);
-  --red: #f56565;
-  --red-bg: rgba(245,101,101,0.1);
-  --purple: #a78bfa;
-  --purple-bg: rgba(167,139,250,0.1);
-  --radius: 10px;
-  --radius-lg: 14px;
-  --font: 'DM Sans', sans-serif;
-  --mono: 'DM Mono', monospace;
+  --bg:#0d0d0f;--bg2:#141417;--bg3:#1c1c21;--bg4:#242429;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#f0f0f2;--text2:#8888a0;--text3:#44444f;
+  --blue:#4f8ef7;--blue-bg:rgba(79,142,247,.12);--blue-border:rgba(79,142,247,.28);
+  --green:#3ecf8e;--green-bg:rgba(62,207,142,.1);--green-border:rgba(62,207,142,.28);
+  --amber:#f5a623;--amber-bg:rgba(245,166,35,.1);--amber-border:rgba(245,166,35,.28);
+  --red:#f87171;--red-bg:rgba(248,113,113,.1);
+  --purple:#a78bfa;--purple-bg:rgba(167,139,250,.1);
+  --r:10px;--rl:14px;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
 }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* LOGIN */
+#loginScreen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
+.login-box{width:100%;max-width:360px}
+.login-logo{margin-bottom:32px}
+.login-logo h1{font-size:22px;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
+.login-logo p{font-size:13px;color:var(--text2)}
+.member-cards{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.member-card{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);cursor:pointer;transition:all .15s}
+.member-card:hover{border-color:var(--border2);background:var(--bg3)}
+.member-card.selected{border-color:var(--blue-border);background:var(--blue-bg)}
+.mc-name{font-size:14px;font-weight:500}
+.pin-section{display:none}
+.pin-label{font-size:12px;color:var(--text2);margin-bottom:10px;text-align:center}
+.pin-dots{display:flex;justify-content:center;gap:10px;margin-bottom:20px}
+.pin-dot{width:12px;height:12px;border-radius:50%;background:var(--bg4);border:1px solid var(--border2);transition:all .15s}
+.pin-dot.filled{background:var(--blue);border-color:var(--blue)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pin-key{padding:16px;text-align:center;font-size:18px;font-weight:500;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .12s;user-select:none}
+.pin-key:hover{background:var(--bg4);border-color:var(--border2)}
+.pin-key:active{transform:scale(.95)}
+.pin-error{text-align:center;font-size:12px;color:var(--red);margin-top:12px;height:16px}
 
-body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  font-size: 14px;
-  line-height: 1.6;
-}
+/* SHELL */
+.shell{display:flex;min-height:100vh}
+.sidebar{width:220px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar-logo{padding:20px 20px 16px;border-bottom:1px solid var(--border)}
+.sidebar-logo h1{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.sidebar-logo p{font-size:11px;color:var(--text3);margin-top:2px}
+.sidebar-section{padding:14px 12px 6px}
+.ssl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:0 8px;margin-bottom:4px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--text2);transition:all .15s;user-select:none;margin-bottom:1px;border:1px solid transparent}
+.nav-item svg{opacity:.55;flex-shrink:0;transition:opacity .15s}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item:hover svg{opacity:.85}
+.nav-item.active{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-border)}
+.nav-item.active svg{opacity:1}
+.sidebar-bottom{margin-top:auto;padding:12px;border-top:1px solid var(--border)}
+.user-chip{display:flex;align-items:center;gap:9px;padding:9px 11px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)}
+.user-chip-name{font-size:12px;font-weight:500;flex:1}
+.user-chip-logout{font-size:11px;color:var(--text3);cursor:pointer;padding:2px 6px;border-radius:4px}
+.user-chip-logout:hover{color:var(--red)}
+.main{flex:1;padding:32px 36px;max-width:920px;min-width:0}
+.page{display:none}
+.page.active{display:block}
+.page-header{margin-bottom:28px}
+.page-header h2{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.page-header p{font-size:13px;color:var(--text2);margin-top:4px}
 
-/* ─── LAYOUT ─── */
-.shell { display: flex; min-height: 100vh; }
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:16px}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-head h3{font-size:13px;font-weight:500}
+.card-head .sub{font-size:12px;color:var(--text3)}
+.card-body{padding:18px}
 
-.sidebar {
-  width: 220px;
-  flex-shrink: 0;
-  background: var(--bg2);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-}
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
+.stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px}
+.stat-value{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.stat-sub{font-size:11px;color:var(--text3);margin-top:4px}
 
-.sidebar-logo {
-  padding: 20px 20px 16px;
-  border-bottom: 1px solid var(--border);
-}
-.sidebar-logo h1 {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: -0.01em;
-}
-.sidebar-logo p {
-  font-size: 11px;
-  color: var(--text3);
-  margin-top: 2px;
-}
+/* FICHA */
+.ficha-hero{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:24px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.ficha-clock{font-family:var(--mono);font-size:48px;font-weight:500;letter-spacing:-.02em;line-height:1}
+.ficha-date{font-size:13px;color:var(--text2);margin-bottom:6px}
+.ficha-status{font-size:13px;color:var(--text3);display:flex;align-items:center;gap:7px}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
 
-.sidebar-section {
-  padding: 16px 12px 8px;
-}
-.sidebar-section-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--text3);
-  padding: 0 8px;
-  margin-bottom: 4px;
-}
+/* BTNS */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;border:1px solid transparent;transition:all .15s;white-space:nowrap}
+.btn-blue{background:var(--blue);color:#fff;border-color:var(--blue)}.btn-blue:hover{opacity:.88}
+.btn-green{background:var(--green);color:#0a1a10;border-color:var(--green)}.btn-green:hover{opacity:.88}
+.btn-outline{background:transparent;border-color:var(--border2);color:var(--text2)}.btn-outline:hover{background:var(--bg3);color:var(--text)}
+.btn-red{background:transparent;border-color:transparent;color:var(--text3)}.btn-red:hover{color:var(--red);background:var(--red-bg)}
+.btn-amber{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber)}.btn-amber:hover{opacity:.85}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-xs{padding:3px 8px;font-size:11px}
 
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px;
-  color: var(--text2);
-  transition: all .15s;
-  user-select: none;
-  margin-bottom: 1px;
-}
-.nav-item svg { opacity: .6; flex-shrink: 0; }
-.nav-item:hover { background: var(--bg3); color: var(--text); }
-.nav-item:hover svg { opacity: .9; }
-.nav-item.active { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
-.nav-item.active svg { opacity: 1; }
+/* FORM */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.field input,.field select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-family:var(--font);font-size:13px;color:var(--text);outline:none;transition:border-color .15s}
+.field input:focus,.field select:focus{border-color:var(--blue-border)}
+.field select option{background:#1c1c21}
+.field.full{grid-column:1/-1}
 
-.sidebar-bottom {
-  margin-top: auto;
-  padding: 12px;
-  border-top: 1px solid var(--border);
-}
+/* TABLE */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead th{padding:10px 14px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)}
+tbody td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text);font-size:13px;vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,.02)}
 
-.user-switcher {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 8px 10px;
-  background: var(--bg3);
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  cursor: pointer;
-}
-.user-switcher select {
-  background: transparent;
-  border: none;
-  color: var(--text);
-  font-family: var(--font);
-  font-size: 12px;
-  cursor: pointer;
-  width: 100%;
-  outline: none;
-  font-weight: 500;
-}
-.user-switcher select option { background: #1c1c21; }
+/* BADGE */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
+.badge-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+.badge-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.badge-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
+.badge-gray{background:rgba(255,255,255,.05);color:var(--text2);border:1px solid var(--border)}
 
-.avatar {
-  width: 26px; height: 26px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 600;
-  flex-shrink: 0;
-}
+/* CALENDAR */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-nav h3{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.cal-nav-btn{width:30px;height:30px;border-radius:7px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s}
+.cal-nav-btn:hover{background:var(--bg4);color:var(--text)}
+.cal-legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.cal-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3)}
+.cal-legend-dot{width:8px;height:8px;border-radius:2px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.cal-dow{text-align:center;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);padding:6px 0}
+.cal-day{min-height:68px;border-radius:8px;padding:6px 7px;border:1px solid transparent;cursor:pointer;transition:all .12s}
+.cal-day:hover{background:var(--bg3);border-color:var(--border)}
+.cal-day.today{border-color:var(--blue-border);background:var(--blue-bg)}
+.cal-day.other-month{opacity:.2;cursor:default;pointer-events:none}
+.cal-day .dn{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:3px}
+.cal-day.today .dn{color:var(--blue)}
+.cal-pip{font-size:10px;padding:1px 5px;border-radius:4px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.pip-guardia{background:var(--blue-bg);color:var(--blue)}
+.pip-subida{background:var(--green-bg);color:var(--green)}
+.pip-fiesta{background:var(--amber-bg);color:var(--amber)}
+.day-detail{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rl);padding:20px;margin-top:14px;display:none}
+.day-section{margin-bottom:14px}
+.day-section:last-child{margin-bottom:0}
+.day-section-title{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.day-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.day-row:last-child{border-bottom:none}
 
-.main {
-  flex: 1;
-  padding: 32px 36px;
-  max-width: 900px;
-  overflow-x: hidden;
-}
+/* FIESTAS */
+.fiesta-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px}
+.fiesta-item:last-child{margin-bottom:0}
+.fiesta-item-info{flex:1;min-width:0}
+.fiesta-item-date{font-size:13px;font-weight:500}
+.fiesta-item-meta{font-size:11px;color:var(--text3);margin-top:1px}
 
-/* ─── PAGE ─── */
-.page { display: none; }
-.page.active { display: block; }
+/* MEMBER */
+.member-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.member-item:last-child{border-bottom:none}
+.member-info{flex:1;min-width:0}
+.member-name{font-size:14px;font-weight:500}
+.member-meta{font-size:12px;color:var(--text3);margin-top:2px}
+.member-right{text-align:right;flex-shrink:0}
+.member-hrs{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.member-fiesta-stat{font-size:11px;color:var(--text3)}
 
-.page-header {
-  margin-bottom: 28px;
-}
-.page-header h2 {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -.02em;
-  color: var(--text);
-}
-.page-header p {
-  font-size: 13px;
-  color: var(--text2);
-  margin-top: 4px;
-}
+.avatar{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0}
 
-/* ─── CARDS ─── */
-.card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  margin-bottom: 16px;
-}
-.card-head {
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.card-head h3 { font-size: 13px; font-weight: 500; color: var(--text); }
-.card-head .sub { font-size: 12px; color: var(--text3); }
-.card-body { padding: 18px; }
+/* CHIPS */
+.chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer;transition:all .12s}
+.chip.active{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue)}
 
-/* ─── STATS ─── */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  margin-bottom: 20px;
-}
-.stat {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-}
-.stat-label {
-  font-size: 11px;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  font-weight: 500;
-  margin-bottom: 6px;
-}
-.stat-value {
-  font-size: 26px;
-  font-weight: 600;
-  color: var(--text);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -.02em;
-  line-height: 1;
-}
-.stat-sub {
-  font-size: 11px;
-  color: var(--text3);
-  margin-top: 4px;
-}
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--text);z-index:999;transform:translateY(8px);opacity:0;transition:all .2s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
 
-/* ─── FICHAR ─── */
-.ficha-hero {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.ficha-clock {
-  font-family: var(--mono);
-  font-size: 48px;
-  font-weight: 500;
-  color: var(--text);
-  letter-spacing: -.02em;
-  line-height: 1;
-}
-.ficha-info { flex: 1; min-width: 0; }
-.ficha-date { font-size: 13px; color: var(--text2); margin-bottom: 6px; }
-.ficha-status {
-  font-size: 13px;
-  color: var(--text3);
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-.pulse {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--green);
-  flex-shrink: 0;
-  animation: pulse 1.6s ease-in-out infinite;
-}
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
-.ficha-btn-wrap { display: flex; gap: 8px; }
+.sep{height:1px;background:var(--border);margin:16px 0}
+.empty{padding:28px;text-align:center;color:var(--text3);font-size:13px}
 
-/* ─── BUTTONS ─── */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 9px 16px;
-  border-radius: 8px;
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: all .15s;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.btn-blue { background: var(--blue); color: #fff; border-color: var(--blue); }
-.btn-blue:hover { opacity: .88; }
-.btn-outline { background: transparent; border-color: var(--border2); color: var(--text2); }
-.btn-outline:hover { background: var(--bg3); color: var(--text); }
-.btn-green { background: var(--green); color: #0d1a12; border-color: var(--green); }
-.btn-green:hover { opacity: .88; }
-.btn-red { background: transparent; border-color: var(--red-bg); color: var(--red); }
-.btn-red:hover { background: var(--red-bg); }
-.btn-sm { padding: 5px 10px; font-size: 12px; }
-.btn[disabled] { opacity: .4; cursor: not-allowed; }
-
-/* ─── FORM ─── */
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 12px;
-  margin-bottom: 14px;
-}
-.field label {
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  margin-bottom: 6px;
-}
-.field input, .field select, .field textarea {
-  width: 100%;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 9px 12px;
-  font-family: var(--font);
-  font-size: 13px;
-  color: var(--text);
-  outline: none;
-  transition: border-color .15s;
-}
-.field input:focus, .field select:focus, .field textarea:focus {
-  border-color: var(--blue-border);
-}
-.field select option { background: #1c1c21; }
-.field.full { grid-column: 1 / -1; }
-
-/* ─── TABLE ─── */
-.table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; }
-thead th {
-  padding: 10px 14px;
-  text-align: left;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-  color: var(--text3);
-  border-bottom: 1px solid var(--border);
-}
-tbody td {
-  padding: 11px 14px;
-  border-bottom: 1px solid var(--border);
-  color: var(--text);
-  font-size: 13px;
-  vertical-align: middle;
-}
-tbody tr:last-child td { border-bottom: none; }
-tbody tr:hover { background: var(--bg3); }
-
-/* ─── BADGE ─── */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 2px 8px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-.badge-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
-.badge-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
-.badge-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
-.badge-gray { background: rgba(255,255,255,0.05); color: var(--text2); border: 1px solid var(--border); }
-.badge-purple { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(167,139,250,.25); }
-
-/* ─── CALENDAR ─── */
-.cal-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-.cal-nav h3 { font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
-.cal-nav-btns { display: flex; gap: 6px; }
-.cal-nav-btn {
-  width: 30px; height: 30px;
-  border-radius: 7px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  color: var(--text2);
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
-  transition: all .15s;
-}
-.cal-nav-btn:hover { background: var(--bg4); color: var(--text); }
-
-.cal-legend {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 14px;
-}
-.cal-legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: var(--text3);
-}
-.cal-legend-dot {
-  width: 8px; height: 8px;
-  border-radius: 2px;
-}
-
-.cal-grid {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 3px;
-}
-.cal-dow {
-  text-align: center;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-  color: var(--text3);
-  padding: 6px 0;
-}
-.cal-day {
-  min-height: 72px;
-  border-radius: 8px;
-  padding: 6px 7px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: all .12s;
-  position: relative;
-}
-.cal-day:hover { background: var(--bg3); border-color: var(--border); }
-.cal-day.today { border-color: var(--blue-border); background: var(--blue-bg); }
-.cal-day.other-month { opacity: .25; cursor: default; }
-.cal-day.other-month:hover { background: transparent; border-color: transparent; }
-.cal-day .dn {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text2);
-  margin-bottom: 4px;
-}
-.cal-day.today .dn { color: var(--blue); }
-.cal-pip {
-  font-size: 10px;
-  padding: 1px 5px;
-  border-radius: 4px;
-  margin-bottom: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 500;
-}
-.pip-guardia { background: var(--blue-bg); color: var(--blue); }
-.pip-subida { background: var(--green-bg); color: var(--green); }
-.pip-fiesta { background: var(--amber-bg); color: var(--amber); }
-
-/* ─── DAY DETAIL ─── */
-.day-detail {
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  margin-top: 14px;
-  display: none;
-}
-.day-detail h4 { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: var(--text); }
-.day-section { margin-bottom: 14px; }
-.day-section-title {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 8px;
-}
-.day-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-}
-.day-row:last-child { border-bottom: none; }
-
-/* ─── MEMBER CARD ─── */
-.member-grid { display: flex; flex-direction: column; gap: 1px; }
-.member-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-}
-.member-item:last-child { border-bottom: none; }
-.member-info { flex: 1; min-width: 0; }
-.member-name { font-size: 14px; font-weight: 500; color: var(--text); }
-.member-meta { font-size: 12px; color: var(--text3); margin-top: 2px; }
-.member-right { text-align: right; }
-.member-hrs { font-size: 18px; font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
-.member-fiesta { font-size: 11px; color: var(--text3); }
-
-/* ─── MISC ─── */
-.empty {
-  padding: 32px;
-  text-align: center;
-  color: var(--text3);
-  font-size: 13px;
-}
-.empty svg { margin-bottom: 10px; opacity: .3; }
-
-.separator { height: 1px; background: var(--border); margin: 16px 0; }
-
-.chip-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
-.chip {
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-  border: 1px solid var(--border);
-  background: var(--bg3);
-  color: var(--text2);
-  cursor: pointer;
-  transition: all .12s;
-}
-.chip.active { background: var(--blue-bg); border-color: var(--blue-border); color: var(--blue); }
-
-.toast {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: var(--bg4);
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  padding: 12px 18px;
-  font-size: 13px;
-  color: var(--text);
-  z-index: 9999;
-  transform: translateY(8px);
-  opacity: 0;
-  transition: all .2s;
-  pointer-events: none;
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-
-.config-member-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-}
-.config-member-row:last-child { border-bottom: none; }
-
-/* ─── FIREBASE SETUP SCREEN ─── */
-.setup-screen {
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  padding: 20px;
-}
-.setup-box {
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: 16px;
-  padding: 32px;
-  max-width: 480px;
-  width: 100%;
-}
-.setup-box h2 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-.setup-box p { font-size: 13px; color: var(--text2); margin-bottom: 20px; line-height: 1.7; }
-.setup-box .field { margin-bottom: 12px; }
-.setup-note {
-  font-size: 11px;
-  color: var(--text3);
-  margin-top: 14px;
-  line-height: 1.7;
-  padding: 10px 14px;
-  background: var(--bg3);
-  border-radius: 8px;
-}
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 700px) {
-  .sidebar { display: none; }
-  .main { padding: 16px; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .ficha-clock { font-size: 36px; }
+@media(max-width:680px){
+  .sidebar{display:none}
+  .main{padding:16px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .ficha-clock{font-size:36px}
 }
 </style>
 </head>
 <body>
 
-<!-- FIREBASE CONFIG SCREEN -->
-<div class="setup-screen" id="setupScreen">
-  <div class="setup-box">
-    <h2>Conectar Firebase</h2>
-    <p>Para que los datos sean compartidos entre el equipo, necesitas conectar un proyecto Firebase gratuito. Solo hay que hacerlo una vez — luego se guarda automáticamente.</p>
-    <div class="field">
-      <label>API Key</label>
-      <input type="text" id="cfg-apiKey" placeholder="AIzaSy...">
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <h1>Guardias nocturnas</h1>
+      <p>Elige tu perfil e introduce tu PIN</p>
     </div>
-    <div class="field">
-      <label>Project ID</label>
-      <input type="text" id="cfg-projectId" placeholder="mi-proyecto-xxxxx">
-    </div>
-    <div class="field">
-      <label>App ID</label>
-      <input type="text" id="cfg-appId" placeholder="1:123456:web:abc...">
-    </div>
-    <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:4px" onclick="initFirebase()">Conectar y entrar</button>
-    <div class="setup-note">
-      ¿Cómo obtener estos datos? Ve a <strong>console.firebase.google.com</strong> → crea proyecto → Firestore Database → Configuración del proyecto → Tu app web → verás el objeto firebaseConfig con estos campos.
-      <br><br>Activa Firestore en modo <strong>prueba</strong> (sin auth) para que todos puedan entrar sin login. Los datos se guardan en Firestore, gratis hasta 1 GB.
+    <div class="member-cards" id="memberCards"></div>
+    <div class="pin-section" id="pinSection">
+      <div class="pin-label" id="pinLabel">Introduce tu PIN</div>
+      <div class="pin-dots" id="pinDots">
+        <div class="pin-dot"></div><div class="pin-dot"></div>
+        <div class="pin-dot"></div><div class="pin-dot"></div>
+      </div>
+      <div class="pin-pad">
+        <div class="pin-key" onclick="pinKey('1')">1</div>
+        <div class="pin-key" onclick="pinKey('2')">2</div>
+        <div class="pin-key" onclick="pinKey('3')">3</div>
+        <div class="pin-key" onclick="pinKey('4')">4</div>
+        <div class="pin-key" onclick="pinKey('5')">5</div>
+        <div class="pin-key" onclick="pinKey('6')">6</div>
+        <div class="pin-key" onclick="pinKey('7')">7</div>
+        <div class="pin-key" onclick="pinKey('8')">8</div>
+        <div class="pin-key" onclick="pinKey('9')">9</div>
+        <div class="pin-key" onclick="pinClear()" style="font-size:12px;color:var(--text3)">Borrar</div>
+        <div class="pin-key" onclick="pinKey('0')">0</div>
+        <div class="pin-key" onclick="pinDel()" style="font-size:14px">⌫</div>
+      </div>
+      <div class="pin-error" id="pinError"></div>
     </div>
   </div>
 </div>
 
-<div class="shell">
-  <!-- SIDEBAR -->
+<!-- APP -->
+<div class="shell" id="appShell" style="display:none">
   <aside class="sidebar">
     <div class="sidebar-logo">
       <h1>Guardias nocturnas</h1>
-      <p id="syncBadge">Conectando...</p>
+      <p id="syncBadge">Conectando…</p>
     </div>
-
     <div class="sidebar-section">
-      <div class="sidebar-section-label">Principal</div>
-      <div class="nav-item active" onclick="nav('fichar')">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Fichar
+      <div class="ssl">Principal</div>
+      <div class="nav-item active" data-page="fichar" onclick="nav(this)">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Fichar
       </div>
-      <div class="nav-item" onclick="nav('calendario')">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Calendario
+      <div class="nav-item" data-page="calendario" onclick="nav(this)">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Calendario
       </div>
-      <div class="nav-item" onclick="nav('registros')">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Registros
+      <div class="nav-item" data-page="registros" onclick="nav(this)">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>Registros
       </div>
     </div>
-
     <div class="sidebar-section">
-      <div class="sidebar-section-label">Equipo</div>
-      <div class="nav-item" onclick="nav('equipo')">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Estadísticas
+      <div class="ssl">Equipo</div>
+      <div class="nav-item" data-page="fiestas" onclick="nav(this)">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Fiestas
       </div>
-      <div class="nav-item" onclick="nav('config')">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
-        Ajustes
+      <div class="nav-item" data-page="equipo" onclick="nav(this)">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Estadísticas
+      </div>
+      <div class="nav-item" data-page="config" onclick="nav(this)">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>Ajustes
       </div>
     </div>
-
     <div class="sidebar-bottom">
-      <div class="user-switcher">
-        <div class="avatar" id="sideAvatar" style="background:rgba(79,142,247,.15);color:#4f8ef7;font-size:10px">?</div>
-        <select id="userSelect" onchange="switchUser()">
-          <option value="">Elige tu nombre</option>
-        </select>
+      <div class="user-chip">
+        <div class="avatar" id="sideAvatar" style="width:26px;height:26px;font-size:10px"></div>
+        <span class="user-chip-name" id="sideUser">—</span>
+        <span class="user-chip-logout" onclick="logout()" title="Cerrar sesión">✕</span>
       </div>
     </div>
   </aside>
 
-  <!-- MAIN -->
   <main class="main">
 
-    <!-- ── FICHAR ── -->
+    <!-- FICHAR -->
     <div class="page active" id="page-fichar">
-      <div class="page-header">
-        <h2>Fichar</h2>
-        <p>Registra tu turno o añade horas manualmente</p>
-      </div>
-
+      <div class="page-header"><h2>Fichar</h2><p>Registra tu turno o añade horas manualmente</p></div>
       <div class="ficha-hero">
-        <div class="ficha-info">
+        <div>
           <div class="ficha-date" id="fichaDate">—</div>
           <div class="ficha-clock" id="fichaClock">--:--:--</div>
           <div class="ficha-status" id="fichaStatus">Sin turno activo</div>
         </div>
-        <div class="ficha-btn-wrap">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn btn-green" id="btnStart" onclick="startShift()">
-            <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><polygon points="3,2 14,8 3,14"/></svg>
-            Iniciar turno
+            <svg width="13" height="13" fill="currentColor" viewBox="0 0 16 16"><polygon points="3,2 14,8 3,14"/></svg>Iniciar turno
           </button>
           <button class="btn btn-outline" id="btnStop" onclick="stopShift()" style="display:none">
-            <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="1"/></svg>
-            Finalizar turno
+            <svg width="11" height="11" fill="currentColor" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="1"/></svg>Finalizar turno
           </button>
         </div>
       </div>
-
-      <div class="stats-grid" id="myStats">
+      <div class="stats-grid">
         <div class="stat"><div class="stat-label">Horas este mes</div><div class="stat-value" id="st-horas">—</div></div>
         <div class="stat"><div class="stat-label">Subidas reales</div><div class="stat-value" id="st-subidas">—</div></div>
-        <div class="stat"><div class="stat-label">Fiestas ganadas</div><div class="stat-value" id="st-ganadas">—</div><div class="stat-sub">a 1.75h/h</div></div>
+        <div class="stat"><div class="stat-label">Fiestas ganadas</div><div class="stat-value" id="st-ganadas">—</div><div class="stat-sub">a <span id="rateDisplay">1.75</span>h/h</div></div>
         <div class="stat"><div class="stat-label">Fiestas disponibles</div><div class="stat-value" id="st-disp">—</div><div class="stat-sub" id="st-cogidas"></div></div>
       </div>
-
       <div class="card">
-        <div class="card-head">
-          <h3>Entrada manual</h3>
-          <span class="sub">Si olvidaste fichar</span>
-        </div>
+        <div class="card-head"><h3>Entrada manual</h3><span class="sub">Si olvidaste fichar</span></div>
         <div class="card-body">
           <div class="form-grid">
-            <div class="field">
-              <label>Fecha</label>
-              <input type="date" id="mDate">
+            <div class="field"><label>Fecha</label><input type="date" id="mDate"></div>
+            <div class="field"><label>Inicio</label><input type="time" id="mStart" value="22:00"></div>
+            <div class="field"><label>Fin</label><input type="time" id="mEnd" value="06:00"></div>
+            <div class="field"><label>Tipo</label>
+              <select id="mTipo"><option value="guardia">Guardia (sin subida)</option><option value="subida">Subida real</option></select>
             </div>
-            <div class="field">
-              <label>Inicio</label>
-              <input type="time" id="mStart" value="22:00">
-            </div>
-            <div class="field">
-              <label>Fin</label>
-              <input type="time" id="mEnd" value="06:00">
-            </div>
-            <div class="field">
-              <label>Tipo</label>
-              <select id="mTipo">
-                <option value="guardia">Guardia (sin subida)</option>
-                <option value="subida">Subida real</option>
-              </select>
-            </div>
-            <div class="field full">
-              <label>Notas (opcional)</label>
-              <input type="text" id="mNotas" placeholder="Ej: subida alarma edificio A...">
-            </div>
+            <div class="field full"><label>Notas (opcional)</label><input type="text" id="mNotas" placeholder="Ej: alarma edificio A…"></div>
           </div>
           <button class="btn btn-blue" onclick="addManual()">Guardar registro</button>
         </div>
       </div>
     </div>
 
-    <!-- ── CALENDARIO ── -->
+    <!-- CALENDARIO -->
     <div class="page" id="page-calendario">
-      <div class="page-header">
-        <h2>Calendario</h2>
-        <p>Guardias asignadas, subidas reales y fiestas</p>
-      </div>
-
+      <div class="page-header"><h2>Calendario</h2><p>Guardias, subidas y fiestas del equipo</p></div>
       <div class="card">
         <div class="card-body">
           <div class="cal-legend">
             <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--blue)"></div>Guardia asignada</div>
             <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--green)"></div>Subida real</div>
-            <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--amber)"></div>Fiesta cogida</div>
+            <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--amber)"></div>Fiesta</div>
           </div>
           <div class="cal-nav">
             <h3 id="calTitle"></h3>
-            <div class="cal-nav-btns">
-              <button class="cal-nav-btn" onclick="calPrev()">&#8249;</button>
-              <button class="cal-nav-btn" onclick="calNext()">&#8250;</button>
+            <div style="display:flex;gap:6px">
+              <button class="cal-nav-btn" onclick="calPrev()">‹</button>
+              <button class="cal-nav-btn" onclick="calNext()">›</button>
             </div>
           </div>
           <div class="cal-grid" id="calGrid"></div>
         </div>
       </div>
-
       <div class="day-detail" id="dayDetail">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-          <h4 id="dayDetailTitle"></h4>
+          <h4 id="dayDetailTitle" style="font-size:15px;font-weight:600"></h4>
           <button class="btn btn-outline btn-sm" onclick="closeDayDetail()">Cerrar</button>
         </div>
         <div id="dayDetailBody"></div>
-        <div id="dayDetailActions" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap"></div>
+        <div id="dayDetailActions" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap"></div>
       </div>
     </div>
 
-    <!-- ── REGISTROS ── -->
+    <!-- REGISTROS -->
     <div class="page" id="page-registros">
-      <div class="page-header">
-        <h2>Registros</h2>
-        <p>Historial de todos los turnos</p>
-      </div>
-
+      <div class="page-header"><h2>Registros</h2><p>Historial de turnos — solo puedes borrar los tuyos</p></div>
       <div class="chip-row" id="filterChips"></div>
-
       <div class="card">
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Compañero</th>
-                <th>Inicio</th>
-                <th>Fin</th>
-                <th>Duración</th>
-                <th>Tipo</th>
-                <th>Notas</th>
-                <th></th>
-              </tr>
-            </thead>
+            <thead><tr><th>Fecha</th><th>Compañero</th><th>Inicio</th><th>Fin</th><th>Duración</th><th>Tipo</th><th>Notas</th><th></th></tr></thead>
             <tbody id="registrosBody"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ── EQUIPO ── -->
-    <div class="page" id="page-equipo">
-      <div class="page-header">
-        <h2>Estadísticas del equipo</h2>
-        <p>Resumen de horas, subidas y fiestas por compañero</p>
+    <!-- FIESTAS -->
+    <div class="page" id="page-fiestas">
+      <div class="page-header"><h2>Fiestas</h2><p>Gestión de días de fiesta ganados y disfrutados</p></div>
+      <div class="stats-grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+        <div class="stat"><div class="stat-label">Fiestas ganadas</div><div class="stat-value" id="f-ganadas">—</div><div class="stat-sub">acumulado total</div></div>
+        <div class="stat"><div class="stat-label">Fiestas cogidas</div><div class="stat-value" id="f-cogidas">—</div><div class="stat-sub">registradas</div></div>
+        <div class="stat"><div class="stat-label">Disponibles</div><div class="stat-value" id="f-disp" style="color:var(--green)">—</div></div>
       </div>
+      <div class="card">
+        <div class="card-head"><h3>Añadir fiesta cogida</h3><span class="sub">Registra los días que disfrutas</span></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field"><label>Fecha inicio</label><input type="date" id="fStart"></div>
+            <div class="field"><label>Fecha fin</label><input type="date" id="fEnd"></div>
+            <div class="field"><label>Horas totales</label><input type="number" id="fHoras" value="8" min="1" max="999"></div>
+            <div class="field full"><label>Descripción (opcional)</label><input type="text" id="fDesc" placeholder="Ej: puente de mayo…"></div>
+          </div>
+          <button class="btn btn-amber" onclick="addFiesta()">Registrar fiesta</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Mis fiestas</h3><span class="sub">Puedes eliminar si te equivocas</span></div>
+        <div class="card-body" id="fiestasList"><div class="empty">Sin fiestas registradas</div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Resumen del equipo</h3></div>
+        <div class="card-body" id="fiestasEquipo"></div>
+      </div>
+    </div>
 
+    <!-- EQUIPO -->
+    <div class="page" id="page-equipo">
+      <div class="page-header"><h2>Estadísticas</h2><p>Resumen del equipo</p></div>
       <div class="stats-grid">
-        <div class="stat"><div class="stat-label">Total horas equipo</div><div class="stat-value" id="eq-horas">—</div></div>
-        <div class="stat"><div class="stat-label">Total subidas</div><div class="stat-value" id="eq-subidas">—</div></div>
-        <div class="stat"><div class="stat-label">Fiestas ganadas</div><div class="stat-value" id="eq-fiestas">—</div></div>
+        <div class="stat"><div class="stat-label">Horas equipo</div><div class="stat-value" id="eq-horas">—</div></div>
+        <div class="stat"><div class="stat-label">Subidas totales</div><div class="stat-value" id="eq-subidas">—</div></div>
+        <div class="stat"><div class="stat-label">Fiestas generadas</div><div class="stat-value" id="eq-fiestas">—</div></div>
         <div class="stat"><div class="stat-label">Compañeros</div><div class="stat-value" id="eq-miembros">—</div></div>
       </div>
-
       <div class="card">
         <div class="card-head"><h3>Por compañero</h3></div>
         <div class="card-body" id="equipoBody"></div>
       </div>
     </div>
 
-    <!-- ── CONFIG ── -->
+    <!-- CONFIG -->
     <div class="page" id="page-config">
-      <div class="page-header">
-        <h2>Ajustes</h2>
-        <p>Compañeros, parámetros y fiestas cogidas</p>
-      </div>
-
+      <div class="page-header"><h2>Ajustes</h2><p>Parámetros y gestión del equipo</p></div>
       <div class="card">
-        <div class="card-head">
-          <h3>Compañeros del equipo</h3>
-        </div>
-        <div class="card-body">
-          <div id="membersList"></div>
-          <div class="separator"></div>
-          <div class="form-grid">
-            <div class="field">
-              <label>Nombre</label>
-              <input type="text" id="newName" placeholder="Ej: Mario">
-            </div>
-            <div class="field">
-              <label>Color</label>
-              <select id="newColor">
-                <option value="blue">Azul</option>
-                <option value="green">Verde</option>
-                <option value="amber">Ambar</option>
-                <option value="purple">Morado</option>
-                <option value="coral">Coral</option>
-              </select>
-            </div>
-          </div>
-          <button class="btn btn-blue" onclick="addMember()">Añadir compañero</button>
-        </div>
+        <div class="card-head"><h3>Compañeros y PINs</h3><span class="sub">Solo ves tu propio PIN</span></div>
+        <div class="card-body" id="configMembers"></div>
       </div>
-
       <div class="card">
-        <div class="card-head"><h3>Parámetros de remuneración</h3></div>
+        <div class="card-head"><h3>Remuneración</h3></div>
         <div class="card-body">
           <div class="form-grid">
-            <div class="field">
-              <label>Horas de fiesta por hora trabajada</label>
-              <input type="number" id="cfgRate" step="0.05" min="0" value="1.75">
-            </div>
+            <div class="field"><label>Horas de fiesta por hora trabajada</label><input type="number" id="cfgRate" step="0.05" min="0" value="1.75"></div>
           </div>
           <button class="btn btn-blue" onclick="saveRate()">Guardar</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><h3>Registrar fiesta cogida</h3></div>
-        <div class="card-body">
-          <div class="form-grid">
-            <div class="field">
-              <label>Compañero</label>
-              <select id="fUser"></select>
-            </div>
-            <div class="field">
-              <label>Fecha</label>
-              <input type="date" id="fDate">
-            </div>
-            <div class="field">
-              <label>Horas disfrutadas</label>
-              <input type="number" id="fHoras" value="8" min="1" max="24">
-            </div>
-          </div>
-          <button class="btn btn-blue" onclick="addFiesta()">Registrar fiesta</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><h3>Sobre esta app</h3></div>
-        <div class="card-body">
-          <p style="font-size:13px;color:var(--text2);line-height:1.8">
-            Datos compartidos en tiempo real via Firebase Firestore.<br>
-            Rate de remuneración: <strong id="rateDisplay" style="color:var(--text)">1.75</strong> horas de fiesta por cada hora trabajada.<br>
-            <br>
-            <button class="btn btn-outline btn-sm" onclick="resetFirebase()">Cambiar configuración Firebase</button>
-          </p>
         </div>
       </div>
     </div>
@@ -911,440 +421,389 @@ tbody tr:hover { background: var(--bg3); }
 
 <div class="toast" id="toast"></div>
 
-<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import {
-  getFirestore, collection, doc, onSnapshot,
-  addDoc, deleteDoc, setDoc, getDoc, updateDoc
-} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getFirestore, collection, doc, onSnapshot, addDoc, deleteDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-const DOWS = ['L','M','X','J','V','S','D'];
+/* ═══════════════════════════════════════════════════
+   🔧 CONFIGURACIÓN — edita estos valores
+   ═══════════════════════════════════════════════════ */
+const FIREBASE_CONFIG = {
+  apiKey:            "REEMPLAZA_API_KEY",
+  authDomain:        "REEMPLAZA_PROJECT_ID.firebaseapp.com",
+  projectId:         "REEMPLAZA_PROJECT_ID",
+  storageBucket:     "REEMPLAZA_PROJECT_ID.appspot.com",
+  messagingSenderId: "REEMPLAZA_SENDER_ID",
+  appId:             "REEMPLAZA_APP_ID"
+};
+
+/* 👥 Equipo — cambia nombres y PINs antes de subir */
+const TEAM = [
+  { id: 'u1', name: 'Laia', color: 'blue',  pin: '1234' },
+  { id: 'u2', name: 'David', color: 'green', pin: '5678' },
+  { id: 'u3', name: 'María', color: 'amber', pin: '9012' },
+];
+/* ═══════════════════════════════════════════════════ */
+
 const COLORS = {
-  blue:   { bg:'rgba(79,142,247,.15)', text:'#4f8ef7' },
-  green:  { bg:'rgba(62,207,142,.12)', text:'#3ecf8e' },
-  amber:  { bg:'rgba(245,166,35,.12)', text:'#f5a623' },
+  blue:   { bg:'rgba(79,142,247,.15)',  text:'#4f8ef7' },
+  green:  { bg:'rgba(62,207,142,.12)',  text:'#3ecf8e' },
+  amber:  { bg:'rgba(245,166,35,.12)',  text:'#f5a623' },
   purple: { bg:'rgba(167,139,250,.12)', text:'#a78bfa' },
   coral:  { bg:'rgba(248,113,113,.12)', text:'#f87171' },
 };
+const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const DOWS = ['L','M','X','J','V','S','D'];
 
-let db, app;
-let members = [], sessions = [], fiestas = [], guardias = [], config = { rate: 1.75 };
-let currentUser = localStorage.getItem('gnCurrentUser') || '';
-let shiftStart = sessionStorage.getItem('gnShiftStart') ? new Date(sessionStorage.getItem('gnShiftStart')) : null;
-let calY, calM;
-let selectedDay = null;
-let filterUser = '';
-let clockInterval;
-let unsubs = [];
+let db;
+let sessions=[], fiestas=[], guardias=[], config={rate:1.75};
+let currentUser=null, shiftStart=null, calY, calM, filterUser='', clockTick;
 
-function pad(n) { return String(n).padStart(2,'0'); }
-function fmtMs(ms) {
-  const h = Math.floor(ms/3600000), m = Math.floor((ms%3600000)/60000);
-  return h === 0 ? m+'min' : m === 0 ? h+'h' : h+'h '+m+'min';
-}
-function fmtHrsNum(ms) { return (ms/3600000).toFixed(1)+'h'; }
-function today() {
-  const d = new Date();
-  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-}
-function getMember(id) { return members.find(m => m.id === id); }
-function getColor(id) { const m = getMember(id); return m ? (COLORS[m.color] || COLORS.blue) : COLORS.blue; }
-function initials(name) { return (name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+const pad = n => String(n).padStart(2,'0');
+const fmtMs = ms => { const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000); return h===0?m+'min':m===0?h+'h':h+'h '+m+'min'; };
+const fmtH = ms => (ms/3600000).toFixed(1)+'h';
+const todayKey = () => { const d=new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; };
+const getMember = id => TEAM.find(m=>m.id===id);
+const getColor = id => { const m=getMember(id); return m?(COLORS[m.color]||COLORS.blue):COLORS.blue; };
+const initials = name => (name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+function toast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
+
+/* ── LOGIN ── */
+let selectedMember=null, pinBuffer='';
+
+function buildLoginCards() {
+  document.getElementById('memberCards').innerHTML = TEAM.map(m => {
+    const c = COLORS[m.color]||COLORS.blue;
+    return `<div class="member-card" id="mc-${m.id}" onclick="selectMember('${m.id}')">
+      <div class="avatar" style="width:38px;height:38px;font-size:13px;background:${c.bg};color:${c.text}">${initials(m.name)}</div>
+      <div class="mc-name">${m.name}</div>
+    </div>`;
+  }).join('');
 }
 
-// ── FIREBASE INIT ──
-window.initFirebase = async function() {
-  const apiKey = document.getElementById('cfg-apiKey').value.trim();
-  const projectId = document.getElementById('cfg-projectId').value.trim();
-  const appId = document.getElementById('cfg-appId').value.trim();
-  if (!apiKey || !projectId || !appId) { alert('Rellena todos los campos'); return; }
-  const cfg = { apiKey, projectId, appId, authDomain: `${projectId}.firebaseapp.com`, storageBucket: `${projectId}.appspot.com`, messagingSenderId: '000000000000' };
-  localStorage.setItem('gnFirebase', JSON.stringify(cfg));
-  startApp(cfg);
+window.selectMember = id => {
+  selectedMember=id;
+  document.querySelectorAll('.member-card').forEach(el=>el.classList.remove('selected'));
+  document.getElementById('mc-'+id).classList.add('selected');
+  document.getElementById('pinSection').style.display='block';
+  document.getElementById('pinLabel').textContent=`PIN para ${getMember(id).name}`;
+  pinBuffer=''; renderDots(); document.getElementById('pinError').textContent='';
+};
+window.pinKey = k => {
+  if(pinBuffer.length>=4) return;
+  pinBuffer+=k; renderDots();
+  if(pinBuffer.length===4) setTimeout(checkPin,120);
+};
+window.pinDel = () => { pinBuffer=pinBuffer.slice(0,-1); renderDots(); };
+window.pinClear = () => { pinBuffer=''; renderDots(); };
+function renderDots() { document.querySelectorAll('.pin-dot').forEach((d,i)=>d.classList.toggle('filled',i<pinBuffer.length)); }
+function checkPin() {
+  const m=getMember(selectedMember);
+  if(pinBuffer===m.pin) { loginSuccess(m.id); }
+  else { document.getElementById('pinError').textContent='PIN incorrecto'; pinBuffer=''; renderDots(); }
+}
+function loginSuccess(id) {
+  currentUser=id; sessionStorage.setItem('gnUser',id);
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('appShell').style.display='flex';
+  bootApp();
+}
+window.logout = () => {
+  currentUser=null; shiftStart=null;
+  sessionStorage.removeItem('gnUser'); sessionStorage.removeItem('gnShift');
+  if(clockTick) clearInterval(clockTick);
+  document.getElementById('appShell').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  pinBuffer=''; selectedMember=null;
+  document.querySelectorAll('.member-card').forEach(el=>el.classList.remove('selected'));
+  document.getElementById('pinSection').style.display='none';
+  document.querySelectorAll('.nav-item').forEach((el,i)=>el.classList.toggle('active',i===0));
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===0));
 };
 
-window.resetFirebase = function() {
-  localStorage.removeItem('gnFirebase');
-  location.reload();
-};
-
-function startApp(firebaseCfg) {
-  document.getElementById('setupScreen').style.display = 'none';
-  try { app = initializeApp(firebaseCfg); } catch(e) { app = initializeApp(firebaseCfg, 'gn'); }
-  db = getFirestore(app);
-  document.getElementById('syncBadge').textContent = 'Conectado · en tiempo real';
-
-  const now = new Date();
-  calY = now.getFullYear(); calM = now.getMonth();
-
-  // set today date on manual form
-  document.getElementById('mDate').value = today();
-  const d = now;
-  const days = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
-  document.getElementById('fichaDate').textContent = `${days[d.getDay()]} ${d.getDate()} de ${MONTHS[d.getMonth()]} · ${d.getFullYear()}`;
-
-  startClock();
-  subscribe();
-  if (shiftStart) { document.getElementById('btnStart').style.display='none'; document.getElementById('btnStop').style.display=''; updateRunningStatus(); }
+/* ── BOOT ── */
+function bootApp() {
+  const m=getMember(currentUser), c=getColor(currentUser);
+  document.getElementById('sideUser').textContent=m.name;
+  const av=document.getElementById('sideAvatar');
+  av.style.background=c.bg; av.style.color=c.text; av.textContent=initials(m.name);
+  const now=new Date();
+  calY=now.getFullYear(); calM=now.getMonth();
+  document.getElementById('mDate').value=todayKey();
+  const days=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  document.getElementById('fichaDate').textContent=`${days[now.getDay()]} ${now.getDate()} de ${MONTHS[now.getMonth()].toLowerCase()} · ${now.getFullYear()}`;
+  const saved=sessionStorage.getItem('gnShift');
+  if(saved){shiftStart=new Date(saved);document.getElementById('btnStart').style.display='none';document.getElementById('btnStop').style.display='';}
+  try{db=getFirestore(initializeApp(FIREBASE_CONFIG));}catch(e){db=getFirestore(initializeApp(FIREBASE_CONFIG,'gn'));}
+  document.getElementById('syncBadge').textContent='Conectado · tiempo real';
+  onSnapshot(collection(db,'sessions'),s=>{sessions=s.docs.map(d=>({id:d.id,...d.data()}));renderAll();});
+  onSnapshot(collection(db,'fiestas'),s=>{fiestas=s.docs.map(d=>({id:d.id,...d.data()}));renderAll();});
+  onSnapshot(collection(db,'guardias'),s=>{guardias=s.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById('page-calendario').classList.contains('active'))buildCal();});
+  onSnapshot(doc(db,'config','main'),s=>{if(s.exists()){config=s.data();document.getElementById('cfgRate').value=config.rate||1.75;document.getElementById('rateDisplay').textContent=config.rate||1.75;}renderMyStats();});
+  startClock(); renderConfig();
 }
 
-function subscribe() {
-  unsubs.forEach(u => u());
-  unsubs = [
-    onSnapshot(collection(db,'members'), snap => { members = snap.docs.map(d=>({id:d.id,...d.data()})); renderAll(); }),
-    onSnapshot(collection(db,'sessions'), snap => { sessions = snap.docs.map(d=>({id:d.id,...d.data()})); renderAll(); }),
-    onSnapshot(collection(db,'fiestas'), snap => { fiestas = snap.docs.map(d=>({id:d.id,...d.data()})); renderAll(); }),
-    onSnapshot(collection(db,'guardias'), snap => { guardias = snap.docs.map(d=>({id:d.id,...d.data()})); if(document.getElementById('page-calendario').classList.contains('active')) buildCal(); }),
-    onSnapshot(doc(db,'config','main'), snap => { if(snap.exists()) config = snap.data(); document.getElementById('cfgRate').value = config.rate||1.75; document.getElementById('rateDisplay').textContent = config.rate||1.75; renderMyStats(); }),
-  ];
-}
-
-function renderAll() {
-  updateUserSelect();
+function renderAll(){
   renderMyStats();
-  if (document.getElementById('page-calendario').classList.contains('active')) buildCal();
-  if (document.getElementById('page-registros').classList.contains('active')) renderRegistros();
-  if (document.getElementById('page-equipo').classList.contains('active')) renderEquipo();
-  if (document.getElementById('page-config').classList.contains('active')) renderConfig();
+  if(document.getElementById('page-calendario').classList.contains('active'))buildCal();
+  if(document.getElementById('page-registros').classList.contains('active'))renderRegistros();
+  if(document.getElementById('page-fiestas').classList.contains('active'))renderFiestas();
+  if(document.getElementById('page-equipo').classList.contains('active'))renderEquipo();
 }
 
-// ── NAV ──
-window.nav = function(page) {
-  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+/* ── NAV ── */
+window.nav = el => {
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  const page=el.dataset.page;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
-  if (page === 'calendario') buildCal();
-  if (page === 'registros') renderRegistros();
-  if (page === 'equipo') renderEquipo();
-  if (page === 'config') renderConfig();
+  if(page==='calendario')buildCal();
+  if(page==='registros')renderRegistros();
+  if(page==='fiestas')renderFiestas();
+  if(page==='equipo')renderEquipo();
+  if(page==='config')renderConfig();
 };
 
-// ── USER ──
-window.switchUser = function() {
-  currentUser = document.getElementById('userSelect').value;
-  localStorage.setItem('gnCurrentUser', currentUser);
-  updateAvatar();
-  renderMyStats();
-};
-
-function updateAvatar() {
-  const av = document.getElementById('sideAvatar');
-  if (currentUser) {
-    const m = getMember(currentUser);
-    if (m) {
-      const c = getColor(currentUser);
-      av.style.background = c.bg; av.style.color = c.text;
-      av.textContent = initials(m.name); return;
-    }
-  }
-  av.style.background='rgba(79,142,247,.15)'; av.style.color='#4f8ef7'; av.textContent='?';
-}
-
-function updateUserSelect() {
-  const sel = document.getElementById('userSelect');
-  const prev = sel.value;
-  sel.innerHTML = '<option value="">Elige tu nombre</option>' + members.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
-  sel.value = prev || currentUser;
-  const fu = document.getElementById('fUser');
-  if(fu) fu.innerHTML = members.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
-  updateAvatar();
-}
-
-// ── CLOCK ──
+/* ── CLOCK ── */
 function startClock() {
-  if (clockInterval) clearInterval(clockInterval);
-  clockInterval = setInterval(() => {
-    const now = new Date();
-    document.getElementById('fichaClock').textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-    if (shiftStart) updateRunningStatus();
-  }, 1000);
-}
-function updateRunningStatus() {
-  if (!shiftStart) return;
-  const el = Math.floor((new Date()-shiftStart)/1000);
-  const h=Math.floor(el/3600), m=Math.floor((el%3600)/60), s=el%60;
-  document.getElementById('fichaStatus').innerHTML = `<span class="pulse"></span> Turno en curso · ${pad(h)}:${pad(m)}:${pad(s)}`;
+  if(clockTick) clearInterval(clockTick);
+  clockTick=setInterval(()=>{
+    const n=new Date();
+    document.getElementById('fichaClock').textContent=`${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;
+    if(shiftStart){const e=Math.floor((n-shiftStart)/1000),h=Math.floor(e/3600),m=Math.floor((e%3600)/60),s=e%60;document.getElementById('fichaStatus').innerHTML=`<span class="pulse"></span> Turno en curso · ${pad(h)}:${pad(m)}:${pad(s)}`;}
+  },1000);
 }
 
-// ── SHIFT ──
-window.startShift = function() {
-  if (!currentUser) { toast('Elige tu nombre primero'); return; }
-  shiftStart = new Date();
-  sessionStorage.setItem('gnShiftStart', shiftStart.toISOString());
-  document.getElementById('btnStart').style.display = 'none';
-  document.getElementById('btnStop').style.display = '';
+/* ── SHIFT ── */
+window.startShift=()=>{shiftStart=new Date();sessionStorage.setItem('gnShift',shiftStart.toISOString());document.getElementById('btnStart').style.display='none';document.getElementById('btnStop').style.display='';};
+window.stopShift=async()=>{
+  if(!shiftStart)return;
+  const end=new Date(),d=shiftStart,dateKey=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+  await addDoc(collection(db,'sessions'),{userId:currentUser,date:dateKey,start:shiftStart.toISOString(),end:end.toISOString(),dur:end-shiftStart,tipo:'subida',notas:''});
+  shiftStart=null;sessionStorage.removeItem('gnShift');
+  document.getElementById('btnStart').style.display='';document.getElementById('btnStop').style.display='none';
+  document.getElementById('fichaStatus').textContent='Sin turno activo';toast('Turno guardado');
+};
+window.addManual=async()=>{
+  const d=document.getElementById('mDate').value,s=document.getElementById('mStart').value,e=document.getElementById('mEnd').value;
+  if(!d||!s||!e){toast('Rellena todos los campos');return;}
+  const [sh,sm]=s.split(':').map(Number),[eh,em]=e.split(':').map(Number),[y,mo,dd]=d.split('-').map(Number);
+  const st=new Date(y,mo-1,dd,sh,sm);let en=new Date(y,mo-1,dd,eh,em);
+  if(en<=st)en.setDate(en.getDate()+1);
+  await addDoc(collection(db,'sessions'),{userId:currentUser,date:d,start:st.toISOString(),end:en.toISOString(),dur:en-st,tipo:document.getElementById('mTipo').value,notas:document.getElementById('mNotas').value});
+  document.getElementById('mNotas').value='';toast('Registro añadido');
 };
 
-window.stopShift = async function() {
-  if (!shiftStart || !currentUser) return;
-  const end = new Date();
-  const dateKey = `${shiftStart.getFullYear()}-${pad(shiftStart.getMonth()+1)}-${pad(shiftStart.getDate())}`;
-  await addDoc(collection(db,'sessions'), { userId:currentUser, date:dateKey, start:shiftStart.toISOString(), end:end.toISOString(), dur:end-shiftStart, tipo:'subida', notas:'' });
-  shiftStart = null;
-  sessionStorage.removeItem('gnShiftStart');
-  document.getElementById('btnStart').style.display = '';
-  document.getElementById('btnStop').style.display = 'none';
-  document.getElementById('fichaStatus').textContent = 'Sin turno activo';
-  toast('Turno guardado');
-};
-
-window.addManual = async function() {
-  if (!currentUser) { toast('Elige tu nombre primero'); return; }
-  const d=document.getElementById('mDate').value, s=document.getElementById('mStart').value, e=document.getElementById('mEnd').value;
-  if (!d||!s||!e) { toast('Rellena todos los campos'); return; }
-  const [sh,sm]=s.split(':').map(Number), [eh,em]=e.split(':').map(Number);
-  const [y,mo,dd]=d.split('-').map(Number);
-  const st=new Date(y,mo-1,dd,sh,sm); let en=new Date(y,mo-1,dd,eh,em);
-  if(en<=st) en.setDate(en.getDate()+1);
-  await addDoc(collection(db,'sessions'), { userId:currentUser, date:d, start:st.toISOString(), end:en.toISOString(), dur:en-st, tipo:document.getElementById('mTipo').value, notas:document.getElementById('mNotas').value });
-  document.getElementById('mNotas').value='';
-  toast('Registro añadido');
-};
-
-// ── MY STATS ──
-function renderMyStats() {
-  if (!currentUser) { ['st-horas','st-subidas','st-ganadas','st-disp'].forEach(id=>{ const el=document.getElementById(id); if(el)el.textContent='—'; }); return; }
-  const now=new Date(), mes=`${now.getFullYear()}-${pad(now.getMonth()+1)}`;
+/* ── MY STATS ── */
+function renderMyStats(){
+  if(!currentUser)return;
+  const now=new Date(),mes=`${now.getFullYear()}-${pad(now.getMonth()+1)}`;
   const mine=sessions.filter(s=>s.userId===currentUser&&s.date.startsWith(mes));
   const totalMs=mine.reduce((a,s)=>a+s.dur,0);
   const subidas=mine.filter(s=>s.tipo==='subida').length;
   const rate=config.rate||1.75;
   const ganadas=(totalMs/3600000)*rate;
-  const cogidas=fiestas.filter(f=>f.userId===currentUser).reduce((a,f)=>a+f.horas,0);
-  const disp=Math.max(0,ganadas-cogidas);
-  document.getElementById('st-horas').textContent=fmtHrsNum(totalMs);
+  const cogidas=fiestas.filter(f=>f.userId===currentUser).reduce((a,f)=>a+(f.horas||0),0);
+  document.getElementById('st-horas').textContent=fmtH(totalMs);
   document.getElementById('st-subidas').textContent=subidas;
   document.getElementById('st-ganadas').textContent=ganadas.toFixed(1)+'h';
-  document.getElementById('st-disp').textContent=disp.toFixed(1)+'h';
-  document.getElementById('st-cogidas').textContent=`cogidas: ${cogidas}h`;
+  document.getElementById('st-disp').textContent=Math.max(0,ganadas-cogidas).toFixed(1)+'h';
+  document.getElementById('st-cogidas').textContent=`cogidas: ${cogidas.toFixed(1)}h`;
 }
 
-// ── CALENDAR ──
-function buildCal() {
-  const MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  document.getElementById('calTitle').textContent=`${MONTHS_ES[calM]} ${calY}`;
+/* ── CALENDAR ── */
+function buildCal(){
+  document.getElementById('calTitle').textContent=`${MONTHS[calM]} ${calY}`;
   const grid=document.getElementById('calGrid');
   grid.innerHTML=DOWS.map(d=>`<div class="cal-dow">${d}</div>`).join('');
-  const first=new Date(calY,calM,1), last=new Date(calY,calM+1,0);
-  const startDow=(first.getDay()+6)%7;
-  const cells=Math.ceil((startDow+last.getDate())/7)*7;
-  const byDate={};
-  sessions.forEach(s=>{if(!byDate[s.date])byDate[s.date]=[];byDate[s.date].push({...s,_type:'session'});});
-  fiestas.forEach(f=>{const k='f:'+f.date;if(!byDate[k])byDate[k]=[];byDate[k].push({...f,_type:'fiesta'});});
-  guardias.forEach(g=>{const k='g:'+g.date;if(!byDate[k])byDate[k]=[];byDate[k].push({...g,_type:'guardia'});});
+  const first=new Date(calY,calM,1),last=new Date(calY,calM+1,0);
+  const startDow=(first.getDay()+6)%7,cells=Math.ceil((startDow+last.getDate())/7)*7;
   const now=new Date();
   for(let i=0;i<cells;i++){
-    const dn=i-startDow+1;
-    const dt=new Date(calY,calM,dn);
+    const dn=i-startDow+1,dt=new Date(calY,calM,dn);
     const key=`${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}`;
-    const isOther=dn<1||dn>last.getDate();
-    const isToday=!isOther&&dt.toDateString()===now.toDateString();
+    const isOther=dn<1||dn>last.getDate(),isToday=!isOther&&dt.toDateString()===now.toDateString();
     const div=document.createElement('div');
     div.className='cal-day'+(isOther?' other-month':'')+(isToday?' today':'');
     div.innerHTML=`<div class="dn">${dt.getDate()}</div>`;
     if(!isOther){
-      (byDate['g:'+key]||[]).forEach(g=>{const m=getMember(g.userId);if(m){const pip=document.createElement('div');pip.className='cal-pip pip-guardia';pip.textContent=m.name.split(' ')[0];div.appendChild(pip);}});
-      (byDate[key]||[]).forEach(s=>{const m=getMember(s.userId);if(m){const pip=document.createElement('div');pip.className='cal-pip pip-subida';pip.textContent=m.name.split(' ')[0]+' '+fmtMs(s.dur);div.appendChild(pip);}});
-      (byDate['f:'+key]||[]).forEach(f=>{const m=getMember(f.userId);if(m){const pip=document.createElement('div');pip.className='cal-pip pip-fiesta';pip.textContent=m.name.split(' ')[0]+' '+f.horas+'h';div.appendChild(pip);}});
+      guardias.filter(g=>g.date===key).forEach(g=>{const m=getMember(g.userId);if(m){const pip=document.createElement('div');pip.className='cal-pip pip-guardia';pip.textContent=m.name.split(' ')[0];div.appendChild(pip);}});
+      sessions.filter(s=>s.date===key).forEach(s=>{const m=getMember(s.userId);if(m){const pip=document.createElement('div');pip.className='cal-pip pip-subida';pip.textContent=m.name.split(' ')[0]+' '+fmtMs(s.dur);div.appendChild(pip);}});
+      fiestas.filter(f=>f.startDate===key||f.date===key).forEach(f=>{const m=getMember(f.userId);if(m){const pip=document.createElement('div');pip.className='cal-pip pip-fiesta';pip.textContent=m.name.split(' ')[0];div.appendChild(pip);}});
       div.onclick=()=>openDay(key,dt);
     }
     grid.appendChild(div);
   }
 }
+window.calPrev=()=>{calM--;if(calM<0){calM=11;calY--;}buildCal();};
+window.calNext=()=>{calM++;if(calM>11){calM=0;calY++;}buildCal();};
 
-window.calPrev=function(){calM--;if(calM<0){calM=11;calY--;}buildCal();};
-window.calNext=function(){calM++;if(calM>11){calM=0;calY++;}buildCal();};
-
-function openDay(key,dt) {
-  selectedDay=key;
-  const MONTHS_ES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  document.getElementById('dayDetailTitle').textContent=`${dt.getDate()} de ${MONTHS_ES[dt.getMonth()]} ${dt.getFullYear()}`;
-  const detail=document.getElementById('dayDetail');
-  detail.style.display='block';
-  detail.scrollIntoView({behavior:'smooth',block:'nearest'});
-  renderDayDetail(key,dt);
-}
-window.closeDayDetail=function(){document.getElementById('dayDetail').style.display='none';selectedDay=null;};
-
-function renderDayDetail(key,dt) {
-  const body=document.getElementById('dayDetailBody');
-  const actions=document.getElementById('dayDetailActions');
-  const sess=sessions.filter(s=>s.date===key);
-  const gds=guardias.filter(g=>g.date===key);
-  const fts=fiestas.filter(f=>f.date===key);
+function openDay(key,dt){
+  document.getElementById('dayDetailTitle').textContent=`${dt.getDate()} de ${MONTHS[dt.getMonth()]} ${dt.getFullYear()}`;
+  document.getElementById('dayDetail').style.display='block';
+  document.getElementById('dayDetail').scrollIntoView({behavior:'smooth',block:'nearest'});
+  const sess=sessions.filter(s=>s.date===key),gds=guardias.filter(g=>g.date===key),fts=fiestas.filter(f=>f.startDate===key||f.date===key);
   let html='';
-
-  if(gds.length){
-    html+='<div class="day-section"><div class="day-section-title">Guardias asignadas</div>';
-    gds.forEach(g=>{const m=getMember(g.userId);if(m){const c=getColor(g.userId);html+=`<div class="day-row"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${c.bg};color:${c.text}">${initials(m.name)}</div><span style="font-size:13px">${m.name}</span></div>`;}});
-    html+='</div>';
-  }
-  if(sess.length){
-    html+='<div class="day-section"><div class="day-section-title">Turnos registrados</div>';
-    sess.forEach(s=>{const m=getMember(s.userId);if(m){const c=getColor(s.userId);const b=s.tipo==='subida'?'badge-green':'badge-gray';html+=`<div class="day-row"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${c.bg};color:${c.text}">${initials(m.name)}</div><span style="font-size:13px;flex:1">${m.name}</span><span class="badge ${b}">${s.tipo}</span><span style="font-size:12px;color:var(--text3);margin-left:6px">${fmtMs(s.dur)}</span></div>`;}});
-    html+='</div>';
-  }
-  if(fts.length){
-    html+='<div class="day-section"><div class="day-section-title">Fiestas disfrutadas</div>';
-    fts.forEach(f=>{const m=getMember(f.userId);if(m)html+=`<div class="day-row"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:var(--amber-bg);color:var(--amber)">${initials(m.name)}</div><span style="font-size:13px;flex:1">${m.name}</span><span class="badge badge-amber">${f.horas}h fiesta</span></div>`;});
-    html+='</div>';
-  }
-  if(!html) html='<div class="empty" style="padding:16px 0">Sin actividad este día</div>';
-  body.innerHTML=html;
-
-  let actHtml='';
-  if(currentUser){
-    const myGuardia=gds.find(g=>g.userId===currentUser);
-    if(!myGuardia) actHtml+=`<button class="btn btn-blue btn-sm" onclick="assignGuardia('${key}')">Asignarme guardia</button>`;
-    else actHtml+=`<button class="btn btn-outline btn-sm" onclick="removeGuardia('${key}','${myGuardia.id}')">Quitar mi guardia</button>`;
-  }
-  actions.innerHTML=actHtml;
+  if(gds.length){html+='<div class="day-section"><div class="day-section-title">Guardias</div>';gds.forEach(g=>{const m=getMember(g.userId);if(m){const c=getColor(g.userId);html+=`<div class="day-row"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${c.bg};color:${c.text}">${initials(m.name)}</div><span style="font-size:13px">${m.name}</span></div>`;}});html+='</div>';}
+  if(sess.length){html+='<div class="day-section"><div class="day-section-title">Turnos</div>';sess.forEach(s=>{const m=getMember(s.userId);if(m){const c=getColor(s.userId);html+=`<div class="day-row"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${c.bg};color:${c.text}">${initials(m.name)}</div><span style="font-size:13px;flex:1">${m.name}</span><span class="badge ${s.tipo==='subida'?'badge-green':'badge-gray'}">${s.tipo}</span><span style="font-size:12px;color:var(--text3);margin-left:6px">${fmtMs(s.dur)}</span></div>`;}});html+='</div>';}
+  if(fts.length){html+='<div class="day-section"><div class="day-section-title">Fiestas</div>';fts.forEach(f=>{const m=getMember(f.userId);if(m)html+=`<div class="day-row"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:var(--amber-bg);color:var(--amber)">${initials(m.name)}</div><span style="font-size:13px;flex:1">${m.name}</span><span class="badge badge-amber">${f.horas}h</span></div>`;});html+='</div>';}
+  if(!html) html='<div class="empty" style="padding:12px 0">Sin actividad</div>';
+  document.getElementById('dayDetailBody').innerHTML=html;
+  const myG=gds.find(g=>g.userId===currentUser);
+  document.getElementById('dayDetailActions').innerHTML=myG
+    ?`<button class="btn btn-outline btn-sm" onclick="removeGuardia('${myG.id}')">Quitar mi guardia</button>`
+    :`<button class="btn btn-blue btn-sm" onclick="assignGuardia('${key}')">Asignarme guardia</button>`;
 }
+window.closeDayDetail=()=>document.getElementById('dayDetail').style.display='none';
+window.assignGuardia=async key=>{if(guardias.some(g=>g.date===key&&g.userId===currentUser)){toast('Ya tienes guardia');return;}await addDoc(collection(db,'guardias'),{userId:currentUser,date:key});toast('Guardia asignada');};
+window.removeGuardia=async id=>{await deleteDoc(doc(db,'guardias',id));toast('Guardia eliminada');};
 
-window.assignGuardia=async function(date){
-  if(!currentUser){toast('Elige tu nombre primero');return;}
-  if(guardias.some(g=>g.date===date&&g.userId===currentUser)){toast('Ya tienes guardia este día');return;}
-  await addDoc(collection(db,'guardias'),{userId:currentUser,date});
-  toast('Guardia asignada');
-};
-window.removeGuardia=async function(date,id){
-  await deleteDoc(doc(db,'guardias',id));
-  toast('Guardia eliminada');
-};
-
-// ── REGISTROS ──
-function renderRegistros() {
+/* ── REGISTROS ── */
+function renderRegistros(){
   const chips=document.getElementById('filterChips');
-  chips.innerHTML='<div class="chip'+(filterUser===''?' active':'')+'" onclick="setFilter(\'\')">Todos</div>'+members.map(m=>`<div class="chip${filterUser===m.id?' active':''}" onclick="setFilter('${m.id}')">${m.name}</div>`).join('');
+  chips.innerHTML='<div class="chip'+(filterUser===''?' active':'')+'" onclick="setFilter(\'\')">Todos</div>'+TEAM.map(m=>`<div class="chip${filterUser===m.id?' active':''}" onclick="setFilter('${m.id}')">${m.name}</div>`).join('');
   const rows=sessions.filter(s=>!filterUser||s.userId===filterUser).sort((a,b)=>new Date(b.start)-new Date(a.start));
   const body=document.getElementById('registrosBody');
-  if(!rows.length){body.innerHTML=`<tr><td colspan="8"><div class="empty">Sin registros todavía</div></td></tr>`;return;}
+  if(!rows.length){body.innerHTML=`<tr><td colspan="8"><div class="empty">Sin registros</div></td></tr>`;return;}
   body.innerHTML=rows.map(s=>{
     const m=getMember(s.userId),c=getColor(s.userId);
-    const name=m?m.name:'—';
-    const badge=s.tipo==='subida'?'badge-green':'badge-gray';
     const st=new Date(s.start).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
     const en=s.end==='manual'?'—':new Date(s.end).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
-    const dateDisp=s.date.split('-').reverse().join('/');
+    const canDel=s.userId===currentUser;
     return `<tr>
-      <td style="font-variant-numeric:tabular-nums">${dateDisp}</td>
-      <td><div style="display:flex;align-items:center;gap:7px"><div class="avatar" style="width:22px;height:22px;font-size:9px;background:${c.bg};color:${c.text}">${m?initials(m.name):'?'}</div>${name}</div></td>
-      <td style="font-variant-numeric:tabular-nums">${st}</td>
-      <td style="font-variant-numeric:tabular-nums">${en}</td>
+      <td style="font-variant-numeric:tabular-nums">${s.date.split('-').reverse().join('/')}</td>
+      <td><div style="display:flex;align-items:center;gap:7px"><div class="avatar" style="width:22px;height:22px;font-size:9px;background:${c.bg};color:${c.text}">${m?initials(m.name):'?'}</div>${m?m.name:'—'}</div></td>
+      <td>${st}</td><td>${en}</td>
       <td><span class="badge badge-blue">${fmtMs(s.dur)}</span></td>
-      <td><span class="badge ${badge}">${s.tipo}</span></td>
-      <td style="color:var(--text3);font-size:12px;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${s.notas||''}</td>
-      <td><button class="btn btn-red btn-sm" onclick="deleteSess('${s.id}')">✕</button></td>
+      <td><span class="badge ${s.tipo==='subida'?'badge-green':'badge-gray'}">${s.tipo}</span></td>
+      <td style="color:var(--text3);font-size:12px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.notas||''}</td>
+      <td>${canDel?`<button class="btn btn-red btn-xs" onclick="deleteSess('${s.id}')">✕</button>`:''}</td>
     </tr>`;
   }).join('');
 }
-window.setFilter=function(uid){filterUser=uid;renderRegistros();};
-window.deleteSess=async function(id){
-  if(!confirm('¿Eliminar este registro?'))return;
-  await deleteDoc(doc(db,'sessions',id));
-  toast('Registro eliminado');
-};
+window.setFilter=uid=>{filterUser=uid;renderRegistros();};
+window.deleteSess=async id=>{if(!confirm('¿Eliminar?'))return;await deleteDoc(doc(db,'sessions',id));toast('Eliminado');};
 
-// ── EQUIPO ──
-function renderEquipo() {
+/* ── FIESTAS ── */
+function renderFiestas(){
+  const rate=config.rate||1.75;
+  const allMine=sessions.filter(s=>s.userId===currentUser);
+  const totalMs=allMine.reduce((a,s)=>a+s.dur,0);
+  const ganadas=(totalMs/3600000)*rate;
+  const myF=fiestas.filter(f=>f.userId===currentUser).sort((a,b)=>new Date(b.startDate||b.date)-new Date(a.startDate||a.date));
+  const cogidas=myF.reduce((a,f)=>a+(f.horas||0),0);
+  document.getElementById('f-ganadas').textContent=ganadas.toFixed(1)+'h';
+  document.getElementById('f-cogidas').textContent=cogidas.toFixed(1)+'h';
+  document.getElementById('f-disp').textContent=Math.max(0,ganadas-cogidas).toFixed(1)+'h';
+
+  const list=document.getElementById('fiestasList');
+  if(!myF.length){list.innerHTML='<div class="empty">Aún no has registrado ninguna fiesta</div>';}
+  else list.innerHTML=myF.map(f=>`
+    <div class="fiesta-item">
+      <div style="width:36px;height:36px;border-radius:8px;background:var(--amber-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="16" height="16" fill="none" stroke="var(--amber)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <div class="fiesta-item-info">
+        <div class="fiesta-item-date">${formatFiestaRange(f)}</div>
+        <div class="fiesta-item-meta">${f.horas}h · ${f.desc||'sin descripción'}</div>
+      </div>
+      <span class="badge badge-amber">${f.horas}h</span>
+      <button class="btn btn-red btn-xs" onclick="deleteFiesta('${f.id}')" title="Eliminar esta fiesta">✕</button>
+    </div>
+  `).join('');
+
+  document.getElementById('fiestasEquipo').innerHTML=TEAM.map(m=>{
+    const c=getColor(m.id);
+    const mf=fiestas.filter(f=>f.userId===m.id);
+    const cog=mf.reduce((a,f)=>a+(f.horas||0),0);
+    const ms=sessions.filter(s=>s.userId===m.id).reduce((a,s)=>a+s.dur,0);
+    const gan=((ms/3600000)*(config.rate||1.75));
+    return `<div class="member-item">
+      <div class="avatar" style="width:36px;height:36px;font-size:13px;background:${c.bg};color:${c.text}">${initials(m.name)}</div>
+      <div class="member-info"><div class="member-name">${m.name}</div><div class="member-meta">${mf.length} periodos · ${cog.toFixed(1)}h cogidas</div></div>
+      <div class="member-right">
+        <div class="member-hrs">${gan.toFixed(1)}h</div>
+        <div class="member-fiesta-stat">ganadas</div>
+        <div class="member-fiesta-stat" style="color:var(--green)">${Math.max(0,gan-cog).toFixed(1)}h libres</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function formatFiestaRange(f){
+  const s=(f.startDate||f.date||''), e=f.endDate||'';
+  const fmt=d=>d?d.split('-').reverse().join('/'):'';
+  if(e&&e!==s) return `${fmt(s)} → ${fmt(e)}`;
+  return fmt(s);
+}
+
+window.addFiesta=async()=>{
+  const start=document.getElementById('fStart').value,end=document.getElementById('fEnd').value||start;
+  const horas=parseInt(document.getElementById('fHoras').value)||8,desc=document.getElementById('fDesc').value;
+  if(!start){toast('Elige una fecha');return;}
+  await addDoc(collection(db,'fiestas'),{userId:currentUser,startDate:start,endDate:end,date:start,horas,desc});
+  document.getElementById('fStart').value='';document.getElementById('fEnd').value='';document.getElementById('fDesc').value='';
+  toast('Fiesta registrada');
+};
+window.deleteFiesta=async id=>{if(!confirm('¿Eliminar esta fiesta?'))return;await deleteDoc(doc(db,'fiestas',id));toast('Fiesta eliminada');};
+
+/* ── EQUIPO ── */
+function renderEquipo(){
   const rate=config.rate||1.75;
   let totalMs=0,totalSub=0,totalF=0;
-  const stats=members.map(m=>{
+  const stats=TEAM.map(m=>{
     const mine=sessions.filter(s=>s.userId===m.id);
     const ms=mine.reduce((a,s)=>a+s.dur,0);
     const sub=mine.filter(s=>s.tipo==='subida').length;
-    const hrs=ms/3600000;
-    const ganadas=hrs*rate;
-    const cogidas=fiestas.filter(f=>f.userId===m.id).reduce((a,f)=>a+f.horas,0);
-    totalMs+=ms;totalSub+=sub;totalF+=ganadas;
-    return{...m,ms,sub,hrs,ganadas,cogidas,disp:Math.max(0,ganadas-cogidas)};
+    const gan=(ms/3600000)*rate;
+    const cog=fiestas.filter(f=>f.userId===m.id).reduce((a,f)=>a+(f.horas||0),0);
+    totalMs+=ms;totalSub+=sub;totalF+=gan;
+    return{...m,ms,sub,gan,cog,disp:Math.max(0,gan-cog)};
   });
-  document.getElementById('eq-horas').textContent=fmtHrsNum(totalMs);
+  document.getElementById('eq-horas').textContent=fmtH(totalMs);
   document.getElementById('eq-subidas').textContent=totalSub;
   document.getElementById('eq-fiestas').textContent=totalF.toFixed(1)+'h';
-  document.getElementById('eq-miembros').textContent=members.length;
-  const body=document.getElementById('equipoBody');
-  if(!stats.length){body.innerHTML='<div class="empty">Sin compañeros configurados todavía</div>';return;}
-  body.innerHTML=stats.map(m=>{
-    const c=getColor(m.id);
-    const pct=totalMs>0?Math.round(m.ms/totalMs*100):0;
+  document.getElementById('eq-miembros').textContent=TEAM.length;
+  document.getElementById('equipoBody').innerHTML=stats.map(m=>{
+    const c=getColor(m.id),pct=totalMs>0?Math.round(m.ms/totalMs*100):0;
     return`<div class="member-item">
       <div class="avatar" style="width:36px;height:36px;font-size:13px;background:${c.bg};color:${c.text}">${initials(m.name)}</div>
       <div class="member-info">
         <div class="member-name">${m.name}</div>
-        <div style="margin-top:6px;height:4px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;width:200px;max-width:100%">
-          <div style="height:100%;width:${pct}%;background:${c.text};border-radius:99px;opacity:.7"></div>
+        <div style="margin-top:6px;height:3px;background:rgba(255,255,255,.06);border-radius:99px;width:180px;max-width:100%">
+          <div style="height:100%;width:${pct}%;background:${c.text};border-radius:99px;opacity:.8"></div>
         </div>
-        <div class="member-meta">${m.sub} subidas · ${pct}% del total · cogidas: ${m.cogidas}h</div>
+        <div class="member-meta">${m.sub} subidas · ${pct}% del total</div>
       </div>
       <div class="member-right">
-        <div class="member-hrs">${m.hrs.toFixed(1)}h</div>
-        <div class="member-fiesta">${m.ganadas.toFixed(1)}h ganadas</div>
-        <div class="member-fiesta" style="color:var(--green)">${m.disp.toFixed(1)}h disponibles</div>
+        <div class="member-hrs">${fmtH(m.ms)}</div>
+        <div class="member-fiesta-stat">${m.gan.toFixed(1)}h ganadas</div>
+        <div class="member-fiesta-stat" style="color:var(--green)">${m.disp.toFixed(1)}h libres</div>
       </div>
     </div>`;
   }).join('');
 }
 
-// ── CONFIG ──
-function renderConfig() {
-  const list=document.getElementById('membersList');
-  list.innerHTML=members.map(m=>{
-    const c=getColor(m.id);
-    return`<div class="config-member-row">
-      <div class="avatar" style="width:30px;height:30px;font-size:11px;background:${c.bg};color:${c.text}">${initials(m.name)}</div>
-      <span style="flex:1;font-size:13px">${m.name}</span>
-      <button class="btn btn-red btn-sm" onclick="deleteMember('${m.id}')">Eliminar</button>
+/* ── CONFIG ── */
+function renderConfig(){
+  document.getElementById('configMembers').innerHTML=TEAM.map(m=>{
+    const c=getColor(m.id),isMe=m.id===currentUser;
+    return`<div class="member-item">
+      <div class="avatar" style="width:32px;height:32px;font-size:11px;background:${c.bg};color:${c.text}">${initials(m.name)}</div>
+      <div class="member-info">
+        <div class="member-name">${m.name}${isMe?' <span style="font-size:11px;color:var(--text3)">(tú)</span>':''}</div>
+        <div class="member-meta">PIN: ${isMe?`<span style="font-family:var(--mono);letter-spacing:.1em">${m.pin}</span>`:'····'}</div>
+      </div>
     </div>`;
-  }).join('')||'<div style="font-size:13px;color:var(--text3);padding:8px 0">Sin compañeros todavía</div>';
+  }).join('');
 }
+window.saveRate=async()=>{const rate=parseFloat(document.getElementById('cfgRate').value)||1.75;await setDoc(doc(db,'config','main'),{rate});toast('Tasa actualizada');};
 
-window.addMember=async function(){
-  const name=document.getElementById('newName').value.trim();
-  if(!name){toast('Escribe un nombre');return;}
-  const color=document.getElementById('newColor').value;
-  await addDoc(collection(db,'members'),{name,color});
-  document.getElementById('newName').value='';
-  toast(`${name} añadido al equipo`);
-};
-
-window.deleteMember=async function(id){
-  if(!confirm('¿Eliminar compañero y todos sus registros?'))return;
-  await deleteDoc(doc(db,'members',id));
-  const toDelete=[...sessions.filter(s=>s.userId===id),...fiestas.filter(f=>f.userId===id),...guardias.filter(g=>g.userId===id)];
-  await Promise.all(toDelete.map(r=>deleteDoc(doc(db,r._col||'sessions',r.id))));
-  toast('Compañero eliminado');
-};
-
-window.saveRate=async function(){
-  const rate=parseFloat(document.getElementById('cfgRate').value)||1.75;
-  await setDoc(doc(db,'config','main'),{rate});
-  toast('Tasa guardada');
-};
-
-window.addFiesta=async function(){
-  const uid=document.getElementById('fUser').value;
-  const date=document.getElementById('fDate').value;
-  const horas=parseInt(document.getElementById('fHoras').value)||8;
-  if(!uid||!date){toast('Rellena los campos');return;}
-  await addDoc(collection(db,'fiestas'),{userId:uid,date,horas});
-  toast('Fiesta registrada');
-};
-
-// ── BOOT ──
-const saved = localStorage.getItem('gnFirebase');
-if(saved) {
-  startApp(JSON.parse(saved));
-} else {
-  document.getElementById('setupScreen').style.display='flex';
-}
+/* ── INIT ── */
+buildLoginCards();
+const saved=sessionStorage.getItem('gnUser');
+if(saved&&TEAM.find(m=>m.id===saved)){currentUser=saved;document.getElementById('loginScreen').style.display='none';document.getElementById('appShell').style.display='flex';bootApp();}
 </script>
 </body>
 </html>
