@@ -13,51 +13,61 @@
   --blue:#4f8ef7;--blue-bg:rgba(79,142,247,.12);--blue-b:rgba(79,142,247,.28);
   --green:#3ecf8e;--green-bg:rgba(62,207,142,.1);--green-b:rgba(62,207,142,.28);
   --amber:#f5a623;--amber-bg:rgba(245,166,35,.1);--amber-b:rgba(245,166,35,.28);
-  --red:#f87171;--red-bg:rgba(248,113,113,.1);
+  --red:#f87171;--red-bg:rgba(248,113,113,.1);--red-b:rgba(248,113,113,.28);
+  --purple:#a78bfa;--purple-bg:rgba(167,139,250,.1);
   --r:10px;--rl:14px;
   --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
 
-/* ── OVERLAYS ── */
-.overlay{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
-.overlay-box{width:100%;max-width:400px}
-.overlay-box h2{font-size:20px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
-.overlay-box p{font-size:13px;color:var(--text2);margin-bottom:22px;line-height:1.7}
+/* ── MODAL OVERLAY ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:300;padding:20px}
+.modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rl);padding:28px;width:100%;max-width:420px;position:relative}
+.modal-box h3{font-size:17px;font-weight:600;margin-bottom:6px;letter-spacing:-.01em}
+.modal-box .modal-sub{font-size:13px;color:var(--text2);margin-bottom:20px}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px}
+.modal-close:hover{background:var(--bg3);color:var(--text)}
 
-/* Firebase setup */
-.setup-field{margin-bottom:12px}
-.setup-field label{display:block;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
-.setup-field input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-family:var(--font);font-size:13px;color:var(--text);outline:none;transition:border-color .15s}
-.setup-field input:focus{border-color:var(--blue-b)}
-.setup-note{font-size:12px;color:var(--text3);margin-top:14px;padding:12px 14px;background:var(--bg3);border-radius:8px;line-height:1.7}
-.setup-note strong{color:var(--text2)}
-.setup-note a{color:var(--blue);text-decoration:none}
+/* ── LOGIN SCREEN ── */
+#loginScreen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
+.login-box{width:100%;max-width:380px}
+.login-logo{margin-bottom:28px}
+.login-logo h1{font-size:22px;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
+.login-logo p{font-size:13px;color:var(--text2)}
+.login-tabs{display:flex;gap:4px;background:var(--bg3);border-radius:8px;padding:3px;margin-bottom:20px}
+.ltab{flex:1;padding:7px;text-align:center;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;border-radius:6px;transition:all .15s}
+.ltab.active{background:var(--bg2);color:var(--text);border:1px solid var(--border2)}
 
-/* Login */
-.member-cards{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.member-card{display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);cursor:pointer;transition:all .15s}
+/* Member picker */
+.member-cards{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;max-height:320px;overflow-y:auto}
+.member-card{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);cursor:pointer;transition:all .15s}
 .member-card:hover{border-color:var(--border2);background:var(--bg3)}
 .member-card.selected{border-color:var(--blue-b);background:var(--blue-bg)}
+.mc-info{flex:1}
 .mc-name{font-size:14px;font-weight:500}
 .mc-sub{font-size:11px;color:var(--text3);margin-top:1px}
+
+/* PIN pad */
 .pin-section{display:none}
 .pin-label{font-size:12px;color:var(--text2);margin-bottom:10px;text-align:center}
 .pin-dots{display:flex;justify-content:center;gap:10px;margin-bottom:18px}
 .pin-dot{width:11px;height:11px;border-radius:50%;background:var(--bg4);border:1px solid var(--border2);transition:all .15s}
 .pin-dot.filled{background:var(--blue);border-color:var(--blue)}
 .pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.pin-key{padding:15px;text-align:center;font-size:18px;font-weight:500;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .12s;user-select:none}
+.pin-key{padding:14px;text-align:center;font-size:18px;font-weight:500;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .12s;user-select:none}
 .pin-key:hover{background:var(--bg4);border-color:var(--border2)}
 .pin-key:active{transform:scale(.95)}
 .pin-error{text-align:center;font-size:12px;color:var(--red);margin-top:10px;height:16px}
-.login-back{font-size:12px;color:var(--text3);text-align:center;margin-top:12px;cursor:pointer}
+.login-back{font-size:12px;color:var(--text3);text-align:center;margin-top:10px;cursor:pointer}
 .login-back:hover{color:var(--text2)}
+
+/* Register form */
+.reg-form{display:none}
 
 /* ── SHELL ── */
 .shell{display:flex;min-height:100vh}
-.sidebar{width:222px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar{width:226px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
 .sb-logo{padding:20px 20px 16px;border-bottom:1px solid var(--border)}
 .sb-logo h1{font-size:14px;font-weight:600;letter-spacing:-.01em}
 .sb-logo p{font-size:11px;color:var(--text3);margin-top:2px}
@@ -74,17 +84,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .user-chip-name{font-size:12px;font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .logout-btn{font-size:11px;color:var(--text3);cursor:pointer;padding:2px 6px;border-radius:4px;flex-shrink:0}
 .logout-btn:hover{color:var(--red)}
-
-.main{flex:1;padding:32px 36px;max-width:940px;min-width:0}
+.main{flex:1;padding:32px 36px;max-width:960px;min-width:0}
 .page{display:none}
 .page.active{display:block}
 .ph{margin-bottom:26px}
 .ph h2{font-size:22px;font-weight:600;letter-spacing:-.02em}
 .ph p{font-size:13px;color:var(--text2);margin-top:4px}
 
-/* ── COMPONENTS ── */
+/* ── UI COMPONENTS ── */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:16px}
-.ch{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.ch{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .ch h3{font-size:13px;font-weight:500}
 .ch .sub{font-size:12px;color:var(--text3)}
 .cb{padding:18px}
@@ -107,8 +116,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .btn-green{background:var(--green);color:#0a1a10;border-color:var(--green)}.btn-green:hover{opacity:.88}
 .btn-outline{background:transparent;border-color:var(--border2);color:var(--text2)}.btn-outline:hover{background:var(--bg3);color:var(--text)}
 .btn-red{background:transparent;border:none;color:var(--text3)}.btn-red:hover{color:var(--red);background:var(--red-bg)}
+.btn-red-solid{background:var(--red-bg);border:1px solid var(--red-b);color:var(--red)}.btn-red-solid:hover{opacity:.85}
 .btn-amber{background:var(--amber-bg);border-color:var(--amber-b);color:var(--amber)}.btn-amber:hover{opacity:.85}
-.btn-ghost{background:var(--bg3);border-color:var(--border);color:var(--text2)}.btn-ghost:hover{background:var(--bg4);color:var(--text)}
+.btn-ghost{background:var(--bg3);border:1px solid var(--border);color:var(--text2)}.btn-ghost:hover{background:var(--bg4);color:var(--text)}
 .btn-sm{padding:5px 10px;font-size:12px}
 .btn-xs{padding:3px 8px;font-size:11px}
 
@@ -131,13 +141,14 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 .bg{background:var(--green-bg);color:var(--green);border:1px solid var(--green-b)}
 .ba{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-b)}
 .bgy{background:rgba(255,255,255,.05);color:var(--text2);border:1px solid var(--border)}
+.br{background:var(--red-bg);color:var(--red);border:1px solid var(--red-b)}
 
 /* Calendar */
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .cal-nav h3{font-size:15px;font-weight:600;letter-spacing:-.01em}
 .cnb{width:30px;height:30px;border-radius:7px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s}
 .cnb:hover{background:var(--bg4);color:var(--text)}
-.cal-legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.cal-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px}
 .cl-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3)}
 .cl-dot{width:8px;height:8px;border-radius:2px}
 .cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
@@ -159,14 +170,22 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 .dr{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
 .dr:last-child{border-bottom:none}
 
+/* Range picker */
+.range-members{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.rtog{display:flex;align-items:center;gap:7px;padding:7px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .12s;user-select:none}
+.rtog.on{border-color:var(--blue-b);background:var(--blue-bg)}
+.rtog .rav{width:22px;height:22px;font-size:9px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0}
+.rtog span{font-size:13px;font-weight:500;color:var(--text2)}
+.rtog.on span{color:var(--blue)}
+
 /* Fiestas */
-.fiesta-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px}
-.fiesta-item:last-child{margin-bottom:0}
+.fi-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px}
+.fi-item:last-child{margin-bottom:0}
 .fi-info{flex:1;min-width:0}
 .fi-date{font-size:13px;font-weight:500}
 .fi-meta{font-size:11px;color:var(--text3);margin-top:1px}
 
-/* Members */
+/* Members list */
 .mi{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
 .mi:last-child{border-bottom:none}
 .mi-info{flex:1;min-width:0}
@@ -182,73 +201,93 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 .chip{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer;transition:all .12s}
 .chip.active{background:var(--blue-bg);border-color:var(--blue-b);color:var(--blue)}
 .empty{padding:28px;text-align:center;color:var(--text3);font-size:13px}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--text);z-index:999;transform:translateY(8px);opacity:0;transition:all .2s;pointer-events:none}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--text);z-index:9999;transform:translateY(8px);opacity:0;transition:all .2s;pointer-events:none;max-width:280px}
 .toast.show{transform:translateY(0);opacity:1}
 
-/* Guardia range picker */
-.range-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.member-toggle-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-.mtog{display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .12s;user-select:none}
-.mtog.on{border-color:var(--blue-b);background:var(--blue-bg)}
-.mtog .av-sm{width:24px;height:24px;font-size:10px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}
-.mtog span{font-size:13px;font-weight:500;color:var(--text2)}
-.mtog.on span{color:var(--blue)}
+/* Team group pills */
+.team-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;background:var(--purple-bg);color:var(--purple);border:1px solid rgba(167,139,250,.25)}
+
+/* Settings section labels */
+.settings-section{margin-bottom:24px}
+.settings-section-title{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+
+/* Note box */
+.note{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:14px}
+.note strong{color:var(--text)}
+.note a{color:var(--blue);text-decoration:none}
 
 @media(max-width:680px){.sidebar{display:none}.main{padding:16px}.sg{grid-template-columns:repeat(2,1fr)}.ficha-clock{font-size:36px}}
 </style>
 </head>
 <body>
 
-<!-- FIREBASE SETUP -->
-<div class="overlay" id="setupScreen">
-  <div class="overlay-box">
-    <h2>Conectar Firebase</h2>
-    <p>Base de datos gratuita para sincronizar el equipo en tiempo real. Solo hay que configurarlo una vez — se guarda en el navegador.</p>
-    <div class="setup-field"><label>API Key</label><input type="text" id="cfg-apiKey" placeholder="AIzaSy..."></div>
-    <div class="setup-field"><label>Project ID</label><input type="text" id="cfg-projectId" placeholder="mi-proyecto-xxxxx"></div>
-    <div class="setup-field"><label>App ID</label><input type="text" id="cfg-appId" placeholder="1:123456:web:abc..."></div>
-    <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:8px" onclick="connectFirebase()">Conectar y entrar</button>
-    <div class="setup-note">
-      <strong>Cómo obtenerlo:</strong> <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a> → crea proyecto → Firestore Database (modo prueba) → Configuración del proyecto ⚙️ → Tu app web → verás el <code>firebaseConfig</code>.
+<!-- ══ LOGIN ══ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <h1>Guardias nocturnas</h1>
+      <p>Accede o crea tu cuenta</p>
+    </div>
+
+    <div class="login-tabs">
+      <div class="ltab active" id="ltab-login" onclick="switchLoginTab('login')">Entrar</div>
+      <div class="ltab" id="ltab-register" onclick="switchLoginTab('register')">Registrarse</div>
+    </div>
+
+    <!-- LOGIN FLOW -->
+    <div id="loginFlow">
+      <div class="member-cards" id="memberCards"></div>
+      <div class="pin-section" id="pinSection">
+        <div class="pin-label" id="pinLabel">Introduce tu PIN</div>
+        <div class="pin-dots">
+          <div class="pin-dot"></div><div class="pin-dot"></div>
+          <div class="pin-dot"></div><div class="pin-dot"></div>
+        </div>
+        <div class="pin-pad">
+          <div class="pin-key" onclick="pinKey('1')">1</div><div class="pin-key" onclick="pinKey('2')">2</div><div class="pin-key" onclick="pinKey('3')">3</div>
+          <div class="pin-key" onclick="pinKey('4')">4</div><div class="pin-key" onclick="pinKey('5')">5</div><div class="pin-key" onclick="pinKey('6')">6</div>
+          <div class="pin-key" onclick="pinKey('7')">7</div><div class="pin-key" onclick="pinKey('8')">8</div><div class="pin-key" onclick="pinKey('9')">9</div>
+          <div class="pin-key" onclick="pinClear()" style="font-size:12px;color:var(--text3)">Borrar</div>
+          <div class="pin-key" onclick="pinKey('0')">0</div>
+          <div class="pin-key" onclick="pinDel()" style="font-size:14px">⌫</div>
+        </div>
+        <div class="pin-error" id="pinError"></div>
+        <div class="login-back" onclick="backToCards()">← Volver</div>
+      </div>
+    </div>
+
+    <!-- REGISTER FLOW -->
+    <div class="reg-form" id="registerFlow">
+      <div class="fg" style="grid-template-columns:1fr">
+        <div class="field"><label>Tu nombre</label><input type="text" id="regName" placeholder="Ej: Mario"></div>
+        <div class="field"><label>Equipo (opcional)</label><input type="text" id="regTeam" placeholder="Ej: Turno A, Noche…" list="teamSuggestions"><datalist id="teamSuggestions"></datalist></div>
+        <div class="field"><label>Color</label>
+          <select id="regColor">
+            <option value="blue">Azul</option><option value="green">Verde</option>
+            <option value="amber">Ámbar</option><option value="purple">Morado</option><option value="coral">Coral</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Elige tu PIN (4 dígitos)</div>
+      <div class="pin-dots" id="regDots" style="justify-content:flex-start;gap:8px;margin-bottom:14px">
+        <div class="pin-dot"></div><div class="pin-dot"></div>
+        <div class="pin-dot"></div><div class="pin-dot"></div>
+      </div>
+      <div class="pin-pad" style="margin-bottom:14px">
+        <div class="pin-key" onclick="regPinKey('1')">1</div><div class="pin-key" onclick="regPinKey('2')">2</div><div class="pin-key" onclick="regPinKey('3')">3</div>
+        <div class="pin-key" onclick="regPinKey('4')">4</div><div class="pin-key" onclick="regPinKey('5')">5</div><div class="pin-key" onclick="regPinKey('6')">6</div>
+        <div class="pin-key" onclick="regPinKey('7')">7</div><div class="pin-key" onclick="regPinKey('8')">8</div><div class="pin-key" onclick="regPinKey('9')">9</div>
+        <div class="pin-key" onclick="regPinClear()" style="font-size:12px;color:var(--text3)">Borrar</div>
+        <div class="pin-key" onclick="regPinKey('0')">0</div>
+        <div class="pin-key" onclick="regPinDel()" style="font-size:14px">⌫</div>
+      </div>
+      <button class="btn btn-blue" style="width:100%;justify-content:center" onclick="registerUser()">Crear cuenta</button>
+      <div class="pin-error" id="regError" style="margin-top:8px"></div>
     </div>
   </div>
 </div>
 
-<!-- LOGIN PIN -->
-<div class="overlay" id="loginScreen" style="display:none">
-  <div class="overlay-box" style="max-width:360px">
-    <div style="margin-bottom:28px">
-      <h2>Guardias nocturnas</h2>
-      <p>Elige tu perfil e introduce tu PIN</p>
-    </div>
-    <div class="member-cards" id="memberCards"></div>
-    <div class="pin-section" id="pinSection">
-      <div class="pin-label" id="pinLabel">Introduce tu PIN</div>
-      <div class="pin-dots" id="pinDots">
-        <div class="pin-dot"></div><div class="pin-dot"></div>
-        <div class="pin-dot"></div><div class="pin-dot"></div>
-      </div>
-      <div class="pin-pad">
-        <div class="pin-key" onclick="pinKey('1')">1</div>
-        <div class="pin-key" onclick="pinKey('2')">2</div>
-        <div class="pin-key" onclick="pinKey('3')">3</div>
-        <div class="pin-key" onclick="pinKey('4')">4</div>
-        <div class="pin-key" onclick="pinKey('5')">5</div>
-        <div class="pin-key" onclick="pinKey('6')">6</div>
-        <div class="pin-key" onclick="pinKey('7')">7</div>
-        <div class="pin-key" onclick="pinKey('8')">8</div>
-        <div class="pin-key" onclick="pinKey('9')">9</div>
-        <div class="pin-key" onclick="pinClear()" style="font-size:12px;color:var(--text3)">Borrar</div>
-        <div class="pin-key" onclick="pinKey('0')">0</div>
-        <div class="pin-key" onclick="pinDel()" style="font-size:14px">⌫</div>
-      </div>
-      <div class="pin-error" id="pinError"></div>
-      <div class="login-back" onclick="backToCards()">← Volver</div>
-    </div>
-  </div>
-</div>
-
-<!-- APP SHELL -->
+<!-- ══ APP SHELL ══ -->
 <div class="shell" id="appShell" style="display:none">
   <aside class="sidebar">
     <div class="sb-logo">
@@ -334,29 +373,11 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
     <!-- CALENDARIO -->
     <div class="page" id="page-calendario">
       <div class="ph"><h2>Calendario</h2><p>Guardias, subidas y fiestas del equipo</p></div>
-
-      <!-- ASIGNAR RANGO -->
-      <div class="card">
-        <div class="ch"><h3>Asignar guardias por rango</h3><span class="sub">Para una semana o más de una vez</span></div>
-        <div class="cb">
-          <div class="range-grid">
-            <div class="field"><label>Desde</label><input type="date" id="rangeFrom"></div>
-            <div class="field"><label>Hasta</label><input type="date" id="rangeTo"></div>
-          </div>
-          <div style="margin-bottom:10px;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">¿Para quién?</div>
-          <div class="member-toggle-grid" id="rangeMembers"></div>
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <button class="btn btn-blue" onclick="assignRange()">Asignar guardias</button>
-            <span style="font-size:12px;color:var(--text3)" id="rangePreview"></span>
-          </div>
-        </div>
-      </div>
-
       <div class="card">
         <div class="cb">
           <div class="cal-legend">
             <div class="cl-item"><div class="cl-dot" style="background:var(--blue)"></div>Guardia</div>
-            <div class="cl-item"><div class="cl-dot" style="background:var(--green)"></div>Subida real</div>
+            <div class="cl-item"><div class="cl-dot" style="background:var(--green)"></div>Subida</div>
             <div class="cl-item"><div class="cl-dot" style="background:var(--amber)"></div>Fiesta</div>
           </div>
           <div class="cal-nav">
@@ -370,6 +391,7 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
         </div>
       </div>
 
+      <!-- DAY DETAIL -->
       <div class="day-detail" id="dayDetail">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
           <h4 id="dayDetailTitle" style="font-size:15px;font-weight:600"></h4>
@@ -377,6 +399,23 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
         </div>
         <div id="dayDetailBody"></div>
         <div id="dayDetailActions" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap"></div>
+      </div>
+
+      <!-- RANGE PICKER (below calendar) -->
+      <div class="card" style="margin-top:8px">
+        <div class="ch"><h3>Asignar guardias por rango</h3><span class="sub">Una semana, dos semanas…</span></div>
+        <div class="cb">
+          <div class="fg" style="grid-template-columns:1fr 1fr;margin-bottom:12px">
+            <div class="field"><label>Desde</label><input type="date" id="rangeFrom" oninput="updateRangePreview()"></div>
+            <div class="field"><label>Hasta</label><input type="date" id="rangeTo" oninput="updateRangePreview()"></div>
+          </div>
+          <div style="margin-bottom:8px;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Para quién</div>
+          <div class="range-members" id="rangeMembers"></div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <button class="btn btn-blue" onclick="assignRange()">Asignar guardias</button>
+            <span style="font-size:12px;color:var(--text3)" id="rangePreview"></span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -387,7 +426,7 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
       <div class="card">
         <div class="tw">
           <table>
-            <thead><tr><th>Fecha</th><th>Compañero</th><th>Inicio</th><th>Fin</th><th>Duración</th><th>Tipo</th><th>Notas</th><th></th></tr></thead>
+            <thead><tr><th>Fecha</th><th>Compañero</th><th>Equipo</th><th>Inicio</th><th>Fin</th><th>Duración</th><th>Tipo</th><th>Notas</th><th></th></tr></thead>
             <tbody id="registrosBody"></tbody>
           </table>
         </div>
@@ -424,12 +463,13 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
       </div>
     </div>
 
-    <!-- EQUIPO -->
+    <!-- ESTADÍSTICAS -->
     <div class="page" id="page-equipo">
       <div class="ph"><h2>Estadísticas</h2><p>Resumen del equipo</p></div>
+      <div class="chip-row" id="eqFilterChips"></div>
       <div class="sg">
         <div class="stat"><div class="stat-lbl">Horas equipo</div><div class="stat-val" id="eq-horas">—</div></div>
-        <div class="stat"><div class="stat-lbl">Subidas totales</div><div class="stat-val" id="eq-subidas">—</div></div>
+        <div class="stat"><div class="stat-lbl">Subidas</div><div class="stat-val" id="eq-subidas">—</div></div>
         <div class="stat"><div class="stat-lbl">Fiestas generadas</div><div class="stat-val" id="eq-fiestas">—</div></div>
         <div class="stat"><div class="stat-lbl">Compañeros</div><div class="stat-val" id="eq-miembros">—</div></div>
       </div>
@@ -439,27 +479,67 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
       </div>
     </div>
 
-    <!-- CONFIG -->
+    <!-- AJUSTES -->
     <div class="page" id="page-config">
       <div class="ph"><h2>Ajustes</h2></div>
+
+      <!-- My profile -->
       <div class="card">
-        <div class="ch"><h3>Compañeros y PINs</h3><span class="sub">Cada uno ve solo su PIN</span></div>
+        <div class="ch"><h3>Mi perfil</h3></div>
+        <div class="cb">
+          <div class="fg">
+            <div class="field"><label>Nombre</label><input type="text" id="cfgMyName"></div>
+            <div class="field"><label>Equipo</label><input type="text" id="cfgMyTeam" list="teamSuggestions2"><datalist id="teamSuggestions2"></datalist></div>
+            <div class="field"><label>Color</label>
+              <select id="cfgMyColor">
+                <option value="blue">Azul</option><option value="green">Verde</option>
+                <option value="amber">Ámbar</option><option value="purple">Morado</option><option value="coral">Coral</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-blue btn-sm" onclick="saveMyProfile()" style="margin-right:8px">Guardar perfil</button>
+
+          <div class="sep"></div>
+          <div style="font-size:13px;font-weight:500;margin-bottom:10px">Cambiar PIN</div>
+          <div class="fg" style="grid-template-columns:1fr 1fr">
+            <div class="field"><label>PIN actual</label><input type="password" id="pinOld" maxlength="4" placeholder="····"></div>
+            <div class="field"><label>PIN nuevo (4 dígitos)</label><input type="password" id="pinNew" maxlength="4" placeholder="····"></div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="changePin()">Cambiar PIN</button>
+        </div>
+      </div>
+
+      <!-- Users management -->
+      <div class="card">
+        <div class="ch"><h3>Compañeros del equipo</h3><span class="sub">Gestión de usuarios</span></div>
         <div class="cb" id="configMembers"></div>
       </div>
+
+      <!-- Rate -->
       <div class="card">
         <div class="ch"><h3>Remuneración</h3></div>
         <div class="cb">
           <div class="fg">
             <div class="field"><label>Horas de fiesta / hora trabajada</label><input type="number" id="cfgRate" step="0.05" min="0" value="1.75"></div>
           </div>
-          <button class="btn btn-blue" onclick="saveRate()">Guardar</button>
+          <button class="btn btn-blue btn-sm" onclick="saveRate()">Guardar</button>
         </div>
       </div>
+
+      <!-- Firebase -->
       <div class="card">
         <div class="ch"><h3>Conexión Firebase</h3></div>
-        <div class="cb">
-          <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Cambia la base de datos o desconecta para volver a la pantalla de configuración.</p>
-          <button class="btn btn-outline btn-sm" onclick="resetFirebase()">Cambiar configuración Firebase</button>
+        <div class="cb" id="fbConfigBody">
+          <div class="note">Los datos se guardan en <strong>Firebase Firestore</strong>. Las credenciales se almacenan en el código y en el navegador.</div>
+          <div class="fg">
+            <div class="field full"><label>API Key</label><input type="text" id="fb-apiKey" placeholder="AIzaSy…"></div>
+            <div class="field full"><label>Project ID</label><input type="text" id="fb-projectId" placeholder="mi-proyecto-xxxxx"></div>
+            <div class="field full"><label>App ID</label><input type="text" id="fb-appId" placeholder="1:123:web:abc…"></div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-blue btn-sm" onclick="saveFbConfig()">Guardar y reconectar</button>
+            <button class="btn btn-outline btn-sm" id="fbStatusBtn">Estado: —</button>
+          </div>
         </div>
       </div>
     </div>
@@ -467,18 +547,51 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
   </main>
 </div>
 
+<!-- EDIT MEMBER MODAL -->
+<div class="modal-bg" id="editMemberModal" style="display:none">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeEditMember()">✕</button>
+    <h3>Editar compañero</h3>
+    <p class="modal-sub">Cambia el nombre, equipo o color de este usuario.</p>
+    <input type="hidden" id="editMemberId">
+    <div class="fg" style="grid-template-columns:1fr">
+      <div class="field"><label>Nombre</label><input type="text" id="editMemberName"></div>
+      <div class="field"><label>Equipo</label><input type="text" id="editMemberTeam" list="teamSuggestions3"><datalist id="teamSuggestions3"></datalist></div>
+      <div class="field"><label>Color</label>
+        <select id="editMemberColor">
+          <option value="blue">Azul</option><option value="green">Verde</option>
+          <option value="amber">Ámbar</option><option value="purple">Morado</option><option value="coral">Coral</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap">
+      <button class="btn btn-blue btn-sm" onclick="saveEditMember()">Guardar cambios</button>
+      <button class="btn btn-red-solid btn-sm" onclick="deleteMemberConfirm()">Eliminar usuario</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
+<!-- ══ FIREBASE + APP LOGIC ══ -->
 <script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getFirestore, collection, doc, onSnapshot, addDoc, deleteDoc, setDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { initializeApp, getApps, deleteApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, doc, onSnapshot, addDoc, deleteDoc, setDoc, updateDoc, writeBatch, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-/* ─ Equipo: edita nombres y PINs aquí ─ */
-const TEAM = [
-  { id:'u1', name:'Laia', color:'coral',   pin:'1111' },
-  { id:'u2', name:'María', color:'green',  pin:'2222' },
-  { id:'u3', name:'David', color:'amber',  pin:'3333' },
-];
+/* ═══════════════════════════════════════════════
+   🔧 FIREBASE CONFIG — edita estos valores
+   Si no tienes proyecto aún, déjalos vacíos y
+   configúralos desde Ajustes → Conexión Firebase
+   ═══════════════════════════════════════════════ */
+const DEFAULT_FIREBASE = {
+  apiKey:            "",
+  authDomain:        "",
+  projectId:         "",
+  storageBucket:     "",
+  messagingSenderId: "",
+  appId:             ""
+};
+/* ═══════════════════════════════════════════════ */
 
 const COLORS = {
   blue:   {bg:'rgba(79,142,247,.15)',  tx:'#4f8ef7'},
@@ -490,82 +603,149 @@ const COLORS = {
 const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const DOWS=['L','M','X','J','V','S','D'];
 
-let db;
-let sessions=[], fiestas=[], guardias=[], config={rate:1.75};
-let currentUser=null, shiftStart=null, calY, calM, filterUser='', clockTick;
+let db, firebaseApp;
+let members=[], sessions=[], fiestas=[], guardias=[], config={rate:1.75};
+let currentUser=null, shiftStart=null, calY, calM, filterUser='', eqFilterTeam='', clockTick;
+let rangeSelected=new Set();
+let unsubs=[];
 
 const pad=n=>String(n).padStart(2,'0');
 const fmtMs=ms=>{const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);return h===0?m+'min':m===0?h+'h':h+'h '+m+'min';};
 const fmtH=ms=>(ms/3600000).toFixed(1)+'h';
 const todayKey=()=>{const d=new Date();return`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;};
-const getMember=id=>TEAM.find(m=>m.id===id);
+const getMember=id=>members.find(m=>m.id===id);
 const getColor=id=>{const m=getMember(id);return m?(COLORS[m.color]||COLORS.blue):COLORS.blue;};
 const initials=name=>(name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+const teams=()=>[...new Set(members.map(m=>m.team).filter(Boolean))];
+function toast(msg,dur=2500){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur);}
+function hashPin(pin){let h=0;for(let i=0;i<pin.length;i++){h=(h<<5)-h+pin.charCodeAt(i);h|=0;}return h.toString(36);}
 
-/* ── FIREBASE SETUP ── */
-window.connectFirebase = function(){
-  const apiKey=document.getElementById('cfg-apiKey').value.trim();
-  const projectId=document.getElementById('cfg-projectId').value.trim();
-  const appId=document.getElementById('cfg-appId').value.trim();
-  if(!apiKey||!projectId||!appId){toast('Rellena todos los campos');return;}
-  const cfg={apiKey,projectId,appId,authDomain:`${projectId}.firebaseapp.com`,storageBucket:`${projectId}.appspot.com`,messagingSenderId:'000000000000'};
-  localStorage.setItem('gnFB',JSON.stringify(cfg));
-  initDB(cfg);
+/* ── FIREBASE ── */
+function getFbCfg(){
+  const stored=localStorage.getItem('gnFB');
+  if(stored){const s=JSON.parse(stored);if(s.apiKey&&s.projectId)return s;}
+  if(DEFAULT_FIREBASE.apiKey&&DEFAULT_FIREBASE.projectId)return DEFAULT_FIREBASE;
+  return null;
+}
+
+async function initDB(cfg){
+  try{
+    if(firebaseApp){try{await deleteApp(firebaseApp);}catch(e){}}
+    firebaseApp=initializeApp(cfg,'gn-'+ Date.now());
+    db=getFirestore(firebaseApp);
+    document.getElementById('syncBadge').textContent='Conectado · tiempo real';
+    document.getElementById('fbStatusBtn').textContent='Estado: conectado';
+    document.getElementById('fb-apiKey').value=cfg.apiKey||'';
+    document.getElementById('fb-projectId').value=cfg.projectId||'';
+    document.getElementById('fb-appId').value=cfg.appId||'';
+    startListeners();
+    return true;
+  }catch(e){
+    console.error(e);
+    document.getElementById('syncBadge').textContent='Error de conexión';
+    document.getElementById('fbStatusBtn').textContent='Estado: error';
+    toast('Error conectando Firebase: '+e.message,4000);
+    return false;
+  }
+}
+
+function startListeners(){
+  unsubs.forEach(u=>u());unsubs=[];
+  unsubs=[
+    onSnapshot(collection(db,'members'),s=>{members=s.docs.map(d=>({id:d.id,...d.data()}));onMembersChange();}),
+    onSnapshot(collection(db,'sessions'),s=>{sessions=s.docs.map(d=>({id:d.id,...d.data()}));renderAll();}),
+    onSnapshot(collection(db,'fiestas'),s=>{fiestas=s.docs.map(d=>({id:d.id,...d.data()}));renderAll();}),
+    onSnapshot(collection(db,'guardias'),s=>{guardias=s.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById('page-calendario').classList.contains('active'))buildCal();}),
+    onSnapshot(doc(db,'config','main'),s=>{if(s.exists()){config=s.data();const r=config.rate||1.75;document.getElementById('cfgRate').value=r;document.getElementById('rateDisplay').textContent=r;}renderMyStats();}),
+  ];
+}
+
+/* ── LOGIN TABS ── */
+window.switchLoginTab=tab=>{
+  document.getElementById('ltab-login').classList.toggle('active',tab==='login');
+  document.getElementById('ltab-register').classList.toggle('active',tab==='register');
+  document.getElementById('loginFlow').style.display=tab==='login'?'block':'none';
+  document.getElementById('registerFlow').style.display=tab==='register'?'block':'none';
+  if(tab==='login')buildMemberCards();
 };
-window.resetFirebase=function(){localStorage.removeItem('gnFB');localStorage.removeItem('gnFBok');location.reload();};
 
-function initDB(cfg){
-  try{db=getFirestore(initializeApp(cfg));}
-  catch(e){try{db=getFirestore(initializeApp(cfg,'gn2'));}catch(e2){}}
-  document.getElementById('setupScreen').style.display='none';
-  document.getElementById('loginScreen').style.display='flex';
-  document.getElementById('syncBadge').textContent='Conectado · tiempo real';
-  buildLoginCards();
-  const saved=sessionStorage.getItem('gnUser');
-  if(saved&&TEAM.find(m=>m.id===saved)){currentUser=saved;showApp();}
-  onSnapshot(collection(db,'sessions'),s=>{sessions=s.docs.map(d=>({id:d.id,...d.data()}));renderAll();});
-  onSnapshot(collection(db,'fiestas'),s=>{fiestas=s.docs.map(d=>({id:d.id,...d.data()}));renderAll();});
-  onSnapshot(collection(db,'guardias'),s=>{guardias=s.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById('page-calendario').classList.contains('active'))buildCal();});
-  onSnapshot(doc(db,'config','main'),s=>{if(s.exists()){config=s.data();document.getElementById('cfgRate').value=config.rate||1.75;document.getElementById('rateDisplay').textContent=config.rate||1.75;}renderMyStats();});
+/* ── MEMBER CARDS ── */
+function buildMemberCards(){
+  const wrap=document.getElementById('memberCards');
+  wrap.innerHTML=members.length
+    ?members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>{
+        const c=COLORS[m.color]||COLORS.blue;
+        return`<div class="member-card" id="mc-${m.id}" onclick="selectMember('${m.id}')">
+          <div class="avatar" style="width:38px;height:38px;font-size:13px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div>
+          <div class="mc-info"><div class="mc-name">${m.name}</div><div class="mc-sub">${m.team||'Sin equipo'}</div></div>
+        </div>`;
+      }).join('')
+    :'<div class="empty" style="padding:16px">Aún no hay usuarios. Regístrate primero.</div>';
+}
+
+function onMembersChange(){
+  buildMemberCards();
+  buildRangeMembers();
+  updateTeamSuggestions();
+  renderAll();
+}
+
+function updateTeamSuggestions(){
+  const ts=teams();
+  ['teamSuggestions','teamSuggestions2','teamSuggestions3'].forEach(id=>{
+    const dl=document.getElementById(id);
+    if(dl)dl.innerHTML=ts.map(t=>`<option value="${t}">`).join('');
+  });
 }
 
 /* ── LOGIN ── */
-let selectedMember=null, pinBuffer='';
-
-function buildLoginCards(){
-  document.getElementById('memberCards').innerHTML=TEAM.map(m=>{
-    const c=COLORS[m.color]||COLORS.blue;
-    return`<div class="member-card" id="mc-${m.id}" onclick="selectMember('${m.id}')">
-      <div class="avatar" style="width:38px;height:38px;font-size:13px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div>
-      <div><div class="mc-name">${m.name}</div></div>
-    </div>`;
-  }).join('');
-  buildRangeMembers();
-}
+let selectedMember=null,pinBuf='';
 
 window.selectMember=id=>{
   selectedMember=id;
   document.querySelectorAll('.member-card').forEach(el=>el.classList.remove('selected'));
-  document.getElementById('mc-'+id).classList.add('selected');
+  document.getElementById('mc-'+id)?.classList.add('selected');
   document.getElementById('pinSection').style.display='block';
-  document.getElementById('pinLabel').textContent=`PIN de ${getMember(id).name}`;
-  pinBuffer='';renderDots();document.getElementById('pinError').textContent='';
+  document.getElementById('pinLabel').textContent=`PIN de ${getMember(id)?.name||''}`;
+  pinBuf='';renderDots();document.getElementById('pinError').textContent='';
 };
-window.backToCards=()=>{
-  document.getElementById('pinSection').style.display='none';
-  document.querySelectorAll('.member-card').forEach(el=>el.classList.remove('selected'));
-  selectedMember=null;pinBuffer='';
-};
-window.pinKey=k=>{if(pinBuffer.length>=4)return;pinBuffer+=k;renderDots();if(pinBuffer.length===4)setTimeout(checkPin,120);};
-window.pinDel=()=>{pinBuffer=pinBuffer.slice(0,-1);renderDots();};
-window.pinClear=()=>{pinBuffer='';renderDots();};
-function renderDots(){document.querySelectorAll('.pin-dot').forEach((d,i)=>d.classList.toggle('filled',i<pinBuffer.length));}
-function checkPin(){
+window.backToCards=()=>{document.getElementById('pinSection').style.display='none';document.querySelectorAll('.member-card').forEach(el=>el.classList.remove('selected'));selectedMember=null;pinBuf='';};
+window.pinKey=k=>{if(pinBuf.length>=4)return;pinBuf+=k;renderDots();if(pinBuf.length===4)setTimeout(checkPin,120);};
+window.pinDel=()=>{pinBuf=pinBuf.slice(0,-1);renderDots();};
+window.pinClear=()=>{pinBuf='';renderDots();};
+function renderDots(){document.querySelectorAll('#pinSection .pin-dot').forEach((d,i)=>d.classList.toggle('filled',i<pinBuf.length));}
+async function checkPin(){
   const m=getMember(selectedMember);
-  if(pinBuffer===m.pin){loginSuccess(m.id);}
-  else{document.getElementById('pinError').textContent='PIN incorrecto';pinBuffer='';renderDots();}
+  if(!m)return;
+  const hashed=hashPin(pinBuf);
+  if(hashed===m.pinHash||pinBuf===m.pin){loginSuccess(m.id);}
+  else{document.getElementById('pinError').textContent='PIN incorrecto';pinBuf='';renderDots();}
 }
+
+/* ── REGISTER ── */
+let regPin='';
+window.regPinKey=k=>{if(regPin.length>=4)return;regPin+=k;renderRegDots();};
+window.regPinDel=()=>{regPin=regPin.slice(0,-1);renderRegDots();};
+window.regPinClear=()=>{regPin='';renderRegDots();};
+function renderRegDots(){document.querySelectorAll('#regDots .pin-dot').forEach((d,i)=>d.classList.toggle('filled',i<regPin.length));}
+
+window.registerUser=async()=>{
+  const name=document.getElementById('regName').value.trim();
+  const team=document.getElementById('regTeam').value.trim();
+  const color=document.getElementById('regColor').value;
+  const err=document.getElementById('regError');
+  if(!name){err.textContent='Escribe tu nombre';return;}
+  if(regPin.length<4){err.textContent='Elige un PIN de 4 dígitos';return;}
+  if(members.some(m=>m.name.toLowerCase()===name.toLowerCase())){err.textContent='Ya existe un usuario con ese nombre';return;}
+  err.textContent='';
+  await addDoc(collection(db,'members'),{name,team,color,pinHash:hashPin(regPin),createdAt:Date.now()});
+  toast(`Bienvenido, ${name}!`);
+  regPin='';renderRegDots();
+  document.getElementById('regName').value='';document.getElementById('regTeam').value='';
+  switchLoginTab('login');
+};
+
+/* ── SESSION ── */
 function loginSuccess(id){
   currentUser=id;sessionStorage.setItem('gnUser',id);
   document.getElementById('loginScreen').style.display='none';
@@ -574,7 +754,9 @@ function loginSuccess(id){
 function showApp(){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('appShell').style.display='flex';
-  const m=getMember(currentUser),c=getColor(currentUser);
+  const m=getMember(currentUser);
+  if(!m){logout();return;}
+  const c=getColor(currentUser);
   document.getElementById('sideUser').textContent=m.name;
   const av=document.getElementById('sideAvatar');
   av.style.background=c.bg;av.style.color=c.tx;av.textContent=initials(m.name);
@@ -589,10 +771,7 @@ function showApp(){
   clockTick=setInterval(()=>{
     const n=new Date();
     document.getElementById('fichaClock').textContent=`${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;
-    if(shiftStart){
-      const e=Math.floor((n-shiftStart)/1000),h=Math.floor(e/3600),mm=Math.floor((e%3600)/60),s=e%60;
-      document.getElementById('fichaStatus').innerHTML=`<span class="pulse"></span> En curso · ${pad(h)}:${pad(mm)}:${pad(s)}`;
-    }
+    if(shiftStart){const e=Math.floor((n-shiftStart)/1000),h=Math.floor(e/3600),mm=Math.floor((e%3600)/60),s=e%60;document.getElementById('fichaStatus').innerHTML=`<span class="pulse"></span> En curso · ${pad(h)}:${pad(mm)}:${pad(s)}`;}
   },1000);
   renderAll();renderConfig();
 }
@@ -602,7 +781,7 @@ window.logout=()=>{
   if(clockTick)clearInterval(clockTick);
   document.getElementById('appShell').style.display='none';
   document.getElementById('loginScreen').style.display='flex';
-  pinBuffer='';selectedMember=null;
+  pinBuf='';selectedMember=null;
   document.getElementById('pinSection').style.display='none';
   document.querySelectorAll('.member-card').forEach(el=>el.classList.remove('selected'));
   document.querySelectorAll('.nav-item').forEach((el,i)=>el.classList.toggle('active',i===0));
@@ -659,7 +838,8 @@ function renderMyStats(){
   const totalMs=mine.reduce((a,s)=>a+s.dur,0);
   const subidas=mine.filter(s=>s.tipo==='subida').length;
   const rate=config.rate||1.75;
-  const ganadas=(totalMs/3600000)*rate;
+  const allMs=sessions.filter(s=>s.userId===currentUser).reduce((a,s)=>a+s.dur,0);
+  const ganadas=(allMs/3600000)*rate;
   const cogidas=fiestas.filter(f=>f.userId===currentUser).reduce((a,f)=>a+(f.horas||0),0);
   document.getElementById('st-horas').textContent=fmtH(totalMs);
   document.getElementById('st-subidas').textContent=subidas;
@@ -667,72 +847,6 @@ function renderMyStats(){
   document.getElementById('st-disp').textContent=Math.max(0,ganadas-cogidas).toFixed(1)+'h';
   document.getElementById('st-cogidas').textContent=`cogidas: ${cogidas.toFixed(1)}h`;
 }
-
-/* ── GUARDIA RANGE ── */
-let rangeSelected=new Set();
-function buildRangeMembers(){
-  const wrap=document.getElementById('rangeMembers');
-  if(!wrap)return;
-  wrap.innerHTML=TEAM.map(m=>{
-    const c=COLORS[m.color]||COLORS.blue;
-    return`<div class="mtog" id="rtog-${m.id}" onclick="toggleRangeMember('${m.id}')">
-      <div class="av-sm" style="background:${c.bg};color:${c.tx}">${initials(m.name)}</div>
-      <span>${m.name}</span>
-    </div>`;
-  }).join('');
-}
-window.toggleRangeMember=id=>{
-  if(rangeSelected.has(id))rangeSelected.delete(id);else rangeSelected.add(id);
-  document.getElementById('rtog-'+id).classList.toggle('on',rangeSelected.has(id));
-  updateRangePreview();
-};
-function updateRangePreview(){
-  const from=document.getElementById('rangeFrom').value,to=document.getElementById('rangeTo').value;
-  if(!from||!to||rangeSelected.size===0){document.getElementById('rangePreview').textContent='';return;}
-  const days=daysBetween(from,to);
-  document.getElementById('rangePreview').textContent=`${days} días · ${rangeSelected.size} persona${rangeSelected.size>1?'s':''}`;
-}
-document.addEventListener('change',e=>{if(e.target.id==='rangeFrom'||e.target.id==='rangeTo')updateRangePreview();});
-
-function daysBetween(from,to){
-  const a=new Date(from),b=new Date(to);
-  return Math.max(0,Math.round((b-a)/86400000)+1);
-}
-function dateRange(from,to){
-  const dates=[];
-  const cur=new Date(from);
-  const end=new Date(to);
-  while(cur<=end){
-    const y=cur.getFullYear(),mo=pad(cur.getMonth()+1),d=pad(cur.getDate());
-    dates.push(`${y}-${mo}-${d}`);
-    cur.setDate(cur.getDate()+1);
-  }
-  return dates;
-}
-window.assignRange=async()=>{
-  const from=document.getElementById('rangeFrom').value,to=document.getElementById('rangeTo').value;
-  if(!from||!to){toast('Elige fechas de inicio y fin');return;}
-  if(rangeSelected.size===0){toast('Selecciona al menos un compañero');return;}
-  if(new Date(from)>new Date(to)){toast('La fecha de inicio debe ser anterior al fin');return;}
-  const dates=dateRange(from,to);
-  if(dates.length>60){toast('Máximo 60 días por asignación');return;}
-  const existing=new Set(guardias.map(g=>`${g.userId}:${g.date}`));
-  const toAdd=[];
-  dates.forEach(date=>{
-    rangeSelected.forEach(uid=>{
-      if(!existing.has(`${uid}:${date}`))toAdd.push({userId:uid,date});
-    });
-  });
-  if(toAdd.length===0){toast('Todas esas guardias ya están asignadas');return;}
-  const batch=writeBatch(db);
-  toAdd.forEach(g=>batch.set(doc(collection(db,'guardias')),g));
-  await batch.commit();
-  toast(`${toAdd.length} guardia${toAdd.length > 1 ? 's' : ''} asignada${toAdd.length > 1 ? 's' : ''}`);
-  document.getElementById('rangeFrom').value='';document.getElementById('rangeTo').value='';
-  rangeSelected.clear();document.querySelectorAll('.mtog').forEach(el=>el.classList.remove('on'));
-  document.getElementById('rangePreview').textContent='';
-  buildCal();
-};
 
 /* ── CALENDAR ── */
 function buildCal(){
@@ -768,7 +882,7 @@ function openDay(key,dt){
   detail.scrollIntoView({behavior:'smooth',block:'nearest'});
   const sess=sessions.filter(s=>s.date===key),gds=guardias.filter(g=>g.date===key),fts=fiestas.filter(f=>f.startDate===key||f.date===key);
   let html='';
-  if(gds.length){html+='<div class="ds"><div class="dst">Guardias</div>';gds.forEach(g=>{const m=getMember(g.userId);if(m){const c=getColor(g.userId);html+=`<div class="dr"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div><span style="font-size:13px;flex:1">${m.name}</span>${g.userId===currentUser?`<button class="btn btn-red btn-xs" onclick="removeGuardia('${g.id}')">Quitar</button>`:''}</div>`;}});html+='</div>';}
+  if(gds.length){html+='<div class="ds"><div class="dst">Guardias</div>';gds.forEach(g=>{const m=getMember(g.userId);if(m){const c=getColor(g.userId);html+=`<div class="dr"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div><span style="font-size:13px;flex:1">${m.name}</span>${m.team?`<span class="team-pill">${m.team}</span>`:''} ${g.userId===currentUser?`<button class="btn btn-red btn-xs" onclick="removeGuardia('${g.id}')">Quitar</button>`:''}</div>`;}});html+='</div>';}
   if(sess.length){html+='<div class="ds"><div class="dst">Turnos</div>';sess.forEach(s=>{const m=getMember(s.userId);if(m){const c=getColor(s.userId);html+=`<div class="dr"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div><span style="font-size:13px;flex:1">${m.name}</span><span class="badge ${s.tipo==='subida'?'bg':'bgy'}">${s.tipo}</span><span style="font-size:12px;color:var(--text3);margin-left:6px">${fmtMs(s.dur)}</span></div>`;}});html+='</div>';}
   if(fts.length){html+='<div class="ds"><div class="dst">Fiestas</div>';fts.forEach(f=>{const m=getMember(f.userId);if(m)html+=`<div class="dr"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:var(--amber-bg);color:var(--amber)">${initials(m.name)}</div><span style="font-size:13px;flex:1">${m.name}</span><span class="badge ba">${f.horas}h</span></div>`;});html+='</div>';}
   if(!html)html='<div class="empty" style="padding:12px 0">Sin actividad</div>';
@@ -780,13 +894,67 @@ window.closeDayDetail=()=>document.getElementById('dayDetail').style.display='no
 window.assignGuardia=async key=>{if(guardias.some(g=>g.date===key&&g.userId===currentUser)){toast('Ya tienes guardia');return;}await addDoc(collection(db,'guardias'),{userId:currentUser,date:key});toast('Guardia asignada');closeDayDetail();};
 window.removeGuardia=async id=>{await deleteDoc(doc(db,'guardias',id));toast('Guardia eliminada');closeDayDetail();};
 
+/* ── RANGE PICKER ── */
+function buildRangeMembers(){
+  const wrap=document.getElementById('rangeMembers');
+  if(!wrap)return;
+  wrap.innerHTML=members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>{
+    const c=COLORS[m.color]||COLORS.blue;
+    return`<div class="rtog ${rangeSelected.has(m.id)?'on':''}" id="rtog-${m.id}" onclick="toggleRange('${m.id}')">
+      <div class="rav" style="background:${c.bg};color:${c.tx}">${initials(m.name)}</div>
+      <span>${m.name}</span>
+    </div>`;
+  }).join('');
+}
+window.toggleRange=id=>{
+  if(rangeSelected.has(id))rangeSelected.delete(id);else rangeSelected.add(id);
+  document.getElementById('rtog-'+id)?.classList.toggle('on',rangeSelected.has(id));
+  updateRangePreview();
+};
+window.updateRangePreview=()=>{
+  const from=document.getElementById('rangeFrom').value,to=document.getElementById('rangeTo').value;
+  if(!from||!to||rangeSelected.size===0){document.getElementById('rangePreview').textContent='';return;}
+  const days=Math.max(0,Math.round((new Date(to)-new Date(from))/86400000)+1);
+  document.getElementById('rangePreview').textContent=`${days} día${days!==1?'s':''} · ${rangeSelected.size} persona${rangeSelected.size!==1?'s':''}`;
+};
+function dateRange(from,to){
+  const dates=[],cur=new Date(from),end=new Date(to);
+  while(cur<=end){dates.push(`${cur.getFullYear()}-${pad(cur.getMonth()+1)}-${pad(cur.getDate())}`);cur.setDate(cur.getDate()+1);}
+  return dates;
+}
+window.assignRange=async()=>{
+  const from=document.getElementById('rangeFrom').value,to=document.getElementById('rangeTo').value;
+  if(!from||!to){toast('Elige fechas de inicio y fin');return;}
+  if(rangeSelected.size===0){toast('Selecciona al menos una persona');return;}
+  if(new Date(from)>new Date(to)){toast('La fecha inicio debe ser anterior al fin');return;}
+  const dates=dateRange(from,to);
+  if(dates.length>90){toast('Máximo 90 días por asignación');return;}
+  const existing=new Set(guardias.map(g=>`${g.userId}:${g.date}`));
+  const toAdd=[];
+  dates.forEach(date=>rangeSelected.forEach(uid=>{if(!existing.has(`${uid}:${date}`))toAdd.push({userId:uid,date});}));
+  if(!toAdd.length){toast('Todas esas guardias ya están asignadas');return;}
+  const batch=writeBatch(db);
+  toAdd.forEach(g=>batch.set(doc(collection(db,'guardias')),g));
+  await batch.commit();
+  toast(`${toAdd.length} guardia${toAdd.length!==1?'s':''} asignada${toAdd.length!==1?'s':''}`);
+  document.getElementById('rangeFrom').value='';document.getElementById('rangeTo').value='';
+  rangeSelected.clear();buildRangeMembers();document.getElementById('rangePreview').textContent='';
+};
+
 /* ── REGISTROS ── */
 function renderRegistros(){
   const chips=document.getElementById('filterChips');
-  chips.innerHTML='<div class="chip'+(filterUser===''?' active':'')+'" onclick="setFilter(\'\')">Todos</div>'+TEAM.map(m=>`<div class="chip${filterUser===m.id?' active':''}" onclick="setFilter('${m.id}')">${m.name}</div>`).join('');
-  const rows=sessions.filter(s=>!filterUser||s.userId===filterUser).sort((a,b)=>new Date(b.start)-new Date(a.start));
+  const ts=teams();
+  chips.innerHTML=
+    '<div class="chip'+(filterUser===''&&!ts.length?' active':filterUser===''&&!document.querySelector('#filterChips .chip.active')?' active':filterUser===''?' active':'')+'" onclick="setFilter(\'\')">Todos</div>'+
+    ts.map(t=>`<div class="chip" onclick="setFilterTeam('${t}')">${t}</div>`).join('')+
+    members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>`<div class="chip${filterUser===m.id?' active':''}" onclick="setFilter('${m.id}')">${m.name}</div>`).join('');
+  const rows=sessions.filter(s=>{
+    if(filterUser&&s.userId!==filterUser)return false;
+    return true;
+  }).sort((a,b)=>new Date(b.start)-new Date(a.start));
   const body=document.getElementById('registrosBody');
-  if(!rows.length){body.innerHTML=`<tr><td colspan="8"><div class="empty">Sin registros</div></td></tr>`;return;}
+  if(!rows.length){body.innerHTML=`<tr><td colspan="9"><div class="empty">Sin registros</div></td></tr>`;return;}
   body.innerHTML=rows.map(s=>{
     const m=getMember(s.userId),c=getColor(s.userId);
     const st=new Date(s.start).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
@@ -794,15 +962,17 @@ function renderRegistros(){
     return`<tr>
       <td style="font-variant-numeric:tabular-nums">${s.date.split('-').reverse().join('/')}</td>
       <td><div style="display:flex;align-items:center;gap:7px"><div class="avatar" style="width:22px;height:22px;font-size:9px;background:${c.bg};color:${c.tx}">${m?initials(m.name):'?'}</div>${m?m.name:'—'}</div></td>
+      <td>${m?.team?`<span class="team-pill">${m.team}</span>`:''}</td>
       <td>${st}</td><td>${en}</td>
       <td><span class="badge bb">${fmtMs(s.dur)}</span></td>
       <td><span class="badge ${s.tipo==='subida'?'bg':'bgy'}">${s.tipo}</span></td>
-      <td style="color:var(--text3);font-size:12px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.notas||''}</td>
+      <td style="color:var(--text3);font-size:12px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.notas||''}</td>
       <td>${s.userId===currentUser?`<button class="btn btn-red btn-xs" onclick="deleteSess('${s.id}')">✕</button>`:''}</td>
     </tr>`;
   }).join('');
 }
-window.setFilter=uid=>{filterUser=uid;renderRegistros();};
+window.setFilter=uid=>{filterUser=uid;document.querySelectorAll('#filterChips .chip').forEach(c=>c.classList.remove('active'));event.target.classList.add('active');renderRegistros();};
+window.setFilterTeam=team=>{filterUser='';document.querySelectorAll('#filterChips .chip').forEach(c=>c.classList.remove('active'));event.target.classList.add('active');const body=document.getElementById('registrosBody');const rows=sessions.filter(s=>{const m=getMember(s.userId);return m?.team===team;}).sort((a,b)=>new Date(b.start)-new Date(a.start));if(!rows.length){body.innerHTML=`<tr><td colspan="9"><div class="empty">Sin registros para este equipo</div></td></tr>`;return;}renderRegistros();/* simple: just filter by team */document.getElementById('filterChips').querySelectorAll('.chip').forEach(c=>{if(c.textContent===team)c.classList.add('active');});};
 window.deleteSess=async id=>{if(!confirm('¿Eliminar?'))return;await deleteDoc(doc(db,'sessions',id));toast('Eliminado');};
 
 /* ── FIESTAS ── */
@@ -817,31 +987,30 @@ function renderFiestas(){
   document.getElementById('f-disp').textContent=Math.max(0,ganadas-cogidas).toFixed(1)+'h';
   const list=document.getElementById('fiestasList');
   list.innerHTML=myF.length?myF.map(f=>`
-    <div class="fiesta-item">
+    <div class="fi-item">
       <div style="width:36px;height:36px;border-radius:8px;background:var(--amber-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0">
         <svg width="16" height="16" fill="none" stroke="var(--amber)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </div>
       <div class="fi-info">
-        <div class="fi-date">${fmtFiestaRange(f)}</div>
+        <div class="fi-date">${fmtRange(f)}</div>
         <div class="fi-meta">${f.horas}h · ${f.desc||'sin descripción'}</div>
       </div>
       <span class="badge ba">${f.horas}h</span>
       <button class="btn btn-red btn-xs" onclick="deleteFiesta('${f.id}')">✕</button>
-    </div>
-  `).join(''):'<div class="empty">Aún no has registrado ninguna fiesta</div>';
-  document.getElementById('fiestasEquipo').innerHTML=TEAM.map(m=>{
+    </div>`).join(''):'<div class="empty">Aún no has registrado ninguna fiesta</div>';
+  document.getElementById('fiestasEquipo').innerHTML=members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>{
     const c=getColor(m.id);
     const mf=fiestas.filter(f=>f.userId===m.id),cog=mf.reduce((a,f)=>a+(f.horas||0),0);
     const ms=sessions.filter(s=>s.userId===m.id).reduce((a,s)=>a+s.dur,0);
     const gan=((ms/3600000)*(config.rate||1.75));
     return`<div class="mi">
       <div class="avatar" style="width:36px;height:36px;font-size:13px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div>
-      <div class="mi-info"><div class="mi-name">${m.name}</div><div class="mi-meta">${mf.length} periodos · ${cog.toFixed(1)}h cogidas</div></div>
+      <div class="mi-info"><div class="mi-name">${m.name}</div><div class="mi-meta">${m.team?`<span class="team-pill" style="margin-right:4px">${m.team}</span>`:''} ${mf.length} periodo${mf.length!==1?'s':''} · ${cog.toFixed(1)}h cogidas</div></div>
       <div class="mi-right"><div class="mi-hrs">${gan.toFixed(1)}h</div><div class="mi-sub">ganadas</div><div class="mi-sub" style="color:var(--green)">${Math.max(0,gan-cog).toFixed(1)}h libres</div></div>
     </div>`;
   }).join('');
 }
-function fmtFiestaRange(f){const s=(f.startDate||f.date||''),e=f.endDate||'';const fmt=d=>d?d.split('-').reverse().join('/'):'';return(e&&e!==s)?`${fmt(s)} → ${fmt(e)}`:fmt(s);}
+function fmtRange(f){const s=(f.startDate||f.date||''),e=f.endDate||'';const fmt=d=>d?d.split('-').reverse().join('/'):'';return(e&&e!==s)?`${fmt(s)} → ${fmt(e)}`:fmt(s);}
 window.addFiesta=async()=>{
   const start=document.getElementById('fStart').value,end=document.getElementById('fEnd').value||start;
   const horas=parseInt(document.getElementById('fHoras').value)||8,desc=document.getElementById('fDesc').value;
@@ -852,11 +1021,15 @@ window.addFiesta=async()=>{
 };
 window.deleteFiesta=async id=>{if(!confirm('¿Eliminar esta fiesta?'))return;await deleteDoc(doc(db,'fiestas',id));toast('Fiesta eliminada');};
 
-/* ── EQUIPO ── */
+/* ── EQUIPO / ESTADÍSTICAS ── */
 function renderEquipo(){
   const rate=config.rate||1.75;
+  const ts=teams();
+  const chips=document.getElementById('eqFilterChips');
+  chips.innerHTML='<div class="chip'+(eqFilterTeam===''?' active':'')+'" onclick="setEqFilter(\'\')">Todos</div>'+ts.map(t=>`<div class="chip${eqFilterTeam===t?' active':''}" onclick="setEqFilter('${t}')">${t}</div>`).join('');
+  const filtered=eqFilterTeam?members.filter(m=>m.team===eqFilterTeam):members;
   let totalMs=0,totalSub=0,totalF=0;
-  const stats=TEAM.map(m=>{
+  const stats=filtered.map(m=>{
     const mine=sessions.filter(s=>s.userId===m.id);
     const ms=mine.reduce((a,s)=>a+s.dur,0);
     const sub=mine.filter(s=>s.tipo==='subida').length;
@@ -868,13 +1041,13 @@ function renderEquipo(){
   document.getElementById('eq-horas').textContent=fmtH(totalMs);
   document.getElementById('eq-subidas').textContent=totalSub;
   document.getElementById('eq-fiestas').textContent=totalF.toFixed(1)+'h';
-  document.getElementById('eq-miembros').textContent=TEAM.length;
-  document.getElementById('equipoBody').innerHTML=stats.map(m=>{
+  document.getElementById('eq-miembros').textContent=filtered.length;
+  document.getElementById('equipoBody').innerHTML=stats.length?stats.sort((a,b)=>b.ms-a.ms).map(m=>{
     const c=getColor(m.id),pct=totalMs>0?Math.round(m.ms/totalMs*100):0;
     return`<div class="mi">
       <div class="avatar" style="width:36px;height:36px;font-size:13px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div>
       <div class="mi-info">
-        <div class="mi-name">${m.name}</div>
+        <div class="mi-name">${m.name} ${m.team?`<span class="team-pill">${m.team}</span>`:''}</div>
         <div style="margin-top:6px;height:3px;background:rgba(255,255,255,.06);border-radius:99px;width:180px;max-width:100%">
           <div style="height:100%;width:${pct}%;background:${c.tx};border-radius:99px;opacity:.8"></div>
         </div>
@@ -886,27 +1059,136 @@ function renderEquipo(){
         <div class="mi-sub" style="color:var(--green)">${m.disp.toFixed(1)}h libres</div>
       </div>
     </div>`;
-  }).join('');
+  }).join(''):'<div class="empty">Sin compañeros en este equipo</div>';
 }
+window.setEqFilter=t=>{eqFilterTeam=t;renderEquipo();};
 
 /* ── CONFIG ── */
 function renderConfig(){
-  document.getElementById('configMembers').innerHTML=TEAM.map(m=>{
+  if(!currentUser)return;
+  const me=getMember(currentUser);
+  if(me){
+    document.getElementById('cfgMyName').value=me.name;
+    document.getElementById('cfgMyTeam').value=me.team||'';
+    document.getElementById('cfgMyColor').value=me.color||'blue';
+  }
+  updateTeamSuggestions();
+  document.getElementById('configMembers').innerHTML=members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>{
     const c=getColor(m.id),isMe=m.id===currentUser;
     return`<div class="mi">
       <div class="avatar" style="width:32px;height:32px;font-size:11px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div>
       <div class="mi-info">
         <div class="mi-name">${m.name}${isMe?' <span style="font-size:11px;color:var(--text3)">(tú)</span>':''}</div>
-        <div class="mi-meta">PIN: ${isMe?`<span style="font-family:var(--mono);letter-spacing:.12em">${m.pin}</span>`:'····'}</div>
+        <div class="mi-meta">${m.team?`<span class="team-pill">${m.team}</span>`:''} <span style="margin-left:4px">PIN: ${isMe?'<span style="font-family:var(--mono);letter-spacing:.12em">••••</span>':'••••'}</span></div>
       </div>
+      <button class="btn btn-ghost btn-xs" onclick="openEditMember('${m.id}')">Editar</button>
     </div>`;
-  }).join('');
+  }).join('')||'<div class="empty">Sin compañeros</div>';
 }
+
+window.saveMyProfile=async()=>{
+  const name=document.getElementById('cfgMyName').value.trim();
+  const team=document.getElementById('cfgMyTeam').value.trim();
+  const color=document.getElementById('cfgMyColor').value;
+  if(!name){toast('El nombre no puede estar vacío');return;}
+  await updateDoc(doc(db,'members',currentUser),{name,team,color});
+  toast('Perfil actualizado');
+  const c=COLORS[color]||COLORS.blue;
+  document.getElementById('sideUser').textContent=name;
+  const av=document.getElementById('sideAvatar');av.style.background=c.bg;av.style.color=c.tx;av.textContent=initials(name);
+};
+
+window.changePin=async()=>{
+  const old=document.getElementById('pinOld').value;
+  const nw=document.getElementById('pinNew').value;
+  if(old.length<4||nw.length<4){toast('El PIN debe tener 4 dígitos');return;}
+  const me=getMember(currentUser);
+  if(hashPin(old)!==me.pinHash&&old!==me.pin){toast('PIN actual incorrecto');return;}
+  await updateDoc(doc(db,'members',currentUser),{pinHash:hashPin(nw),pin:null});
+  document.getElementById('pinOld').value='';document.getElementById('pinNew').value='';
+  toast('PIN cambiado');
+};
+
 window.saveRate=async()=>{const rate=parseFloat(document.getElementById('cfgRate').value)||1.75;await setDoc(doc(db,'config','main'),{rate});toast('Tasa actualizada');};
 
+/* ── EDIT MEMBER MODAL ── */
+window.openEditMember=id=>{
+  const m=getMember(id);if(!m)return;
+  document.getElementById('editMemberId').value=id;
+  document.getElementById('editMemberName').value=m.name;
+  document.getElementById('editMemberTeam').value=m.team||'';
+  document.getElementById('editMemberColor').value=m.color||'blue';
+  updateTeamSuggestions();
+  document.getElementById('editMemberModal').style.display='flex';
+};
+window.closeEditMember=()=>document.getElementById('editMemberModal').style.display='none';
+window.saveEditMember=async()=>{
+  const id=document.getElementById('editMemberId').value;
+  const name=document.getElementById('editMemberName').value.trim();
+  const team=document.getElementById('editMemberTeam').value.trim();
+  const color=document.getElementById('editMemberColor').value;
+  if(!name){toast('El nombre no puede estar vacío');return;}
+  await updateDoc(doc(db,'members',id),{name,team,color});
+  if(id===currentUser){
+    const c=COLORS[color]||COLORS.blue;
+    document.getElementById('sideUser').textContent=name;
+    const av=document.getElementById('sideAvatar');av.style.background=c.bg;av.style.color=c.tx;av.textContent=initials(name);
+  }
+  closeEditMember();toast('Usuario actualizado');
+};
+window.deleteMemberConfirm=async()=>{
+  const id=document.getElementById('editMemberId').value;
+  const m=getMember(id);
+  if(!confirm(`¿Eliminar a ${m?.name||'este usuario'} y todos sus datos?`))return;
+  const batch=writeBatch(db);
+  batch.delete(doc(db,'members',id));
+  sessions.filter(s=>s.userId===id).forEach(s=>batch.delete(doc(db,'sessions',s.id)));
+  fiestas.filter(f=>f.userId===id).forEach(f=>batch.delete(doc(db,'fiestas',f.id)));
+  guardias.filter(g=>g.userId===id).forEach(g=>batch.delete(doc(db,'guardias',g.id)));
+  await batch.commit();
+  closeEditMember();
+  if(id===currentUser)logout();
+  else toast('Usuario eliminado');
+};
+
+/* ── FIREBASE CONFIG from settings ── */
+window.saveFbConfig=async()=>{
+  const apiKey=document.getElementById('fb-apiKey').value.trim();
+  const projectId=document.getElementById('fb-projectId').value.trim();
+  const appId=document.getElementById('fb-appId').value.trim();
+  if(!apiKey||!projectId||!appId){toast('Rellena API Key, Project ID y App ID');return;}
+  const cfg={apiKey,projectId,appId,authDomain:`${projectId}.firebaseapp.com`,storageBucket:`${projectId}.appspot.com`,messagingSenderId:'000000000000'};
+  localStorage.setItem('gnFB',JSON.stringify(cfg));
+  const ok=await initDB(cfg);
+  if(ok)toast('Firebase reconectado');
+};
+
 /* ── BOOT ── */
-const saved=localStorage.getItem('gnFB');
-if(saved){initDB(JSON.parse(saved));}
+async function boot(){
+  const cfg=getFbCfg();
+  if(cfg&&cfg.apiKey){
+    await initDB(cfg);
+    const saved=sessionStorage.getItem('gnUser');
+    if(saved){
+      currentUser=saved;
+      // Wait a tick for members to load
+      setTimeout(()=>{
+        if(getMember(currentUser)){showApp();}
+        else{document.getElementById('loginScreen').style.display='flex';}
+      },1200);
+    } else {
+      document.getElementById('loginScreen').style.display='flex';
+    }
+  } else {
+    // No config: show login (register tab to get started)
+    document.getElementById('loginScreen').style.display='flex';
+    switchLoginTab('register');
+    // Show a one-time message in settings
+    document.getElementById('syncBadge').textContent='Sin configurar';
+  }
+}
+
+boot();
 </script>
 </body>
 </html>
