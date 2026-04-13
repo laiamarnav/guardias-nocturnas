@@ -584,12 +584,12 @@ import { getFirestore, collection, doc, onSnapshot, addDoc, deleteDoc, setDoc, u
    configúralos desde Ajustes → Conexión Firebase
    ═══════════════════════════════════════════════ */
 const DEFAULT_FIREBASE = {
-  apiKey:            "",
-  authDomain:        "",
-  projectId:         "",
-  storageBucket:     "",
-  messagingSenderId: "",
-  appId:             ""
+  apiKey:            "AIzaSyChpZGTM4LlA82nLVRw4h5YVBh614qMqNg",
+  authDomain:        "guardias-nocturnas.firebasestorage.app",
+  projectId:         "guardias-nocturnas",
+  storageBucket:     "guardias-nocturnas.firebasestorage.app",
+  messagingSenderId: "754134928453",
+  appId:             "1:754134928453:web:90d4a5ac8aadc213b0e72c"
 };
 /* ═══════════════════════════════════════════════ */
 
@@ -934,7 +934,8 @@ window.assignRange=async()=>{
   dates.forEach(date=>rangeSelected.forEach(uid=>{if(!existing.has(`${uid}:${date}`))toAdd.push({userId:uid,date});}));
   if(!toAdd.length){toast('Todas esas guardias ya están asignadas');return;}
   const batch=writeBatch(db);
-  toAdd.forEach(g=>batch.set(doc(collection(db,'guardias')),g));
+  const guardiasRef = collection(db, 'guardias');
+  toAdd.forEach(g => batch.set(doc(guardiasRef), g));
   await batch.commit();
   toast(`${toAdd.length} guardia${toAdd.length!==1?'s':''} asignada${toAdd.length!==1?'s':''}`);
   document.getElementById('rangeFrom').value='';document.getElementById('rangeTo').value='';
