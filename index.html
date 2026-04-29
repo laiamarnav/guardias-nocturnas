@@ -406,10 +406,22 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
     <!-- FIESTAS -->
     <div class="page" id="page-fiestas">
       <div class="ph"><h2>Fiestas</h2><p>Días ganados y disfrutados</p></div>
-      <div class="sg" style="grid-template-columns:repeat(3,minmax(0,1fr))">
-        <div class="stat"><div class="stat-lbl">Ganadas (total)</div><div class="stat-val" id="f-ganadas">—</div></div>
+      <div class="sg">
+        <div class="stat"><div class="stat-lbl">Bolsa anterior</div><div class="stat-val" id="f-bolsa">—</div><div class="stat-sub">arrastrada de antes</div></div>
+        <div class="stat"><div class="stat-lbl">Ganadas aquí</div><div class="stat-val" id="f-ganadas">—</div><div class="stat-sub">por horas trabajadas</div></div>
         <div class="stat"><div class="stat-lbl">Cogidas</div><div class="stat-val" id="f-cogidas">—</div></div>
         <div class="stat"><div class="stat-lbl">Disponibles</div><div class="stat-val" id="f-disp" style="color:var(--green)">—</div></div>
+      </div>
+      <div class="card">
+        <div class="ch"><h3>Bolsa de horas anterior</h3><span class="sub">Horas acumuladas antes de usar esta app</span></div>
+        <div class="cb">
+          <div class="fg" style="grid-template-columns:1fr 1fr">
+            <div class="field"><label>Horas acumuladas</label><input type="number" id="bolsaHoras" value="0" min="0" step="0.5"></div>
+            <div class="field"><label>Descripción (opcional)</label><input type="text" id="bolsaDesc" placeholder="Ej: saldo 2025…"></div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="saveBolsa()">Guardar bolsa inicial</button>
+          <div style="font-size:12px;color:var(--text3);margin-top:10px">Ponla una vez — se suma a tus horas disponibles.</div>
+        </div>
       </div>
       <div class="card">
         <div class="ch"><h3>Añadir fiesta cogida</h3></div>
@@ -417,7 +429,7 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
           <div class="fg">
             <div class="field"><label>Fecha inicio</label><input type="date" id="fStart"></div>
             <div class="field"><label>Fecha fin</label><input type="date" id="fEnd"></div>
-            <div class="field"><label>Horas totales</label><input type="number" id="fHoras" value="8" min="1" max="999"></div>
+            <div class="field"><label>Horas totales</label><input type="number" id="fHoras" value="8" min="0.5" max="999" step="0.5"></div>
             <div class="field full"><label>Descripción</label><input type="text" id="fDesc" placeholder="Ej: puente de mayo…"></div>
           </div>
           <button class="btn btn-amber" onclick="addFiesta()">Registrar fiesta</button>
@@ -746,6 +758,7 @@ window.addManual=async()=>{
 };
 
 /* ── STATS ── */
+function getBolsa(uid){const m=getMember(uid);return parseFloat(m?.bolsa)||0;}
 function renderMyStats(){
   if(!currentUser)return;
   const now=new Date(),mes=`${now.getFullYear()}-${pad(now.getMonth()+1)}`;
@@ -754,7 +767,9 @@ function renderMyStats(){
   const subidas=mine.filter(s=>s.tipo==='subida').length;
   const rate=config.rate||1.75;
   const allMs=sessions.filter(s=>s.userId===currentUser).reduce((a,s)=>a+s.dur,0);
-  const ganadas=(allMs/3600000)*rate;
+  const ganadaApp=(allMs/3600000)*rate;
+  const bolsa=getBolsa(currentUser);
+  const ganadas=ganadaApp+bolsa;
   const cogidas=fiestas.filter(f=>f.userId===currentUser).reduce((a,f)=>a+(f.horas||0),0);
   document.getElementById('st-horas').textContent=fmtH(totalMs);
   document.getElementById('st-subidas').textContent=subidas;
@@ -911,10 +926,16 @@ window.saveEditSession=async()=>{
 function renderFiestas(){
   const rate=config.rate||1.75;
   const allMs=sessions.filter(s=>s.userId===currentUser).reduce((a,s)=>a+s.dur,0);
-  const ganadas=(allMs/3600000)*rate;
+  const ganadaApp=(allMs/3600000)*rate;
+  const bolsa=getBolsa(currentUser);
+  const ganadas=ganadaApp+bolsa;
   const myF=fiestas.filter(f=>f.userId===currentUser).sort((a,b)=>new Date(b.startDate||b.date)-new Date(a.startDate||a.date));
   const cogidas=myF.reduce((a,f)=>a+(f.horas||0),0);
-  document.getElementById('f-ganadas').textContent=ganadas.toFixed(1)+'h';
+  // populate bolsa input with current value
+  const me=getMember(currentUser);
+  if(me){document.getElementById('bolsaHoras').value=me.bolsa||0;document.getElementById('bolsaDesc').value=me.bolsaDesc||'';}
+  document.getElementById('f-bolsa').textContent=bolsa.toFixed(1)+'h';
+  document.getElementById('f-ganadas').textContent=ganadaApp.toFixed(1)+'h';
   document.getElementById('f-cogidas').textContent=cogidas.toFixed(1)+'h';
   document.getElementById('f-disp').textContent=Math.max(0,ganadas-cogidas).toFixed(1)+'h';
   const list=document.getElementById('fiestasList');
@@ -932,20 +953,27 @@ function renderFiestas(){
     </div>`).join(''):'<div class="empty">Aún no has registrado ninguna fiesta</div>';
   document.getElementById('fiestasEquipo').innerHTML=members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>{
     const c=getColor(m.id);const mf=fiestas.filter(f=>f.userId===m.id),cog=mf.reduce((a,f)=>a+(f.horas||0),0);
-    const ms=sessions.filter(s=>s.userId===m.id).reduce((a,s)=>a+s.dur,0);const gan=((ms/3600000)*(config.rate||1.75));
-    return`<div class="mi"><div class="avatar" style="width:36px;height:36px;font-size:13px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div><div class="mi-info"><div class="mi-name">${m.name}</div><div class="mi-meta">${m.team?`<span class="team-pill" style="margin-right:4px">${m.team}</span>`:''}${mf.length} periodo${mf.length!==1?'s':''} · ${cog.toFixed(1)}h cogidas</div></div><div class="mi-right"><div class="mi-hrs">${gan.toFixed(1)}h</div><div class="mi-sub">ganadas</div><div class="mi-sub" style="color:var(--green)">${Math.max(0,gan-cog).toFixed(1)}h libres</div></div></div>`;
+    const ms=sessions.filter(s=>s.userId===m.id).reduce((a,s)=>a+s.dur,0);const ganApp=((ms/3600000)*(config.rate||1.75));const ganTotal=ganApp+getBolsa(m.id);
+    return`<div class="mi"><div class="avatar" style="width:36px;height:36px;font-size:13px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div><div class="mi-info"><div class="mi-name">${m.name}</div><div class="mi-meta">${m.team?`<span class="team-pill" style="margin-right:4px">${m.team}</span>`:''}${mf.length} periodo${mf.length!==1?'s':''} · ${cog.toFixed(1)}h cogidas</div></div><div class="mi-right"><div class="mi-hrs">${ganTotal.toFixed(1)}h</div><div class="mi-sub">total (inc. bolsa)</div><div class="mi-sub" style="color:var(--green)">${Math.max(0,ganTotal-cog).toFixed(1)}h libres</div></div></div>`;
   }).join('');
 }
 function fmtRange(f){const s=(f.startDate||f.date||''),e=f.endDate||'';const fmt=d=>d?d.split('-').reverse().join('/'):'';return(e&&e!==s)?`${fmt(s)} → ${fmt(e)}`:fmt(s);}
 window.addFiesta=async()=>{
   const start=document.getElementById('fStart').value,end=document.getElementById('fEnd').value||start;
-  const horas=parseInt(document.getElementById('fHoras').value)||8,desc=document.getElementById('fDesc').value;
+  const horas=parseFloat(document.getElementById('fHoras').value)||8,desc=document.getElementById('fDesc').value;
   if(!start){toast('Elige una fecha');return;}
   await addDoc(collection(db,'fiestas'),{userId:currentUser,startDate:start,endDate:end,date:start,horas,desc});
   document.getElementById('fStart').value='';document.getElementById('fEnd').value='';document.getElementById('fDesc').value='';
   toast('Fiesta registrada');
 };
 window.deleteFiesta=async id=>{if(!confirm('¿Eliminar esta fiesta?'))return;await deleteDoc(doc(db,'fiestas',id));toast('Fiesta eliminada');};
+window.saveBolsa=async()=>{
+  const horas=parseFloat(document.getElementById('bolsaHoras').value)||0;
+  const desc=document.getElementById('bolsaDesc').value.trim();
+  await updateDoc(doc(db,'members',currentUser),{bolsa:horas,bolsaDesc:desc});
+  toast('Bolsa guardada: '+horas+'h');
+  renderMyStats();renderFiestas();
+};
 
 /* ── EQUIPO ── */
 function renderEquipo(){
@@ -956,7 +984,7 @@ function renderEquipo(){
   let totalMs=0,totalSub=0,totalF=0;
   const stats=filtered.map(m=>{
     const mine=sessions.filter(s=>s.userId===m.id);const ms=mine.reduce((a,s)=>a+s.dur,0);
-    const sub=mine.filter(s=>s.tipo==='subida').length;const gan=(ms/3600000)*rate;
+    const sub=mine.filter(s=>s.tipo==='subida').length;const ganApp=(ms/3600000)*rate;const gan=ganApp+getBolsa(m.id);
     const cog=fiestas.filter(f=>f.userId===m.id).reduce((a,f)=>a+(f.horas||0),0);
     totalMs+=ms;totalSub+=sub;totalF+=gan;return{...m,ms,sub,gan,cog,disp:Math.max(0,gan-cog)};
   });
