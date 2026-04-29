@@ -21,15 +21,13 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
 
-/* ── MODAL OVERLAY ── */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:300;padding:20px}
-.modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rl);padding:28px;width:100%;max-width:420px;position:relative}
+.modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rl);padding:28px;width:100%;max-width:440px;position:relative}
 .modal-box h3{font-size:17px;font-weight:600;margin-bottom:6px;letter-spacing:-.01em}
 .modal-box .modal-sub{font-size:13px;color:var(--text2);margin-bottom:20px}
 .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px}
 .modal-close:hover{background:var(--bg3);color:var(--text)}
 
-/* ── LOGIN SCREEN ── */
 #loginScreen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
 .login-box{width:100%;max-width:380px}
 .login-logo{margin-bottom:28px}
@@ -38,8 +36,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .login-tabs{display:flex;gap:4px;background:var(--bg3);border-radius:8px;padding:3px;margin-bottom:20px}
 .ltab{flex:1;padding:7px;text-align:center;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;border-radius:6px;transition:all .15s}
 .ltab.active{background:var(--bg2);color:var(--text);border:1px solid var(--border2)}
-
-/* Member picker */
 .member-cards{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;max-height:320px;overflow-y:auto}
 .member-card{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);cursor:pointer;transition:all .15s}
 .member-card:hover{border-color:var(--border2);background:var(--bg3)}
@@ -47,8 +43,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .mc-info{flex:1}
 .mc-name{font-size:14px;font-weight:500}
 .mc-sub{font-size:11px;color:var(--text3);margin-top:1px}
-
-/* PIN pad */
 .pin-section{display:none}
 .pin-label{font-size:12px;color:var(--text2);margin-bottom:10px;text-align:center}
 .pin-dots{display:flex;justify-content:center;gap:10px;margin-bottom:18px}
@@ -61,11 +55,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .pin-error{text-align:center;font-size:12px;color:var(--red);margin-top:10px;height:16px}
 .login-back{font-size:12px;color:var(--text3);text-align:center;margin-top:10px;cursor:pointer}
 .login-back:hover{color:var(--text2)}
-
-/* Register form */
 .reg-form{display:none}
 
-/* ── SHELL ── */
 .shell{display:flex;min-height:100vh}
 .sidebar{width:226px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
 .sb-logo{padding:20px 20px 16px;border-bottom:1px solid var(--border)}
@@ -91,7 +82,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .ph h2{font-size:22px;font-weight:600;letter-spacing:-.02em}
 .ph p{font-size:13px;color:var(--text2);margin-top:4px}
 
-/* ── UI COMPONENTS ── */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:16px}
 .ch{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .ch h3{font-size:13px;font-weight:500}
@@ -124,8 +114,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 
 .fg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:14px}
 .field label{display:block;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.field input,.field select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-family:var(--font);font-size:13px;color:var(--text);outline:none;transition:border-color .15s}
-.field input:focus,.field select:focus{border-color:var(--blue-b)}
+.field input,.field select,.field textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-family:var(--font);font-size:13px;color:var(--text);outline:none;transition:border-color .15s;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue-b)}
 .field select option{background:#1c1c21}
 .field.full{grid-column:1/-1}
 
@@ -141,9 +131,7 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 .bg{background:var(--green-bg);color:var(--green);border:1px solid var(--green-b)}
 .ba{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-b)}
 .bgy{background:rgba(255,255,255,.05);color:var(--text2);border:1px solid var(--border)}
-.br{background:var(--red-bg);color:var(--red);border:1px solid var(--red-b)}
 
-/* Calendar */
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .cal-nav h3{font-size:15px;font-weight:600;letter-spacing:-.01em}
 .cnb{width:30px;height:30px;border-radius:7px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s}
@@ -170,7 +158,6 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 .dr{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
 .dr:last-child{border-bottom:none}
 
-/* Range picker */
 .range-members{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .rtog{display:flex;align-items:center;gap:7px;padding:7px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .12s;user-select:none}
 .rtog.on{border-color:var(--blue-b);background:var(--blue-bg)}
@@ -178,14 +165,12 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 .rtog span{font-size:13px;font-weight:500;color:var(--text2)}
 .rtog.on span{color:var(--blue)}
 
-/* Fiestas */
 .fi-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px}
 .fi-item:last-child{margin-bottom:0}
 .fi-info{flex:1;min-width:0}
 .fi-date{font-size:13px;font-weight:500}
 .fi-meta{font-size:11px;color:var(--text3);margin-top:1px}
 
-/* Members list */
 .mi{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
 .mi:last-child{border-bottom:none}
 .mi-info{flex:1;min-width:0}
@@ -203,38 +188,29 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 .empty{padding:28px;text-align:center;color:var(--text3);font-size:13px}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--text);z-index:9999;transform:translateY(8px);opacity:0;transition:all .2s;pointer-events:none;max-width:280px}
 .toast.show{transform:translateY(0);opacity:1}
-
-/* Team group pills */
 .team-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;background:var(--purple-bg);color:var(--purple);border:1px solid rgba(167,139,250,.25)}
-
-/* Settings section labels */
-.settings-section{margin-bottom:24px}
-.settings-section-title{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-
-/* Note box */
 .note{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:14px}
 .note strong{color:var(--text)}
-.note a{color:var(--blue);text-decoration:none}
+
+/* ── ROW ACTIONS — inline edit/delete icons in table ── */
+.row-actions{display:flex;gap:4px;justify-content:flex-end}
 
 @media(max-width:680px){.sidebar{display:none}.main{padding:16px}.sg{grid-template-columns:repeat(2,1fr)}.ficha-clock{font-size:36px}}
 </style>
 </head>
 <body>
 
-<!-- ══ LOGIN ══ -->
+<!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">
       <h1>Guardias nocturnas</h1>
       <p>Accede o crea tu cuenta</p>
     </div>
-
     <div class="login-tabs">
       <div class="ltab active" id="ltab-login" onclick="switchLoginTab('login')">Entrar</div>
       <div class="ltab" id="ltab-register" onclick="switchLoginTab('register')">Registrarse</div>
     </div>
-
-    <!-- LOGIN FLOW -->
     <div id="loginFlow">
       <div class="member-cards" id="memberCards"></div>
       <div class="pin-section" id="pinSection">
@@ -255,12 +231,10 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
         <div class="login-back" onclick="backToCards()">← Volver</div>
       </div>
     </div>
-
-    <!-- REGISTER FLOW -->
     <div class="reg-form" id="registerFlow">
       <div class="fg" style="grid-template-columns:1fr">
         <div class="field"><label>Tu nombre</label><input type="text" id="regName" placeholder="Ej: Mario"></div>
-        <div class="field"><label>Equipo (opcional)</label><input type="text" id="regTeam" placeholder="Ej: Turno A, Noche…" list="teamSuggestions"><datalist id="teamSuggestions"></datalist></div>
+        <div class="field"><label>Equipo (opcional)</label><input type="text" id="regTeam" placeholder="Ej: Turno A" list="teamSuggestions"><datalist id="teamSuggestions"></datalist></div>
         <div class="field"><label>Color</label>
           <select id="regColor">
             <option value="blue">Azul</option><option value="green">Verde</option>
@@ -287,7 +261,7 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
   </div>
 </div>
 
-<!-- ══ APP SHELL ══ -->
+<!-- APP -->
 <div class="shell" id="appShell" style="display:none">
   <aside class="sidebar">
     <div class="sb-logo">
@@ -390,8 +364,6 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
           <div class="cal-grid" id="calGrid"></div>
         </div>
       </div>
-
-      <!-- DAY DETAIL -->
       <div class="day-detail" id="dayDetail">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
           <h4 id="dayDetailTitle" style="font-size:15px;font-weight:600"></h4>
@@ -400,8 +372,6 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
         <div id="dayDetailBody"></div>
         <div id="dayDetailActions" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap"></div>
       </div>
-
-      <!-- RANGE PICKER (below calendar) -->
       <div class="card" style="margin-top:8px">
         <div class="ch"><h3>Asignar guardias por rango</h3><span class="sub">Una semana, dos semanas…</span></div>
         <div class="cb">
@@ -421,7 +391,7 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 
     <!-- REGISTROS -->
     <div class="page" id="page-registros">
-      <div class="ph"><h2>Registros</h2><p>Historial completo — solo puedes borrar los tuyos</p></div>
+      <div class="ph"><h2>Registros</h2><p>Puedes editar o borrar los tuyos</p></div>
       <div class="chip-row" id="filterChips"></div>
       <div class="card">
         <div class="tw">
@@ -482,8 +452,6 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
     <!-- AJUSTES -->
     <div class="page" id="page-config">
       <div class="ph"><h2>Ajustes</h2></div>
-
-      <!-- My profile -->
       <div class="card">
         <div class="ch"><h3>Mi perfil</h3></div>
         <div class="cb">
@@ -498,7 +466,6 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
             </div>
           </div>
           <button class="btn btn-blue btn-sm" onclick="saveMyProfile()" style="margin-right:8px">Guardar perfil</button>
-
           <div class="sep"></div>
           <div style="font-size:13px;font-weight:500;margin-bottom:10px">Cambiar PIN</div>
           <div class="fg" style="grid-template-columns:1fr 1fr">
@@ -508,14 +475,10 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
           <button class="btn btn-outline btn-sm" onclick="changePin()">Cambiar PIN</button>
         </div>
       </div>
-
-      <!-- Users management -->
       <div class="card">
         <div class="ch"><h3>Compañeros del equipo</h3><span class="sub">Gestión de usuarios</span></div>
         <div class="cb" id="configMembers"></div>
       </div>
-
-      <!-- Rate -->
       <div class="card">
         <div class="ch"><h3>Remuneración</h3></div>
         <div class="cb">
@@ -525,16 +488,14 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
           <button class="btn btn-blue btn-sm" onclick="saveRate()">Guardar</button>
         </div>
       </div>
-
-      <!-- Firebase -->
       <div class="card">
         <div class="ch"><h3>Conexión Firebase</h3></div>
-        <div class="cb" id="fbConfigBody">
-          <div class="note">Los datos se guardan en <strong>Firebase Firestore</strong>. Las credenciales se almacenan en el código y en el navegador.</div>
+        <div class="cb">
+          <div class="note">Los datos se guardan en <strong>Firebase Firestore</strong>.</div>
           <div class="fg">
-            <div class="field full"><label>API Key</label><input type="text" id="fb-apiKey" placeholder="AIzaSy…"></div>
-            <div class="field full"><label>Project ID</label><input type="text" id="fb-projectId" placeholder="mi-proyecto-xxxxx"></div>
-            <div class="field full"><label>App ID</label><input type="text" id="fb-appId" placeholder="1:123:web:abc…"></div>
+            <div class="field full"><label>API Key</label><input type="text" id="fb-apiKey"></div>
+            <div class="field full"><label>Project ID</label><input type="text" id="fb-projectId"></div>
+            <div class="field full"><label>App ID</label><input type="text" id="fb-appId"></div>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <button class="btn btn-blue btn-sm" onclick="saveFbConfig()">Guardar y reconectar</button>
@@ -552,7 +513,7 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
   <div class="modal-box">
     <button class="modal-close" onclick="closeEditMember()">✕</button>
     <h3>Editar compañero</h3>
-    <p class="modal-sub">Cambia el nombre, equipo o color de este usuario.</p>
+    <p class="modal-sub">Nombre, equipo o color.</p>
     <input type="hidden" id="editMemberId">
     <div class="fg" style="grid-template-columns:1fr">
       <div class="field"><label>Nombre</label><input type="text" id="editMemberName"></div>
@@ -571,43 +532,58 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
   </div>
 </div>
 
+<!-- EDIT SESSION MODAL -->
+<div class="modal-bg" id="editSessionModal" style="display:none">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeEditSession()">✕</button>
+    <h3>Editar registro</h3>
+    <p class="modal-sub">Modifica los datos de este turno.</p>
+    <input type="hidden" id="editSessionId">
+    <div class="fg">
+      <div class="field"><label>Fecha</label><input type="date" id="editDate"></div>
+      <div class="field"><label>Inicio</label><input type="time" id="editStart"></div>
+      <div class="field"><label>Fin</label><input type="time" id="editEnd"></div>
+      <div class="field"><label>Tipo</label>
+        <select id="editTipo">
+          <option value="guardia">Guardia (sin subida)</option>
+          <option value="subida">Subida real</option>
+        </select>
+      </div>
+      <div class="field full"><label>Notas</label><input type="text" id="editNotas" placeholder="Opcional…"></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-blue btn-sm" onclick="saveEditSession()">Guardar cambios</button>
+      <button class="btn btn-outline btn-sm" onclick="closeEditSession()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
-<!-- ══ FIREBASE + APP LOGIC ══ -->
 <script type="module">
-import { initializeApp, getApps, deleteApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getFirestore, collection, doc, onSnapshot, addDoc, deleteDoc, setDoc, updateDoc, writeBatch, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { initializeApp, deleteApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, doc, onSnapshot, addDoc, deleteDoc, setDoc, updateDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 /* ═══════════════════════════════════════════════
-   🔧 FIREBASE CONFIG — edita estos valores
-   Si no tienes proyecto aún, déjalos vacíos y
-   configúralos desde Ajustes → Conexión Firebase
+   🔧 FIREBASE CONFIG
    ═══════════════════════════════════════════════ */
 const DEFAULT_FIREBASE = {
   apiKey:            "AIzaSyChpZGTM4LlA82nLVRw4h5YVBh614qMqNg",
-  authDomain:        "guardias-nocturnas.firebasestorage.app",
+  authDomain:        "guardias-nocturnas.firebaseapp.com",
   projectId:         "guardias-nocturnas",
   storageBucket:     "guardias-nocturnas.firebasestorage.app",
   messagingSenderId: "754134928453",
   appId:             "1:754134928453:web:90d4a5ac8aadc213b0e72c"
 };
-/* ═══════════════════════════════════════════════ */
 
-const COLORS = {
-  blue:   {bg:'rgba(79,142,247,.15)',  tx:'#4f8ef7'},
-  green:  {bg:'rgba(62,207,142,.12)',  tx:'#3ecf8e'},
-  amber:  {bg:'rgba(245,166,35,.12)',  tx:'#f5a623'},
-  purple: {bg:'rgba(167,139,250,.12)', tx:'#a78bfa'},
-  coral:  {bg:'rgba(248,113,113,.12)', tx:'#f87171'},
-};
+const COLORS={blue:{bg:'rgba(79,142,247,.15)',tx:'#4f8ef7'},green:{bg:'rgba(62,207,142,.12)',tx:'#3ecf8e'},amber:{bg:'rgba(245,166,35,.12)',tx:'#f5a623'},purple:{bg:'rgba(167,139,250,.12)',tx:'#a78bfa'},coral:{bg:'rgba(248,113,113,.12)',tx:'#f87171'}};
 const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const DOWS=['L','M','X','J','V','S','D'];
 
-let db, firebaseApp;
-let members=[], sessions=[], fiestas=[], guardias=[], config={rate:1.75};
-let currentUser=null, shiftStart=null, calY, calM, filterUser='', eqFilterTeam='', clockTick;
-let rangeSelected=new Set();
-let unsubs=[];
+let db,firebaseApp;
+let members=[],sessions=[],fiestas=[],guardias=[],config={rate:1.75};
+let currentUser=null,shiftStart=null,calY,calM,filterUser='',eqFilterTeam='',clockTick;
+let rangeSelected=new Set(),unsubs=[];
 
 const pad=n=>String(n).padStart(2,'0');
 const fmtMs=ms=>{const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);return h===0?m+'min':m===0?h+'h':h+'h '+m+'min';};
@@ -621,31 +597,23 @@ function toast(msg,dur=2500){const t=document.getElementById('toast');t.textCont
 function hashPin(pin){let h=0;for(let i=0;i<pin.length;i++){h=(h<<5)-h+pin.charCodeAt(i);h|=0;}return h.toString(36);}
 
 /* ── FIREBASE ── */
-function getFbCfg(){
-  const stored=localStorage.getItem('gnFB');
-  if(stored){const s=JSON.parse(stored);if(s.apiKey&&s.projectId)return s;}
-  if(DEFAULT_FIREBASE.apiKey&&DEFAULT_FIREBASE.projectId)return DEFAULT_FIREBASE;
-  return null;
-}
+function getFbCfg(){const stored=localStorage.getItem('gnFB');if(stored){const s=JSON.parse(stored);if(s.apiKey&&s.projectId)return s;}if(DEFAULT_FIREBASE.apiKey&&DEFAULT_FIREBASE.projectId)return DEFAULT_FIREBASE;return null;}
 
 async function initDB(cfg){
   try{
     if(firebaseApp){try{await deleteApp(firebaseApp);}catch(e){}}
-    firebaseApp=initializeApp(cfg,'gn-'+ Date.now());
+    firebaseApp=initializeApp(cfg,'gn-'+Date.now());
     db=getFirestore(firebaseApp);
     document.getElementById('syncBadge').textContent='Conectado · tiempo real';
     document.getElementById('fbStatusBtn').textContent='Estado: conectado';
     document.getElementById('fb-apiKey').value=cfg.apiKey||'';
     document.getElementById('fb-projectId').value=cfg.projectId||'';
     document.getElementById('fb-appId').value=cfg.appId||'';
-    startListeners();
-    return true;
+    startListeners();return true;
   }catch(e){
-    console.error(e);
     document.getElementById('syncBadge').textContent='Error de conexión';
     document.getElementById('fbStatusBtn').textContent='Estado: error';
-    toast('Error conectando Firebase: '+e.message,4000);
-    return false;
+    toast('Error Firebase: '+e.message,4000);return false;
   }
 }
 
@@ -669,58 +637,25 @@ window.switchLoginTab=tab=>{
   if(tab==='login')buildMemberCards();
 };
 
-/* ── MEMBER CARDS ── */
 function buildMemberCards(){
   const wrap=document.getElementById('memberCards');
   wrap.innerHTML=members.length
-    ?members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>{
-        const c=COLORS[m.color]||COLORS.blue;
-        return`<div class="member-card" id="mc-${m.id}" onclick="selectMember('${m.id}')">
-          <div class="avatar" style="width:38px;height:38px;font-size:13px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div>
-          <div class="mc-info"><div class="mc-name">${m.name}</div><div class="mc-sub">${m.team||'Sin equipo'}</div></div>
-        </div>`;
-      }).join('')
+    ?members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>{const c=COLORS[m.color]||COLORS.blue;return`<div class="member-card" id="mc-${m.id}" onclick="selectMember('${m.id}')"><div class="avatar" style="width:38px;height:38px;font-size:13px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div><div class="mc-info"><div class="mc-name">${m.name}</div><div class="mc-sub">${m.team||'Sin equipo'}</div></div></div>`;}).join('')
     :'<div class="empty" style="padding:16px">Aún no hay usuarios. Regístrate primero.</div>';
 }
 
-function onMembersChange(){
-  buildMemberCards();
-  buildRangeMembers();
-  updateTeamSuggestions();
-  renderAll();
-}
-
-function updateTeamSuggestions(){
-  const ts=teams();
-  ['teamSuggestions','teamSuggestions2','teamSuggestions3'].forEach(id=>{
-    const dl=document.getElementById(id);
-    if(dl)dl.innerHTML=ts.map(t=>`<option value="${t}">`).join('');
-  });
-}
+function onMembersChange(){buildMemberCards();buildRangeMembers();updateTeamSuggestions();renderAll();}
+function updateTeamSuggestions(){const ts=teams();['teamSuggestions','teamSuggestions2','teamSuggestions3'].forEach(id=>{const dl=document.getElementById(id);if(dl)dl.innerHTML=ts.map(t=>`<option value="${t}">`).join('');});}
 
 /* ── LOGIN ── */
 let selectedMember=null,pinBuf='';
-
-window.selectMember=id=>{
-  selectedMember=id;
-  document.querySelectorAll('.member-card').forEach(el=>el.classList.remove('selected'));
-  document.getElementById('mc-'+id)?.classList.add('selected');
-  document.getElementById('pinSection').style.display='block';
-  document.getElementById('pinLabel').textContent=`PIN de ${getMember(id)?.name||''}`;
-  pinBuf='';renderDots();document.getElementById('pinError').textContent='';
-};
+window.selectMember=id=>{selectedMember=id;document.querySelectorAll('.member-card').forEach(el=>el.classList.remove('selected'));document.getElementById('mc-'+id)?.classList.add('selected');document.getElementById('pinSection').style.display='block';document.getElementById('pinLabel').textContent=`PIN de ${getMember(id)?.name||''}`;pinBuf='';renderDots();document.getElementById('pinError').textContent='';};
 window.backToCards=()=>{document.getElementById('pinSection').style.display='none';document.querySelectorAll('.member-card').forEach(el=>el.classList.remove('selected'));selectedMember=null;pinBuf='';};
 window.pinKey=k=>{if(pinBuf.length>=4)return;pinBuf+=k;renderDots();if(pinBuf.length===4)setTimeout(checkPin,120);};
 window.pinDel=()=>{pinBuf=pinBuf.slice(0,-1);renderDots();};
 window.pinClear=()=>{pinBuf='';renderDots();};
 function renderDots(){document.querySelectorAll('#pinSection .pin-dot').forEach((d,i)=>d.classList.toggle('filled',i<pinBuf.length));}
-async function checkPin(){
-  const m=getMember(selectedMember);
-  if(!m)return;
-  const hashed=hashPin(pinBuf);
-  if(hashed===m.pinHash||pinBuf===m.pin){loginSuccess(m.id);}
-  else{document.getElementById('pinError').textContent='PIN incorrecto';pinBuf='';renderDots();}
-}
+async function checkPin(){const m=getMember(selectedMember);if(!m)return;if(hashPin(pinBuf)===m.pinHash||pinBuf===m.pin){loginSuccess(m.id);}else{document.getElementById('pinError').textContent='PIN incorrecto';pinBuf='';renderDots();}}
 
 /* ── REGISTER ── */
 let regPin='';
@@ -728,38 +663,27 @@ window.regPinKey=k=>{if(regPin.length>=4)return;regPin+=k;renderRegDots();};
 window.regPinDel=()=>{regPin=regPin.slice(0,-1);renderRegDots();};
 window.regPinClear=()=>{regPin='';renderRegDots();};
 function renderRegDots(){document.querySelectorAll('#regDots .pin-dot').forEach((d,i)=>d.classList.toggle('filled',i<regPin.length));}
-
 window.registerUser=async()=>{
-  const name=document.getElementById('regName').value.trim();
-  const team=document.getElementById('regTeam').value.trim();
-  const color=document.getElementById('regColor').value;
-  const err=document.getElementById('regError');
+  const name=document.getElementById('regName').value.trim(),team=document.getElementById('regTeam').value.trim(),color=document.getElementById('regColor').value,err=document.getElementById('regError');
   if(!name){err.textContent='Escribe tu nombre';return;}
   if(regPin.length<4){err.textContent='Elige un PIN de 4 dígitos';return;}
-  if(members.some(m=>m.name.toLowerCase()===name.toLowerCase())){err.textContent='Ya existe un usuario con ese nombre';return;}
+  if(members.some(m=>m.name.toLowerCase()===name.toLowerCase())){err.textContent='Ya existe ese nombre';return;}
   err.textContent='';
   await addDoc(collection(db,'members'),{name,team,color,pinHash:hashPin(regPin),createdAt:Date.now()});
-  toast(`Bienvenido, ${name}!`);
-  regPin='';renderRegDots();
+  toast(`Bienvenido, ${name}!`);regPin='';renderRegDots();
   document.getElementById('regName').value='';document.getElementById('regTeam').value='';
   switchLoginTab('login');
 };
 
 /* ── SESSION ── */
-function loginSuccess(id){
-  currentUser=id;sessionStorage.setItem('gnUser',id);
-  document.getElementById('loginScreen').style.display='none';
-  showApp();
-}
+function loginSuccess(id){currentUser=id;sessionStorage.setItem('gnUser',id);document.getElementById('loginScreen').style.display='none';showApp();}
 function showApp(){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('appShell').style.display='flex';
-  const m=getMember(currentUser);
-  if(!m){logout();return;}
+  const m=getMember(currentUser);if(!m){logout();return;}
   const c=getColor(currentUser);
   document.getElementById('sideUser').textContent=m.name;
-  const av=document.getElementById('sideAvatar');
-  av.style.background=c.bg;av.style.color=c.tx;av.textContent=initials(m.name);
+  const av=document.getElementById('sideAvatar');av.style.background=c.bg;av.style.color=c.tx;av.textContent=initials(m.name);
   const now=new Date();
   if(!calY){calY=now.getFullYear();calM=now.getMonth();}
   document.getElementById('mDate').value=todayKey();
@@ -776,32 +700,23 @@ function showApp(){
   renderAll();renderConfig();
 }
 window.logout=()=>{
-  currentUser=null;shiftStart=null;
-  sessionStorage.removeItem('gnUser');sessionStorage.removeItem('gnShift');
+  currentUser=null;shiftStart=null;sessionStorage.removeItem('gnUser');sessionStorage.removeItem('gnShift');
   if(clockTick)clearInterval(clockTick);
-  document.getElementById('appShell').style.display='none';
-  document.getElementById('loginScreen').style.display='flex';
-  pinBuf='';selectedMember=null;
-  document.getElementById('pinSection').style.display='none';
+  document.getElementById('appShell').style.display='none';document.getElementById('loginScreen').style.display='flex';
+  pinBuf='';selectedMember=null;document.getElementById('pinSection').style.display='none';
   document.querySelectorAll('.member-card').forEach(el=>el.classList.remove('selected'));
   document.querySelectorAll('.nav-item').forEach((el,i)=>el.classList.toggle('active',i===0));
   document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===0));
 };
 
-/* ── NAV ── */
 window.nav=el=>{
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  el.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));el.classList.add('active');
   const page=el.dataset.page;
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
-  if(page==='calendario')buildCal();
-  if(page==='registros')renderRegistros();
-  if(page==='fiestas')renderFiestas();
-  if(page==='equipo')renderEquipo();
-  if(page==='config')renderConfig();
+  if(page==='calendario')buildCal();if(page==='registros')renderRegistros();
+  if(page==='fiestas')renderFiestas();if(page==='equipo')renderEquipo();if(page==='config')renderConfig();
 };
-
 function renderAll(){
   renderMyStats();
   if(document.getElementById('page-calendario').classList.contains('active'))buildCal();
@@ -877,8 +792,7 @@ window.calNext=()=>{calM++;if(calM>11){calM=0;calY++;}buildCal();};
 
 function openDay(key,dt){
   document.getElementById('dayDetailTitle').textContent=`${dt.getDate()} de ${MONTHS[dt.getMonth()]} ${dt.getFullYear()}`;
-  const detail=document.getElementById('dayDetail');
-  detail.style.display='block';
+  const detail=document.getElementById('dayDetail');detail.style.display='block';
   detail.scrollIntoView({behavior:'smooth',block:'nearest'});
   const sess=sessions.filter(s=>s.date===key),gds=guardias.filter(g=>g.date===key),fts=fiestas.filter(f=>f.startDate===key||f.date===key);
   let html='';
@@ -894,50 +808,24 @@ window.closeDayDetail=()=>document.getElementById('dayDetail').style.display='no
 window.assignGuardia=async key=>{if(guardias.some(g=>g.date===key&&g.userId===currentUser)){toast('Ya tienes guardia');return;}await addDoc(collection(db,'guardias'),{userId:currentUser,date:key});toast('Guardia asignada');closeDayDetail();};
 window.removeGuardia=async id=>{await deleteDoc(doc(db,'guardias',id));toast('Guardia eliminada');closeDayDetail();};
 
-/* ── RANGE PICKER ── */
+/* ── RANGE ── */
 function buildRangeMembers(){
-  const wrap=document.getElementById('rangeMembers');
-  if(!wrap)return;
-  wrap.innerHTML=members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>{
-    const c=COLORS[m.color]||COLORS.blue;
-    return`<div class="rtog ${rangeSelected.has(m.id)?'on':''}" id="rtog-${m.id}" onclick="toggleRange('${m.id}')">
-      <div class="rav" style="background:${c.bg};color:${c.tx}">${initials(m.name)}</div>
-      <span>${m.name}</span>
-    </div>`;
-  }).join('');
+  const wrap=document.getElementById('rangeMembers');if(!wrap)return;
+  wrap.innerHTML=members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>{const c=COLORS[m.color]||COLORS.blue;return`<div class="rtog ${rangeSelected.has(m.id)?'on':''}" id="rtog-${m.id}" onclick="toggleRange('${m.id}')"><div class="rav" style="background:${c.bg};color:${c.tx}">${initials(m.name)}</div><span>${m.name}</span></div>`;}).join('');
 }
-window.toggleRange=id=>{
-  if(rangeSelected.has(id))rangeSelected.delete(id);else rangeSelected.add(id);
-  document.getElementById('rtog-'+id)?.classList.toggle('on',rangeSelected.has(id));
-  updateRangePreview();
-};
-window.updateRangePreview=()=>{
-  const from=document.getElementById('rangeFrom').value,to=document.getElementById('rangeTo').value;
-  if(!from||!to||rangeSelected.size===0){document.getElementById('rangePreview').textContent='';return;}
-  const days=Math.max(0,Math.round((new Date(to)-new Date(from))/86400000)+1);
-  document.getElementById('rangePreview').textContent=`${days} día${days!==1?'s':''} · ${rangeSelected.size} persona${rangeSelected.size!==1?'s':''}`;
-};
-function dateRange(from,to){
-  const dates=[],cur=new Date(from),end=new Date(to);
-  while(cur<=end){dates.push(`${cur.getFullYear()}-${pad(cur.getMonth()+1)}-${pad(cur.getDate())}`);cur.setDate(cur.getDate()+1);}
-  return dates;
-}
+window.toggleRange=id=>{if(rangeSelected.has(id))rangeSelected.delete(id);else rangeSelected.add(id);document.getElementById('rtog-'+id)?.classList.toggle('on',rangeSelected.has(id));updateRangePreview();};
+window.updateRangePreview=()=>{const from=document.getElementById('rangeFrom').value,to=document.getElementById('rangeTo').value;if(!from||!to||rangeSelected.size===0){document.getElementById('rangePreview').textContent='';return;}const days=Math.max(0,Math.round((new Date(to)-new Date(from))/86400000)+1);document.getElementById('rangePreview').textContent=`${days} día${days!==1?'s':''} · ${rangeSelected.size} persona${rangeSelected.size!==1?'s':''}`;};
+function dateRange(from,to){const dates=[],cur=new Date(from),end=new Date(to);while(cur<=end){dates.push(`${cur.getFullYear()}-${pad(cur.getMonth()+1)}-${pad(cur.getDate())}`);cur.setDate(cur.getDate()+1);}return dates;}
 window.assignRange=async()=>{
   const from=document.getElementById('rangeFrom').value,to=document.getElementById('rangeTo').value;
-  if(!from||!to){toast('Elige fechas de inicio y fin');return;}
-  if(rangeSelected.size===0){toast('Selecciona al menos una persona');return;}
-  if(new Date(from)>new Date(to)){toast('La fecha inicio debe ser anterior al fin');return;}
-  const dates=dateRange(from,to);
-  if(dates.length>90){toast('Máximo 90 días por asignación');return;}
+  if(!from||!to){toast('Elige fechas');return;}if(rangeSelected.size===0){toast('Selecciona al menos una persona');return;}
+  if(new Date(from)>new Date(to)){toast('Fecha inicio debe ser anterior');return;}
+  const dates=dateRange(from,to);if(dates.length>90){toast('Máximo 90 días');return;}
   const existing=new Set(guardias.map(g=>`${g.userId}:${g.date}`));
-  const toAdd=[];
-  dates.forEach(date=>rangeSelected.forEach(uid=>{if(!existing.has(`${uid}:${date}`))toAdd.push({userId:uid,date});}));
-  if(!toAdd.length){toast('Todas esas guardias ya están asignadas');return;}
-  const batch=writeBatch(db);
-  const guardiasRef = collection(db, 'guardias');
-  toAdd.forEach(g => batch.set(doc(guardiasRef), g));
-  await batch.commit();
-  toast(`${toAdd.length} guardia${toAdd.length!==1?'s':''} asignada${toAdd.length!==1?'s':''}`);
+  const toAdd=[];dates.forEach(date=>rangeSelected.forEach(uid=>{if(!existing.has(`${uid}:${date}`))toAdd.push({userId:uid,date});}));
+  if(!toAdd.length){toast('Todas esas guardias ya existen');return;}
+  const batch=writeBatch(db);toAdd.forEach(g=>batch.set(doc(collection(db,'guardias')),g));
+  await batch.commit();toast(`${toAdd.length} guardia${toAdd.length!==1?'s':''} asignada${toAdd.length!==1?'s':''}`);
   document.getElementById('rangeFrom').value='';document.getElementById('rangeTo').value='';
   rangeSelected.clear();buildRangeMembers();document.getElementById('rangePreview').textContent='';
 };
@@ -946,20 +834,22 @@ window.assignRange=async()=>{
 function renderRegistros(){
   const chips=document.getElementById('filterChips');
   const ts=teams();
-  chips.innerHTML=
-    '<div class="chip'+(filterUser===''&&!ts.length?' active':filterUser===''&&!document.querySelector('#filterChips .chip.active')?' active':filterUser===''?' active':'')+'" onclick="setFilter(\'\')">Todos</div>'+
-    ts.map(t=>`<div class="chip" onclick="setFilterTeam('${t}')">${t}</div>`).join('')+
+  chips.innerHTML='<div class="chip'+(filterUser===''?' active':'')+'" onclick="setFilter(\'\')">Todos</div>'+
+    ts.map(t=>`<div class="chip${filterUser===('team:'+t)?' active':''}" onclick="setFilterTeam('${t}')">${t}</div>`).join('')+
     members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>`<div class="chip${filterUser===m.id?' active':''}" onclick="setFilter('${m.id}')">${m.name}</div>`).join('');
-  const rows=sessions.filter(s=>{
-    if(filterUser&&s.userId!==filterUser)return false;
-    return true;
-  }).sort((a,b)=>new Date(b.start)-new Date(a.start));
+
+  let rows=sessions;
+  if(filterUser&&!filterUser.startsWith('team:'))rows=rows.filter(s=>s.userId===filterUser);
+  if(filterUser&&filterUser.startsWith('team:')){const team=filterUser.slice(5);rows=rows.filter(s=>{const m=getMember(s.userId);return m?.team===team;});}
+  rows=rows.sort((a,b)=>new Date(b.start)-new Date(a.start));
+
   const body=document.getElementById('registrosBody');
   if(!rows.length){body.innerHTML=`<tr><td colspan="9"><div class="empty">Sin registros</div></td></tr>`;return;}
   body.innerHTML=rows.map(s=>{
     const m=getMember(s.userId),c=getColor(s.userId);
     const st=new Date(s.start).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
     const en=s.end==='manual'?'—':new Date(s.end).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
+    const isMe=s.userId===currentUser;
     return`<tr>
       <td style="font-variant-numeric:tabular-nums">${s.date.split('-').reverse().join('/')}</td>
       <td><div style="display:flex;align-items:center;gap:7px"><div class="avatar" style="width:22px;height:22px;font-size:9px;background:${c.bg};color:${c.tx}">${m?initials(m.name):'?'}</div>${m?m.name:'—'}</div></td>
@@ -968,13 +858,54 @@ function renderRegistros(){
       <td><span class="badge bb">${fmtMs(s.dur)}</span></td>
       <td><span class="badge ${s.tipo==='subida'?'bg':'bgy'}">${s.tipo}</span></td>
       <td style="color:var(--text3);font-size:12px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.notas||''}</td>
-      <td>${s.userId===currentUser?`<button class="btn btn-red btn-xs" onclick="deleteSess('${s.id}')">✕</button>`:''}</td>
+      <td>
+        ${isMe?`<div class="row-actions">
+          <button class="btn btn-ghost btn-xs" onclick="openEditSession('${s.id}')" title="Editar">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="btn btn-red btn-xs" onclick="deleteSess('${s.id}')" title="Eliminar">✕</button>
+        </div>`:''}
+      </td>
     </tr>`;
   }).join('');
 }
 window.setFilter=uid=>{filterUser=uid;document.querySelectorAll('#filterChips .chip').forEach(c=>c.classList.remove('active'));event.target.classList.add('active');renderRegistros();};
-window.setFilterTeam=team=>{filterUser='';document.querySelectorAll('#filterChips .chip').forEach(c=>c.classList.remove('active'));event.target.classList.add('active');const body=document.getElementById('registrosBody');const rows=sessions.filter(s=>{const m=getMember(s.userId);return m?.team===team;}).sort((a,b)=>new Date(b.start)-new Date(a.start));if(!rows.length){body.innerHTML=`<tr><td colspan="9"><div class="empty">Sin registros para este equipo</div></td></tr>`;return;}renderRegistros();/* simple: just filter by team */document.getElementById('filterChips').querySelectorAll('.chip').forEach(c=>{if(c.textContent===team)c.classList.add('active');});};
-window.deleteSess=async id=>{if(!confirm('¿Eliminar?'))return;await deleteDoc(doc(db,'sessions',id));toast('Eliminado');};
+window.setFilterTeam=team=>{filterUser='team:'+team;document.querySelectorAll('#filterChips .chip').forEach(c=>c.classList.remove('active'));event.target.classList.add('active');renderRegistros();};
+window.deleteSess=async id=>{if(!confirm('¿Eliminar este registro?'))return;await deleteDoc(doc(db,'sessions',id));toast('Registro eliminado');};
+
+/* ── EDIT SESSION ── */
+window.openEditSession=id=>{
+  const s=sessions.find(x=>x.id===id);if(!s)return;
+  document.getElementById('editSessionId').value=id;
+  document.getElementById('editDate').value=s.date;
+  // parse times from ISO string
+  const stDate=new Date(s.start);
+  document.getElementById('editStart').value=`${pad(stDate.getHours())}:${pad(stDate.getMinutes())}`;
+  if(s.end&&s.end!=='manual'){
+    const enDate=new Date(s.end);
+    document.getElementById('editEnd').value=`${pad(enDate.getHours())}:${pad(enDate.getMinutes())}`;
+  } else {
+    document.getElementById('editEnd').value='';
+  }
+  document.getElementById('editTipo').value=s.tipo||'guardia';
+  document.getElementById('editNotas').value=s.notas||'';
+  document.getElementById('editSessionModal').style.display='flex';
+};
+window.closeEditSession=()=>document.getElementById('editSessionModal').style.display='none';
+window.saveEditSession=async()=>{
+  const id=document.getElementById('editSessionId').value;
+  const d=document.getElementById('editDate').value;
+  const sv=document.getElementById('editStart').value;
+  const ev=document.getElementById('editEnd').value;
+  const tipo=document.getElementById('editTipo').value;
+  const notas=document.getElementById('editNotas').value;
+  if(!d||!sv||!ev){toast('Rellena fecha, inicio y fin');return;}
+  const[sh,sm]=sv.split(':').map(Number),[eh,em]=ev.split(':').map(Number),[y,mo,dd]=d.split('-').map(Number);
+  const st=new Date(y,mo-1,dd,sh,sm);let en=new Date(y,mo-1,dd,eh,em);
+  if(en<=st)en.setDate(en.getDate()+1);
+  await updateDoc(doc(db,'sessions',id),{date:d,start:st.toISOString(),end:en.toISOString(),dur:en-st,tipo,notas});
+  closeEditSession();toast('Registro actualizado');
+};
 
 /* ── FIESTAS ── */
 function renderFiestas(){
@@ -1000,15 +931,9 @@ function renderFiestas(){
       <button class="btn btn-red btn-xs" onclick="deleteFiesta('${f.id}')">✕</button>
     </div>`).join(''):'<div class="empty">Aún no has registrado ninguna fiesta</div>';
   document.getElementById('fiestasEquipo').innerHTML=members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>{
-    const c=getColor(m.id);
-    const mf=fiestas.filter(f=>f.userId===m.id),cog=mf.reduce((a,f)=>a+(f.horas||0),0);
-    const ms=sessions.filter(s=>s.userId===m.id).reduce((a,s)=>a+s.dur,0);
-    const gan=((ms/3600000)*(config.rate||1.75));
-    return`<div class="mi">
-      <div class="avatar" style="width:36px;height:36px;font-size:13px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div>
-      <div class="mi-info"><div class="mi-name">${m.name}</div><div class="mi-meta">${m.team?`<span class="team-pill" style="margin-right:4px">${m.team}</span>`:''} ${mf.length} periodo${mf.length!==1?'s':''} · ${cog.toFixed(1)}h cogidas</div></div>
-      <div class="mi-right"><div class="mi-hrs">${gan.toFixed(1)}h</div><div class="mi-sub">ganadas</div><div class="mi-sub" style="color:var(--green)">${Math.max(0,gan-cog).toFixed(1)}h libres</div></div>
-    </div>`;
+    const c=getColor(m.id);const mf=fiestas.filter(f=>f.userId===m.id),cog=mf.reduce((a,f)=>a+(f.horas||0),0);
+    const ms=sessions.filter(s=>s.userId===m.id).reduce((a,s)=>a+s.dur,0);const gan=((ms/3600000)*(config.rate||1.75));
+    return`<div class="mi"><div class="avatar" style="width:36px;height:36px;font-size:13px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div><div class="mi-info"><div class="mi-name">${m.name}</div><div class="mi-meta">${m.team?`<span class="team-pill" style="margin-right:4px">${m.team}</span>`:''}${mf.length} periodo${mf.length!==1?'s':''} · ${cog.toFixed(1)}h cogidas</div></div><div class="mi-right"><div class="mi-hrs">${gan.toFixed(1)}h</div><div class="mi-sub">ganadas</div><div class="mi-sub" style="color:var(--green)">${Math.max(0,gan-cog).toFixed(1)}h libres</div></div></div>`;
   }).join('');
 }
 function fmtRange(f){const s=(f.startDate||f.date||''),e=f.endDate||'';const fmt=d=>d?d.split('-').reverse().join('/'):'';return(e&&e!==s)?`${fmt(s)} → ${fmt(e)}`:fmt(s);}
@@ -1022,22 +947,18 @@ window.addFiesta=async()=>{
 };
 window.deleteFiesta=async id=>{if(!confirm('¿Eliminar esta fiesta?'))return;await deleteDoc(doc(db,'fiestas',id));toast('Fiesta eliminada');};
 
-/* ── EQUIPO / ESTADÍSTICAS ── */
+/* ── EQUIPO ── */
 function renderEquipo(){
-  const rate=config.rate||1.75;
-  const ts=teams();
+  const rate=config.rate||1.75;const ts=teams();
   const chips=document.getElementById('eqFilterChips');
   chips.innerHTML='<div class="chip'+(eqFilterTeam===''?' active':'')+'" onclick="setEqFilter(\'\')">Todos</div>'+ts.map(t=>`<div class="chip${eqFilterTeam===t?' active':''}" onclick="setEqFilter('${t}')">${t}</div>`).join('');
   const filtered=eqFilterTeam?members.filter(m=>m.team===eqFilterTeam):members;
   let totalMs=0,totalSub=0,totalF=0;
   const stats=filtered.map(m=>{
-    const mine=sessions.filter(s=>s.userId===m.id);
-    const ms=mine.reduce((a,s)=>a+s.dur,0);
-    const sub=mine.filter(s=>s.tipo==='subida').length;
-    const gan=(ms/3600000)*rate;
+    const mine=sessions.filter(s=>s.userId===m.id);const ms=mine.reduce((a,s)=>a+s.dur,0);
+    const sub=mine.filter(s=>s.tipo==='subida').length;const gan=(ms/3600000)*rate;
     const cog=fiestas.filter(f=>f.userId===m.id).reduce((a,f)=>a+(f.horas||0),0);
-    totalMs+=ms;totalSub+=sub;totalF+=gan;
-    return{...m,ms,sub,gan,cog,disp:Math.max(0,gan-cog)};
+    totalMs+=ms;totalSub+=sub;totalF+=gan;return{...m,ms,sub,gan,cog,disp:Math.max(0,gan-cog)};
   });
   document.getElementById('eq-horas').textContent=fmtH(totalMs);
   document.getElementById('eq-subidas').textContent=totalSub;
@@ -1045,21 +966,7 @@ function renderEquipo(){
   document.getElementById('eq-miembros').textContent=filtered.length;
   document.getElementById('equipoBody').innerHTML=stats.length?stats.sort((a,b)=>b.ms-a.ms).map(m=>{
     const c=getColor(m.id),pct=totalMs>0?Math.round(m.ms/totalMs*100):0;
-    return`<div class="mi">
-      <div class="avatar" style="width:36px;height:36px;font-size:13px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div>
-      <div class="mi-info">
-        <div class="mi-name">${m.name} ${m.team?`<span class="team-pill">${m.team}</span>`:''}</div>
-        <div style="margin-top:6px;height:3px;background:rgba(255,255,255,.06);border-radius:99px;width:180px;max-width:100%">
-          <div style="height:100%;width:${pct}%;background:${c.tx};border-radius:99px;opacity:.8"></div>
-        </div>
-        <div class="mi-meta">${m.sub} subidas · ${pct}% del total</div>
-      </div>
-      <div class="mi-right">
-        <div class="mi-hrs">${fmtH(m.ms)}</div>
-        <div class="mi-sub">${m.gan.toFixed(1)}h ganadas</div>
-        <div class="mi-sub" style="color:var(--green)">${m.disp.toFixed(1)}h libres</div>
-      </div>
-    </div>`;
+    return`<div class="mi"><div class="avatar" style="width:36px;height:36px;font-size:13px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div><div class="mi-info"><div class="mi-name">${m.name} ${m.team?`<span class="team-pill">${m.team}</span>`:''}</div><div style="margin-top:6px;height:3px;background:rgba(255,255,255,.06);border-radius:99px;width:180px;max-width:100%"><div style="height:100%;width:${pct}%;background:${c.tx};border-radius:99px;opacity:.8"></div></div><div class="mi-meta">${m.sub} subidas · ${pct}% del total</div></div><div class="mi-right"><div class="mi-hrs">${fmtH(m.ms)}</div><div class="mi-sub">${m.gan.toFixed(1)}h ganadas</div><div class="mi-sub" style="color:var(--green)">${m.disp.toFixed(1)}h libres</div></div></div>`;
   }).join(''):'<div class="empty">Sin compañeros en este equipo</div>';
 }
 window.setEqFilter=t=>{eqFilterTeam=t;renderEquipo();};
@@ -1068,40 +975,23 @@ window.setEqFilter=t=>{eqFilterTeam=t;renderEquipo();};
 function renderConfig(){
   if(!currentUser)return;
   const me=getMember(currentUser);
-  if(me){
-    document.getElementById('cfgMyName').value=me.name;
-    document.getElementById('cfgMyTeam').value=me.team||'';
-    document.getElementById('cfgMyColor').value=me.color||'blue';
-  }
+  if(me){document.getElementById('cfgMyName').value=me.name;document.getElementById('cfgMyTeam').value=me.team||'';document.getElementById('cfgMyColor').value=me.color||'blue';}
   updateTeamSuggestions();
   document.getElementById('configMembers').innerHTML=members.sort((a,b)=>a.name.localeCompare(b.name)).map(m=>{
     const c=getColor(m.id),isMe=m.id===currentUser;
-    return`<div class="mi">
-      <div class="avatar" style="width:32px;height:32px;font-size:11px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div>
-      <div class="mi-info">
-        <div class="mi-name">${m.name}${isMe?' <span style="font-size:11px;color:var(--text3)">(tú)</span>':''}</div>
-        <div class="mi-meta">${m.team?`<span class="team-pill">${m.team}</span>`:''} <span style="margin-left:4px">PIN: ${isMe?'<span style="font-family:var(--mono);letter-spacing:.12em">••••</span>':'••••'}</span></div>
-      </div>
-      <button class="btn btn-ghost btn-xs" onclick="openEditMember('${m.id}')">Editar</button>
-    </div>`;
+    return`<div class="mi"><div class="avatar" style="width:32px;height:32px;font-size:11px;background:${c.bg};color:${c.tx}">${initials(m.name)}</div><div class="mi-info"><div class="mi-name">${m.name}${isMe?' <span style="font-size:11px;color:var(--text3)">(tú)</span>':''}</div><div class="mi-meta">${m.team?`<span class="team-pill">${m.team}</span>`:''}</div></div><button class="btn btn-ghost btn-xs" onclick="openEditMember('${m.id}')">Editar</button></div>`;
   }).join('')||'<div class="empty">Sin compañeros</div>';
 }
-
 window.saveMyProfile=async()=>{
-  const name=document.getElementById('cfgMyName').value.trim();
-  const team=document.getElementById('cfgMyTeam').value.trim();
-  const color=document.getElementById('cfgMyColor').value;
+  const name=document.getElementById('cfgMyName').value.trim(),team=document.getElementById('cfgMyTeam').value.trim(),color=document.getElementById('cfgMyColor').value;
   if(!name){toast('El nombre no puede estar vacío');return;}
   await updateDoc(doc(db,'members',currentUser),{name,team,color});
-  toast('Perfil actualizado');
-  const c=COLORS[color]||COLORS.blue;
+  toast('Perfil actualizado');const c=COLORS[color]||COLORS.blue;
   document.getElementById('sideUser').textContent=name;
   const av=document.getElementById('sideAvatar');av.style.background=c.bg;av.style.color=c.tx;av.textContent=initials(name);
 };
-
 window.changePin=async()=>{
-  const old=document.getElementById('pinOld').value;
-  const nw=document.getElementById('pinNew').value;
+  const old=document.getElementById('pinOld').value,nw=document.getElementById('pinNew').value;
   if(old.length<4||nw.length<4){toast('El PIN debe tener 4 dígitos');return;}
   const me=getMember(currentUser);
   if(hashPin(old)!==me.pinHash&&old!==me.pin){toast('PIN actual incorrecto');return;}
@@ -1109,10 +999,9 @@ window.changePin=async()=>{
   document.getElementById('pinOld').value='';document.getElementById('pinNew').value='';
   toast('PIN cambiado');
 };
-
 window.saveRate=async()=>{const rate=parseFloat(document.getElementById('cfgRate').value)||1.75;await setDoc(doc(db,'config','main'),{rate});toast('Tasa actualizada');};
 
-/* ── EDIT MEMBER MODAL ── */
+/* ── EDIT MEMBER ── */
 window.openEditMember=id=>{
   const m=getMember(id);if(!m)return;
   document.getElementById('editMemberId').value=id;
@@ -1124,44 +1013,30 @@ window.openEditMember=id=>{
 };
 window.closeEditMember=()=>document.getElementById('editMemberModal').style.display='none';
 window.saveEditMember=async()=>{
-  const id=document.getElementById('editMemberId').value;
-  const name=document.getElementById('editMemberName').value.trim();
-  const team=document.getElementById('editMemberTeam').value.trim();
-  const color=document.getElementById('editMemberColor').value;
+  const id=document.getElementById('editMemberId').value,name=document.getElementById('editMemberName').value.trim(),team=document.getElementById('editMemberTeam').value.trim(),color=document.getElementById('editMemberColor').value;
   if(!name){toast('El nombre no puede estar vacío');return;}
   await updateDoc(doc(db,'members',id),{name,team,color});
-  if(id===currentUser){
-    const c=COLORS[color]||COLORS.blue;
-    document.getElementById('sideUser').textContent=name;
-    const av=document.getElementById('sideAvatar');av.style.background=c.bg;av.style.color=c.tx;av.textContent=initials(name);
-  }
+  if(id===currentUser){const c=COLORS[color]||COLORS.blue;document.getElementById('sideUser').textContent=name;const av=document.getElementById('sideAvatar');av.style.background=c.bg;av.style.color=c.tx;av.textContent=initials(name);}
   closeEditMember();toast('Usuario actualizado');
 };
 window.deleteMemberConfirm=async()=>{
-  const id=document.getElementById('editMemberId').value;
-  const m=getMember(id);
+  const id=document.getElementById('editMemberId').value,m=getMember(id);
   if(!confirm(`¿Eliminar a ${m?.name||'este usuario'} y todos sus datos?`))return;
   const batch=writeBatch(db);
   batch.delete(doc(db,'members',id));
   sessions.filter(s=>s.userId===id).forEach(s=>batch.delete(doc(db,'sessions',s.id)));
   fiestas.filter(f=>f.userId===id).forEach(f=>batch.delete(doc(db,'fiestas',f.id)));
   guardias.filter(g=>g.userId===id).forEach(g=>batch.delete(doc(db,'guardias',g.id)));
-  await batch.commit();
-  closeEditMember();
-  if(id===currentUser)logout();
-  else toast('Usuario eliminado');
+  await batch.commit();closeEditMember();
+  if(id===currentUser)logout();else toast('Usuario eliminado');
 };
 
-/* ── FIREBASE CONFIG from settings ── */
+/* ── FIREBASE CONFIG ── */
 window.saveFbConfig=async()=>{
-  const apiKey=document.getElementById('fb-apiKey').value.trim();
-  const projectId=document.getElementById('fb-projectId').value.trim();
-  const appId=document.getElementById('fb-appId').value.trim();
-  if(!apiKey||!projectId||!appId){toast('Rellena API Key, Project ID y App ID');return;}
+  const apiKey=document.getElementById('fb-apiKey').value.trim(),projectId=document.getElementById('fb-projectId').value.trim(),appId=document.getElementById('fb-appId').value.trim();
+  if(!apiKey||!projectId||!appId){toast('Rellena los tres campos');return;}
   const cfg={apiKey,projectId,appId,authDomain:`${projectId}.firebaseapp.com`,storageBucket:`${projectId}.appspot.com`,messagingSenderId:'000000000000'};
-  localStorage.setItem('gnFB',JSON.stringify(cfg));
-  const ok=await initDB(cfg);
-  if(ok)toast('Firebase reconectado');
+  localStorage.setItem('gnFB',JSON.stringify(cfg));const ok=await initDB(cfg);if(ok)toast('Firebase reconectado');
 };
 
 /* ── BOOT ── */
@@ -1170,25 +1045,14 @@ async function boot(){
   if(cfg&&cfg.apiKey){
     await initDB(cfg);
     const saved=sessionStorage.getItem('gnUser');
-    if(saved){
-      currentUser=saved;
-      // Wait a tick for members to load
-      setTimeout(()=>{
-        if(getMember(currentUser)){showApp();}
-        else{document.getElementById('loginScreen').style.display='flex';}
-      },1200);
-    } else {
-      document.getElementById('loginScreen').style.display='flex';
-    }
+    if(saved){currentUser=saved;setTimeout(()=>{if(getMember(currentUser)){showApp();}else{document.getElementById('loginScreen').style.display='flex';}},1200);}
+    else{document.getElementById('loginScreen').style.display='flex';}
   } else {
-    // No config: show login (register tab to get started)
     document.getElementById('loginScreen').style.display='flex';
     switchLoginTab('register');
-    // Show a one-time message in settings
     document.getElementById('syncBadge').textContent='Sin configurar';
   }
 }
-
 boot();
 </script>
 </body>
