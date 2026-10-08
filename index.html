@@ -20,7 +20,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
- 
+
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:300;padding:20px}
 .modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rl);padding:28px;width:100%;max-width:440px;position:relative}
 .modal-box h3{font-size:17px;font-weight:600;margin-bottom:6px;letter-spacing:-.01em}
@@ -857,21 +857,31 @@ window.assignRange=async()=>{
 window.exportGuardias=scope=>{
   if(!window.XLSX){toast('No se pudo cargar la librería de Excel');return;}
   const prefix=`${calY}-${pad(calM+1)}`;
-  let rows=scope==='mes'?guardias.filter(g=>g.date.startsWith(prefix)):[...guardias];
+  // Une guardias asignadas y turnos fichados por persona y día
+  const map=new Map();
+  const entry=(uid,date)=>{const k=uid+'|'+date;if(!map.has(k))map.set(k,{userId:uid,date,ms:0,notas:[]});return map.get(k);};
+  guardias.forEach(g=>entry(g.userId,g.date));
+  sessions.forEach(s=>{const e=entry(s.userId,s.date);e.ms+=s.dur||0;if(s.notas&&s.notas.trim())e.notas.push(s.notas.trim());});
+  let rows=[...map.values()];
+  if(scope==='mes')rows=rows.filter(r=>r.date.startsWith(prefix));
   if(!rows.length){toast('No hay guardias que exportar');return;}
-  const nameOf=g=>getMember(g.userId)?.name||'—';
+  const nameOf=r=>getMember(r.userId)?.name||'—';
   rows.sort((a,b)=>a.date.localeCompare(b.date)||nameOf(a).localeCompare(nameOf(b)));
-  const dias=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
-  const data=rows.map(g=>{
-    const m=getMember(g.userId),[y,mo,d]=g.date.split('-').map(Number);
-    return{'Fecha':`${pad(d)}/${pad(mo)}/${y}`,'Día':dias[new Date(y,mo-1,d).getDay()],'Compañero':m?.name||'—','Equipo':m?.team||''};
+  const data=rows.map(r=>{
+    const m=getMember(r.userId),[y,mo,d]=r.date.split('-').map(Number);
+    return{'Nombre':m?.name||'—','Equipo':m?.team||'','Horas':Math.round(r.ms/3600000*100)/100,'Día':Date.UTC(y,mo-1,d)/86400000+25569,'Comentario':r.notas.join(' · ')};
   });
-  const count={};
-  rows.forEach(g=>{const n=nameOf(g);count[n]=(count[n]||0)+1;});
-  const resumen=Object.entries(count).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).map(([n,c])=>({'Compañero':n,'Guardias':c}));
+  const tot={};
+  rows.forEach(r=>{const n=nameOf(r);tot[n]=tot[n]||{g:0,ms:0};tot[n].g++;tot[n].ms+=r.ms;});
+  const resumen=Object.entries(tot).sort((a,b)=>b[1].ms-a[1].ms||a[0].localeCompare(b[0])).map(([n,v])=>({'Nombre':n,'Días':v.g,'Horas':Math.round(v.ms/3600000*100)/100}));
+  const ws1=XLSX.utils.json_to_sheet(data);
+  ws1['!cols']=[{wch:22},{wch:16},{wch:9},{wch:22},{wch:40}];
+  for(let i=0;i<data.length;i++){
+    const c=ws1['D'+(i+2)];if(c){c.z='dddd dd/mm/yyyy';}
+    const h=ws1['C'+(i+2)];if(h){h.z='0.00';}
+  }
+  const ws2=XLSX.utils.json_to_sheet(resumen);ws2['!cols']=[{wch:22},{wch:8},{wch:9}];
   const wb=XLSX.utils.book_new();
-  const ws1=XLSX.utils.json_to_sheet(data);ws1['!cols']=[{wch:12},{wch:12},{wch:22},{wch:16}];
-  const ws2=XLSX.utils.json_to_sheet(resumen);ws2['!cols']=[{wch:22},{wch:10}];
   XLSX.utils.book_append_sheet(wb,ws1,'Guardias');
   XLSX.utils.book_append_sheet(wb,ws2,'Resumen');
   XLSX.writeFile(wb,`guardias_${scope==='mes'?prefix:'todas'}.xlsx`);
