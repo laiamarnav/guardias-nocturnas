@@ -390,8 +390,8 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
       <div class="card">
         <div class="ch"><h3>Exportar subidas reales</h3><span class="sub">Excel (.xlsx) · solo turnos de tipo subida</span></div>
         <div class="cb" style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn-green" onclick="exportGuardias('mes')">Exportar mes mostrado</button>
-          <button class="btn btn-outline" onclick="exportGuardias('todo')">Exportar todas</button>
+          <button class="btn btn-green" onclick="exportGuardias('mes')">Exportar subidas reales del mes</button>
+          <button class="btn btn-outline" onclick="exportGuardias('todo')">Exportar todas las subidas reales</button>
         </div>
       </div>
     </div>
@@ -858,7 +858,7 @@ window.exportGuardias=scope=>{
   if(!window.XLSX){toast('No se pudo cargar la librería de Excel');return;}
   const prefix=`${calY}-${pad(calM+1)}`;
   // Solo subidas reales (turnos de tipo "subida") de usuarios que existen
-  let rows=sessions.filter(s=>s.tipo==='subida'&&getMember(s.userId));
+  let rows=sessions.filter(s=>String(s.tipo||'').toLowerCase().startsWith('subida')&&(s.dur||0)>=60000&&getMember(s.userId)); // solo subidas con horas
   if(scope==='mes')rows=rows.filter(s=>s.date.startsWith(prefix));
   if(!rows.length){toast('No hay subidas reales que exportar');return;}
   const nameOf=s=>getMember(s.userId).name;
@@ -881,7 +881,7 @@ window.exportGuardias=scope=>{
   XLSX.utils.book_append_sheet(wb,ws1,'Subidas');
   XLSX.utils.book_append_sheet(wb,ws2,'Resumen');
   XLSX.writeFile(wb,`subidas_${scope==='mes'?prefix:'todas'}.xlsx`);
-  toast('Excel descargado');
+  toast(`Excel descargado · ${rows.length} subida${rows.length!==1?'s':''}`);
 };
 
 /* ── REGISTROS ── */
