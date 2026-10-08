@@ -388,7 +388,7 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
         </div>
       </div>
       <div class="card">
-        <div class="ch"><h3>Exportar guardias</h3><span class="sub">Descarga en Excel (.xlsx)</span></div>
+        <div class="ch"><h3>Exportar subidas reales</h3><span class="sub">Excel (.xlsx) · solo turnos de tipo subida</span></div>
         <div class="cb" style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn btn-green" onclick="exportGuardias('mes')">Exportar mes mostrado</button>
           <button class="btn btn-outline" onclick="exportGuardias('todo')">Exportar todas</button>
@@ -857,34 +857,30 @@ window.assignRange=async()=>{
 window.exportGuardias=scope=>{
   if(!window.XLSX){toast('No se pudo cargar la librería de Excel');return;}
   const prefix=`${calY}-${pad(calM+1)}`;
-  // Une guardias asignadas y turnos fichados por persona y día
-  const map=new Map();
-  const entry=(uid,date)=>{const k=uid+'|'+date;if(!map.has(k))map.set(k,{userId:uid,date,ms:0,notas:[]});return map.get(k);};
-  guardias.forEach(g=>entry(g.userId,g.date));
-  sessions.forEach(s=>{const e=entry(s.userId,s.date);e.ms+=s.dur||0;if(s.notas&&s.notas.trim())e.notas.push(s.notas.trim());});
-  let rows=[...map.values()];
-  if(scope==='mes')rows=rows.filter(r=>r.date.startsWith(prefix));
-  if(!rows.length){toast('No hay guardias que exportar');return;}
-  const nameOf=r=>getMember(r.userId)?.name||'—';
-  rows.sort((a,b)=>a.date.localeCompare(b.date)||nameOf(a).localeCompare(nameOf(b)));
-  const data=rows.map(r=>{
-    const m=getMember(r.userId),[y,mo,d]=r.date.split('-').map(Number);
-    return{'Nombre':m?.name||'—','Equipo':m?.team||'','Horas':Math.round(r.ms/3600000*100)/100,'Día':Date.UTC(y,mo-1,d)/86400000+25569,'Comentario':r.notas.join(' · ')};
+  // Solo subidas reales (turnos de tipo "subida") de usuarios que existen
+  let rows=sessions.filter(s=>s.tipo==='subida'&&getMember(s.userId));
+  if(scope==='mes')rows=rows.filter(s=>s.date.startsWith(prefix));
+  if(!rows.length){toast('No hay subidas reales que exportar');return;}
+  const nameOf=s=>getMember(s.userId).name;
+  rows.sort((a,b)=>a.date.localeCompare(b.date)||nameOf(a).localeCompare(nameOf(b))||String(a.start).localeCompare(String(b.start)));
+  const data=rows.map(s=>{
+    const m=getMember(s.userId),[y,mo,d]=s.date.split('-').map(Number);
+    return{'Nombre':m.name,'Equipo':m.team||'','Horas':Math.round((s.dur||0)/3600000*100)/100,'Día':Date.UTC(y,mo-1,d)/86400000+25569,'Comentario':(s.notas||'').trim()};
   });
   const tot={};
-  rows.forEach(r=>{const n=nameOf(r);tot[n]=tot[n]||{g:0,ms:0};tot[n].g++;tot[n].ms+=r.ms;});
-  const resumen=Object.entries(tot).sort((a,b)=>b[1].ms-a[1].ms||a[0].localeCompare(b[0])).map(([n,v])=>({'Nombre':n,'Días':v.g,'Horas':Math.round(v.ms/3600000*100)/100}));
+  rows.forEach(s=>{const n=nameOf(s);tot[n]=tot[n]||{c:0,ms:0};tot[n].c++;tot[n].ms+=s.dur||0;});
+  const resumen=Object.entries(tot).sort((a,b)=>b[1].ms-a[1].ms||a[0].localeCompare(b[0])).map(([n,v])=>({'Nombre':n,'Subidas':v.c,'Horas':Math.round(v.ms/3600000*100)/100}));
   const ws1=XLSX.utils.json_to_sheet(data);
   ws1['!cols']=[{wch:22},{wch:16},{wch:9},{wch:22},{wch:40}];
   for(let i=0;i<data.length;i++){
     const c=ws1['D'+(i+2)];if(c){c.z='dddd dd/mm/yyyy';}
     const h=ws1['C'+(i+2)];if(h){h.z='0.00';}
   }
-  const ws2=XLSX.utils.json_to_sheet(resumen);ws2['!cols']=[{wch:22},{wch:8},{wch:9}];
+  const ws2=XLSX.utils.json_to_sheet(resumen);ws2['!cols']=[{wch:22},{wch:9},{wch:9}];
   const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws1,'Guardias');
+  XLSX.utils.book_append_sheet(wb,ws1,'Subidas');
   XLSX.utils.book_append_sheet(wb,ws2,'Resumen');
-  XLSX.writeFile(wb,`guardias_${scope==='mes'?prefix:'todas'}.xlsx`);
+  XLSX.writeFile(wb,`subidas_${scope==='mes'?prefix:'todas'}.xlsx`);
   toast('Excel descargado');
 };
 
